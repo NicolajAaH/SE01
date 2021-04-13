@@ -11,4 +11,20 @@ public abstract class Account {
     void resetPassword(){
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    public void setAccountEmail(String email) {
+        this.email = email;
+    }
+
+    public void setAccountPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 }

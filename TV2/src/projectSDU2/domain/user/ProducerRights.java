@@ -12,11 +12,17 @@ public interface ProducerRights {
 
     void setCreditRoles(ArrayList<Roles> roles);
 
-    Credit createCredit(Production production, Person person, ArrayList<Roles> roles);
+    void createCredit(int ID, Production production, Person person, ArrayList<Roles> roles);
 
-    Participant createParticipant(String email, String password, String name, int phone);
+    void createParticipant(int ID, String email, String name, int phone);
 
-    void deleteParticipant(String email);
+    void createParticipantLogin(Participant participant);
+
+    void deleteParticipant(Participant participant);
+
+    Participant findParticipant(String email);
+
+    void createProduction(int productionID, ArrayList<Credit> credits);
 
 
 }

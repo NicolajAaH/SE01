@@ -18,7 +18,12 @@ public class Production {
         return credits;
     }
 
-    public void setCredits(ArrayList<Credit> credits) {
+    public void addCredit(Credit credit) {
+        credits.add(credit);
+    }
+
+    public Production(int productionID, ArrayList<Credit> credits){
+        this.productionID = productionID;
         this.credits = credits;
     }
 }
