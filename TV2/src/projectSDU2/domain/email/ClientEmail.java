@@ -1,2 +1,4 @@
-package projectSDU2.domain.email;public class ClientEmail {
+package projectSDU2.domain.email;
+
+public class ClientEmail {
 }

@@ -1,2 +1,4 @@
-package projectSDU2.domain.report;public enum Types {
+package projectSDU2.domain.report;
+
+public enum Types {
 }

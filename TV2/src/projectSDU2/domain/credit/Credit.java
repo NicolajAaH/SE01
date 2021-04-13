@@ -1,4 +1,6 @@
-package projectSDU2.domain;
+package projectSDU2.domain.credit;
+
+import projectSDU2.domain.user.Person;
 
 import java.util.ArrayList;
 

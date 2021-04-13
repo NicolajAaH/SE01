@@ -1,4 +1,4 @@
-package projectSDU2.domain;
+package projectSDU2.domain.credit;
 
 public enum Roles {
 
