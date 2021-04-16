@@ -24,8 +24,9 @@ public class runGUI extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
-        Parent root = fxmlLoader.load(getClass().getResource("Start.fxml"));
-        stage.setTitle("Energi Optimering");
+        fxmlLoader.setLocation(getClass().getResource("/primary.fxml"));
+        Parent root = fxmlLoader.load();
+        stage.setTitle("Krediteringssystem");
         stage.setScene(new Scene(root));
         stage.setResizable(false);
         stage.show();
@@ -33,7 +34,6 @@ public class runGUI extends Application {
 
     //kører programmet
     public static void main(String[] args) {
-
         launch(args);
     }
 }
