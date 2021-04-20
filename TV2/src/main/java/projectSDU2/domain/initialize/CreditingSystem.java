@@ -2,6 +2,7 @@ package projectSDU2.domain.initialize;
 
 import projectSDU2.Interfaces.PersistenceI;
 import projectSDU2.data.PersistenceConnect;
+import projectSDU2.domain.credit.Credit;
 import projectSDU2.domain.credit.Production;
 import projectSDU2.domain.user.*;
 
@@ -32,8 +33,13 @@ public class CreditingSystem {
                 accounts.add(new SystemAdministratorLogin(persistenceI.getAccounts().get(i)[0], persistenceI.getAccounts().get(i)[1]));
             }
             else if(persistenceI.getAccounts().get(i)[2].equals("producer")){
+                ArrayList<Production> productions = new ArrayList<>();
+                productions.add(new Production(1, new ArrayList<>()));
+                productions.add(new Production(4, new ArrayList<>()));
+                productions.add(new Production(9, new ArrayList<>()));
+                productions.add(new Production(11, new ArrayList<>()));
                 accounts.add(new ProducerLogin(new Producer("name", 12345678, persistenceI.getAccounts().get(i)[0],
-                        "asdfghjk", new ArrayList<Production>()), persistenceI.getAccounts().get(i)[1]));
+                        "asdfghjk", productions), persistenceI.getAccounts().get(i)[1]));
             }
             else if(persistenceI.getAccounts().get(i)[2].equals("participant")){
                 accounts.add(new ParticipantLogin(new Participant("name", 12345678, persistenceI.getAccounts().get(i)[0]),

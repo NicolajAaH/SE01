@@ -36,4 +36,9 @@ public class Production {
         this.productionID = productionID;
         this.credits = credits;
     }
+
+    @Override
+    public String toString(){
+        return ""+productionID;
+    }
 }

@@ -1,8 +1,13 @@
 package projectSDU2.presentation;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import projectSDU2.domain.user.Producer;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class PersonalController extends Controller{
 
@@ -17,7 +22,7 @@ public class PersonalController extends Controller{
     @FXML
     private TextField companyField;
     @FXML
-    private ListView<String> productionsList;
+    private ListView<Object> productionsList;
     @FXML
     private Label updateLabel;
     @FXML
@@ -49,6 +54,9 @@ public class PersonalController extends Controller{
         }else if(type.equals("producer")){
             Producer producer = (Producer) getDomainI().findAccount(email).getPerson();
             companyField.setText(producer.getCompany());
+            Object[] productionString = producer.getProductions().toArray();
+            ObservableList<Object> strings = FXCollections.observableArrayList(Arrays.asList(productionString));
+            productionsList.setItems(strings);
         }else if(type.equals("systemadministrator")){
             nameField.setDisable(true);
             nameField.setVisible(false);
