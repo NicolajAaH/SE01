@@ -5,6 +5,16 @@ import java.util.ArrayList;
 public class Production {
     private int productionID;
     private ArrayList<Credit> credits;
+    private boolean status;
+    private boolean sent;
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public void setSent(boolean sent) {
+        this.sent = sent;
+    }
 
     public int getProductionID() {
         return productionID;

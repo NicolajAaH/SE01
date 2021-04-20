@@ -8,28 +8,45 @@ import projectSDU2.domain.initialize.Server;
 
 import java.util.ArrayList;
 
-class ProducerLogin extends ParticipantLogin implements ProducerRights{
+public class ProducerLogin extends ParticipantLogin implements ProducerRights{
 
     private Producer producer;
 
-    ProducerLogin(){
-
+    public ProducerLogin(String email, String password) {
+        setPerson(producer);
+        setAccountEmail(email);
+        setAccountPassword(password);
     }
 
-    ProducerLogin(Producer producer){
+    public ProducerLogin(Producer producer, String password){
+        this.producer = producer;
+        setPerson(producer);
+        setAccountPassword(password);
+        setAccountEmail(producer.getEmail());
+    }
+
+    public Producer getProducer() {
+        return producer;
+    }
+
+    ProducerLogin(){
+        setPerson(producer);
+    }
+
+    public ProducerLogin(Producer producer){
         this.producer = producer;
         setAccountPassword("" + producer.getPhone());
         setAccountEmail(producer.getEmail());
     }
 
     @Override
-    public void setCreditPerson(Person person) {
-
+    public void setCreditPerson(Credit credit, Person person) {
+        credit.setPerson(person);
     }
 
     @Override
-    public void setCreditRoles(ArrayList<Roles> roles) {
-
+    public void setCreditRoles(Credit credit, ArrayList<Roles> roles) {
+        credit.setRoles(roles);
     }
 
     @Override

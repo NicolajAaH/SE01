@@ -15,7 +15,7 @@ public interface SystemAdministratorRights {
 
     void mergePersons(String email1, String email2);
 
-    void validateCredit(boolean status);
+    void validateProduction(Production production, boolean state);
 
     void createProducerLogin(Producer producer);
 }

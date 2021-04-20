@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class runGUI extends Application {
 
     //FXMLLoader og stage gemmes i variable
@@ -20,12 +22,12 @@ public class runGUI extends Application {
         return stage;
     }
 
+
     //start metoden kører ved start af programmet, hvor start fxml filen loades og scenen sættes
     @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
-        fxmlLoader.setLocation(getClass().getResource("/primary.fxml"));
-        Parent root = fxmlLoader.load();
+        Parent root = fxmlLoader.load(getClass().getClassLoader().getResource("login.fxml"));
         stage.setTitle("Krediteringssystem");
         stage.setScene(new Scene(root));
         stage.setResizable(false);

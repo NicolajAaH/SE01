@@ -8,8 +8,7 @@ public class Credit {
     private int creditID;
     private Person person;
     private ArrayList<Roles> roles;
-    private boolean status;
-    private boolean sent;
+
 
     public Credit(int creditID, Person person, ArrayList<Roles> roles) {
         this.creditID = creditID;
@@ -17,11 +16,15 @@ public class Credit {
         this.roles = roles;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setCreditID(int creditID) {
+        this.creditID = creditID;
     }
 
-    public void setSent(boolean sent) {
-        this.sent = sent;
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    public void setRoles(ArrayList<Roles> roles) {
+        this.roles = roles;
     }
 }

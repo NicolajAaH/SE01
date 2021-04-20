@@ -1,18 +1,34 @@
 package projectSDU2.domain.user;
 
-class ParticipantLogin extends Account implements ParticipantRights{
+public class ParticipantLogin extends Account implements ParticipantRights{
 
     private Participant participant;
 
-    ParticipantLogin(){
 
+    ParticipantLogin(){
+        setPerson(participant);
+    }
+
+    public ParticipantLogin(String email, String password) {
+        setAccountEmail(email);
+        setAccountPassword(password);
+        setPerson(participant);
     }
 
     ParticipantLogin(Participant participant){
         this.participant = participant;
+        setPerson(participant);
         setAccountPassword("" + participant.getPhone());
         setAccountEmail(participant.getEmail());
     }
+
+    public ParticipantLogin(Participant participant, String password){
+        this.participant = participant;
+        setPerson(participant);
+        setAccountPassword(password);
+        setAccountEmail(participant.getEmail());
+    }
+
 
     @Override
     public void setName(String name) {

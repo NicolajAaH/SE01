@@ -4,6 +4,17 @@ public abstract class Account {
     private String email;
     private String password;
 
+
+    private Person person;
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
     void authenticate(String email, String password){
         throw new UnsupportedOperationException("Not supported yet.");
     }

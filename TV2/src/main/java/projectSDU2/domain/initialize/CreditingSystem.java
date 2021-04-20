@@ -1,19 +1,47 @@
 package projectSDU2.domain.initialize;
 
+import projectSDU2.Interfaces.PersistenceI;
+import projectSDU2.data.PersistenceConnect;
 import projectSDU2.domain.credit.Production;
-import projectSDU2.domain.user.Account;
-import projectSDU2.domain.user.Person;
+import projectSDU2.domain.user.*;
 
 import java.util.ArrayList;
 
 public class CreditingSystem {
-    private ArrayList<Production> productions;
-    private ArrayList<Account> accounts;
-    private ArrayList<Person> persons;
+    //singleton pattern
+    private static CreditingSystem instance = new CreditingSystem();
 
-    public static void main(String[] args) {
-        //
+    private static PersistenceI persistenceI = new PersistenceConnect();
+
+    private CreditingSystem(){
+
     }
+
+    public static CreditingSystem getInstance() {
+        return instance;
+    }
+
+    private ArrayList<Production> productions = new ArrayList<>();
+    private ArrayList<Account> accounts;
+    private ArrayList<Person> persons = new ArrayList<>();
+
+    public void setup(){
+        accounts = new ArrayList<>();
+        for (int i = 0; i < persistenceI.getAccounts().size(); i++) {
+            if(persistenceI.getAccounts().get(i)[2].equals("systemadministrator")) {
+                accounts.add(new SystemAdministratorLogin(persistenceI.getAccounts().get(i)[0], persistenceI.getAccounts().get(i)[1]));
+            }
+            else if(persistenceI.getAccounts().get(i)[2].equals("producer")){
+                accounts.add(new ProducerLogin(new Producer("name", 12345678, persistenceI.getAccounts().get(i)[0],
+                        "asdfghjk", new ArrayList<Production>()), persistenceI.getAccounts().get(i)[1]));
+            }
+            else if(persistenceI.getAccounts().get(i)[2].equals("participant")){
+                accounts.add(new ParticipantLogin(new Participant("name", 12345678, persistenceI.getAccounts().get(i)[0]),
+                        persistenceI.getAccounts().get(i)[1]));
+            }
+        }
+    }
+
 
     public ArrayList<Account> getAccounts() {
         return accounts;
@@ -46,6 +74,14 @@ public class CreditingSystem {
             }
         }
         return null;
+    }
+
+    public boolean authorizeAccount(String email, String password){
+        return persistenceI.findAccount(email, password);
+    }
+
+    public String findType(String email){
+        return persistenceI.findType(email);
     }
 
     public Person findPerson(String email){

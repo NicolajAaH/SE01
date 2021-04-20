@@ -2,14 +2,15 @@ package projectSDU2.domain.user;
 
 import projectSDU2.domain.credit.Credit;
 import projectSDU2.domain.credit.Production;
+import projectSDU2.domain.email.Notification;
 import projectSDU2.domain.initialize.CreditingSystem;
 import projectSDU2.domain.initialize.Server;
 
 import java.util.ArrayList;
 
-class SystemAdministratorLogin extends ProducerLogin implements SystemAdministratorRights{
+public class SystemAdministratorLogin extends ProducerLogin implements SystemAdministratorRights{
 
-    SystemAdministratorLogin(String email, String password) {
+    public SystemAdministratorLogin(String email, String password) {
         setAccountEmail(email);
         setAccountPassword(password);
     }
@@ -36,12 +37,12 @@ class SystemAdministratorLogin extends ProducerLogin implements SystemAdministra
     }
 
     @Override
-    public void validateCredit(boolean status) {
-        if(status){
-            //Server.getCreditingSystem().getProductions().
+    public void validateProduction(Production production, boolean state) {
+        if(state){
+            production.setStatus(true);
         }
         else{
-            //AFVIS
+            new Notification(production + " not approved.").sendNotification();
         }
     }
 

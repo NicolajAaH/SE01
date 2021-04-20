@@ -9,10 +9,22 @@ public class Producer extends Person{
     private ProducerLogin producerLogin = new ProducerLogin(this);
     private ArrayList<Production> productions;
 
-    Producer(String name, int phone, int ID, String email, String company, ArrayList<Production> productions){
+    public Producer(String name, int phone, int ID, String email, String company, ArrayList<Production> productions){
         this.name = name;
         this.phone = phone;
         this.id = ID;
+        this.email = email;
+        this.company = company;
+        this.productions = productions;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public Producer(String name, int phone, String email, String company, ArrayList<Production> productions){
+        this.name = name;
+        this.phone = phone;
         this.email = email;
         this.company = company;
         this.productions = productions;

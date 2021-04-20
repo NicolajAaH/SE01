@@ -8,9 +8,9 @@ import java.util.ArrayList;
 
 public interface ProducerRights {
 
-    void setCreditPerson(Person person);
+    void setCreditPerson(Credit credit, Person person);
 
-    void setCreditRoles(ArrayList<Roles> roles);
+    void setCreditRoles(Credit credit, ArrayList<Roles> roles);
 
     void createCredit(int ID, Production production, Person person, ArrayList<Roles> roles);
 
