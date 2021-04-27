@@ -8,8 +8,6 @@ public class CoreController extends Controller{
     @FXML
     private Button personal;
     @FXML
-    private Button credits;
-    @FXML
     private Button participants;
     @FXML
     private Button productions;
@@ -36,9 +34,6 @@ public class CoreController extends Controller{
 
             participants.setDisable(true);
             participants.setVisible(false);
-
-            credits.setDisable(true);
-            credits.setVisible(false);
         }
     }
 
@@ -47,18 +42,16 @@ public class CoreController extends Controller{
         newFxml("personal.fxml");
     }
 
-    private void creditsHandler(){
-        newFxml("credits.fxml");
-    }
-
     private void participantsHandler(){
         newFxml("participants.fxml");
     }
 
+    @FXML
     private void productionsHandler(){
         newFxml("productions.fxml");
     }
 
+    @FXML
     private void producersHandler(){
         newFxml("producers.fxml");
     }

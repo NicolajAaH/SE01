@@ -4,6 +4,7 @@ import projectSDU2.Interfaces.PersistenceI;
 import projectSDU2.data.PersistenceConnect;
 import projectSDU2.domain.credit.Credit;
 import projectSDU2.domain.credit.Production;
+import projectSDU2.domain.credit.Roles;
 import projectSDU2.domain.user.*;
 
 import java.util.ArrayList;
@@ -27,6 +28,8 @@ public class CreditingSystem {
     private ArrayList<Person> persons = new ArrayList<>();
 
     public void setup(){
+        //test participant
+        persons.add(new Participant("testny", 12345678, "testny@asd.dk"));
         accounts = new ArrayList<>();
         for (int i = 0; i < persistenceI.getAccounts().size(); i++) {
             if(persistenceI.getAccounts().get(i)[2].equals("systemadministrator")) {
@@ -34,18 +37,21 @@ public class CreditingSystem {
             }
             else if(persistenceI.getAccounts().get(i)[2].equals("producer")){
                 ArrayList<Production> productions = new ArrayList<>();
-                productions.add(new Production(1, new ArrayList<>()));
-                productions.add(new Production(4, new ArrayList<>()));
-                productions.add(new Production(9, new ArrayList<>()));
-                productions.add(new Production(11, new ArrayList<>()));
-                accounts.add(new ProducerLogin(new Producer("name", 12345678, persistenceI.getAccounts().get(i)[0],
-                        "asdfghjk", productions), persistenceI.getAccounts().get(i)[1]));
+                productions.add(new Production(1, new ArrayList<>(), "testCompany", "testName"));
+                productions.add(new Production(4, new ArrayList<>(), "testCompany", "testName"));
+                productions.add(new Production(9, new ArrayList<>(), "testCompany", "testName"));
+                productions.add(new Production(11, new ArrayList<>(), "testCompany", "testName"));
+                Producer producer = new Producer("name", 12345678, persistenceI.getAccounts().get(i)[0],
+                        "asdfghjk", productions);
+                persons.add(producer);
+                accounts.add(new ProducerLogin(producer, persistenceI.getAccounts().get(i)[1]));
             }
             else if(persistenceI.getAccounts().get(i)[2].equals("participant")){
                 accounts.add(new ParticipantLogin(new Participant("name", 12345678, persistenceI.getAccounts().get(i)[0]),
                         persistenceI.getAccounts().get(i)[1]));
             }
         }
+        productions.add(new Production(1, new ArrayList<>(), "Company", "Name"));
     }
 
 
@@ -114,5 +120,29 @@ public class CreditingSystem {
 
     public void removeProduction(int productionID){
         productions.remove(findProduction(productionID));
+    }
+
+    public ArrayList<Producer> getProducers() {
+        ArrayList<Producer> producers = new ArrayList<>();
+        persons.forEach(person -> {
+            if(person instanceof Producer){
+                producers.add((Producer) person);
+            }
+        });
+        return producers;
+    }
+
+    public Roles[] getRoles(){
+        Roles[] roles = Roles.values();
+        return Roles.values();
+    }
+
+    public Person findPerson(int id) {
+        for (Person person : persons){
+            if(person.getId() == id){
+                return person;
+            }
+        }
+        return null;
     }
 }

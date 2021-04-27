@@ -1,11 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectSDU2.presentation.CoreController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectSDU2.presentation.ProductionController">
    <children>
       <Button fx:id="signout" layoutX="531.0" layoutY="14.0" mnemonicParsing="false" onAction="#signoutHandler" text="Sign out" />
-      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Back" onAction="#backHandler"/>
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#backHandler" text="Back" />
+      <ListView fx:id="productionsList" layoutX="42.0" layoutY="91.0" prefHeight="273.0" prefWidth="399.0" />
+      <Label layoutX="42.0" layoutY="68.0" text="Productions" />
+      <Button fx:id="addProductionButton" layoutX="478.0" layoutY="91.0" mnemonicParsing="false" onAction="#addProductionHandler" prefHeight="27.0" prefWidth="106.0" text="Add production" />
+      <Button fx:id="deleteProductionButton" layoutX="478.0" layoutY="145.0" mnemonicParsing="false" text="Delete production" onAction="#deleteProductionHandler"/>
+      <Button fx:id="editProductionButton" layoutX="478.0" layoutY="200.0" mnemonicParsing="false" onAction="#editProductionHandler" prefHeight="27.0" prefWidth="106.0" text="Edit production" />
+      <Label fx:id="productionsLabelStatus" layoutX="449.0" layoutY="248.0" prefHeight="115.0" prefWidth="136.0" />
+      <DialogPane fx:id="addProductionpane" prefHeight="400.0" prefWidth="600.0">
+         <content>
+            <AnchorPane prefHeight="62.0" prefWidth="600.0">
+               <children>
+                  <Label fx:id="descLabel" layoutX="263.0" layoutY="14.0" text="Add production" />
+                  <Label layoutX="48.0" layoutY="152.0" text="Name:" />
+                  <Label layoutX="50.0" layoutY="100.0" text="ID:" />
+                  <Label layoutX="38.0" layoutY="194.0" text="Company:" />
+                  <TextField fx:id="nameFieldProduction" layoutX="103.0" layoutY="147.0" />
+                  <TextField fx:id="companyFieldProduction" layoutX="103.0" layoutY="189.0" />
+                  <Label layoutX="338.0" layoutY="49.0" text="Credits:" />
+                  <Button fx:id="finishButton" layoutX="518.0" layoutY="9.0" mnemonicParsing="false" onAction="#finishHandler1" text="Finish" />
+                  <Button fx:id="cancelButton" layoutX="10.0" layoutY="9.0" mnemonicParsing="false" onAction="#cancelHandler1" text="Cancel" />
+                  <TextField fx:id="idFieldProduction" layoutX="102.0" layoutY="95.0" />
+                  <ListView fx:id="creditsProductionList" layoutX="338.0" layoutY="74.0" prefHeight="263.0" prefWidth="233.0" />
+                  <Label layoutX="39.0" layoutY="243.0" text="Status:" />
+                  <CheckBox fx:id="validatedProduction" layoutX="84.0" layoutY="243.0" mnemonicParsing="false" text="Validated" />
+                  <Label layoutX="44.0" layoutY="277.0" text="Sent:" />
+                  <CheckBox fx:id="sentProduction" layoutX="84.0" layoutY="277.0" mnemonicParsing="false" text="Sent to Kreditering Danmark" />
+                  <Button fx:id="addCreditButton" layoutX="263.0" layoutY="238.0" mnemonicParsing="false" onAction="#addCreditHandler" text="Add credit" />
+                  <Button fx:id="editCreditButton" layoutX="263.0" layoutY="272.0" mnemonicParsing="false" text="Edit credit" onAction="#editCreditHandler"/>
+                  <Button fx:id="deleteCreditButton" layoutX="248.0" layoutY="310.0" mnemonicParsing="false" text="Delete credit" onAction="#deleteCreditHandler"/>
+               </children>
+            </AnchorPane>
+         </content>
+      </DialogPane>
+      <DialogPane fx:id="addCreditProduction" prefHeight="400.0" prefWidth="600.0">
+         <content>
+            <AnchorPane prefHeight="62.0" prefWidth="600.0">
+               <children>
+                  <Label fx:id="descLabelCredit" layoutX="263.0" layoutY="14.0" text="Add credit" />
+                  <Label layoutX="38.0" layoutY="225.0" text="Name:" />
+                  <Label layoutX="50.0" layoutY="100.0" text="ID:" />
+                  <Label layoutX="39.0" layoutY="142.0" text="Person" />
+                  <TextField fx:id="nameFieldPerson" layoutX="100.0" layoutY="220.0" />
+                  <Label layoutX="338.0" layoutY="49.0" text="Roles:" />
+                  <Button fx:id="finishButton1" layoutX="518.0" layoutY="9.0" mnemonicParsing="false" onAction="#finishHandler2" text="Finish" />
+                  <Button fx:id="cancelButton1" layoutX="10.0" layoutY="9.0" mnemonicParsing="false" onAction="#cancelHandler2" text="Cancel" />
+                  <TextField fx:id="idFieldCredit" layoutX="102.0" layoutY="95.0" />
+                  <ListView fx:id="rolesList" layoutX="338.0" layoutY="74.0" prefHeight="263.0" prefWidth="233.0" />
+                  <Button fx:id="addRoleButton" layoutX="371.0" layoutY="18.0" mnemonicParsing="false" text="Add role" onAction="#addRoleHandler" />
+                  <Button fx:id="deleteRoleButton" layoutX="509.0" layoutY="44.0" mnemonicParsing="false" text="Delete role" onAction="#deleteRoleHandler"/>
+                  <Label layoutX="50.0" layoutY="174.0" text="ID:" />
+                  <TextField fx:id="idFieldCreditPerson" layoutX="102.0" layoutY="169.0" />
+                  <Label layoutX="39.0" layoutY="271.0" text="Phone:" />
+                  <TextField fx:id="phoneFieldPerson" layoutX="101.0" layoutY="266.0" />
+                  <Label layoutX="39.0" layoutY="308.0" text="Email:" />
+                  <TextField fx:id="emailFieldPerson" layoutX="101.0" layoutY="303.0" />
+                  <ChoiceBox fx:id="rolesMenu" layoutX="371.0" layoutY="44.0" prefHeight="27.0" prefWidth="136.0" />
+               </children>
+            </AnchorPane>
+         </content>
+      </DialogPane>
    </children>
 </AnchorPane>

@@ -33,4 +33,9 @@ public class Producer extends Person{
     public ArrayList<Production> getProductions() {
         return productions;
     }
+
+    @Override
+    public String toString(){
+        return "ID: " + id + "\t" + "Name: " + name + "\t" + "Email: " + email + "\t" + "Phone: " + phone + "\t" + "Company: " + company;
+    }
 }

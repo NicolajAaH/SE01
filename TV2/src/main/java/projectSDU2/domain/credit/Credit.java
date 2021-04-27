@@ -1,5 +1,6 @@
 package projectSDU2.domain.credit;
 
+import javafx.collections.ObservableList;
 import projectSDU2.domain.user.Person;
 
 import java.util.ArrayList;
@@ -26,5 +27,29 @@ public class Credit {
 
     public void setRoles(ArrayList<Roles> roles) {
         this.roles = roles;
+    }
+
+    public int getCreditID() {
+        return creditID;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public ArrayList<Roles> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(ObservableList roles) {
+        ArrayList<Roles> rolesArrayList = new ArrayList<>();
+        for (int i = 0; i < roles.size(); i++) {
+            rolesArrayList.add((Roles) roles.get(i));
+            System.out.println(roles.get(i).toString());
+        }
+    }
+
+    public String toString(){
+        return ""+creditID;
     }
 }

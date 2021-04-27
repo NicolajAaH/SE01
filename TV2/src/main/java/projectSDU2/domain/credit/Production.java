@@ -7,6 +7,8 @@ public class Production {
     private ArrayList<Credit> credits;
     private boolean status;
     private boolean sent;
+    private String company;
+    private String name;
 
     public void setStatus(boolean status) {
         this.status = status;
@@ -32,9 +34,46 @@ public class Production {
         credits.add(credit);
     }
 
-    public Production(int productionID, ArrayList<Credit> credits){
+    public Credit findCredit(int id){
+        for (Credit credit : credits){
+            if(credit.getCreditID() == id){
+                return credit;
+            }
+        }
+        return null;
+    }
+
+    public Production(int productionID, ArrayList<Credit> credits, String company, String name){
         this.productionID = productionID;
         this.credits = credits;
+        this.company = company;
+        this.name = name;
+        status = false;
+        sent = false;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public boolean isSent() {
+        return sent;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

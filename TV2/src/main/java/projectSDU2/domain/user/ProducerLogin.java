@@ -77,6 +77,6 @@ public class ProducerLogin extends ParticipantLogin implements ProducerRights{
 
     @Override
     public void createProduction(int productionID, ArrayList<Credit> credits) {
-        Server.getCreditingSystem().addProduction(new Production(productionID, credits));
+        Server.getCreditingSystem().addProduction(new Production(productionID, credits, "testCompany", "testName"));
     }
 }
