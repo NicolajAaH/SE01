@@ -1,7 +1,7 @@
 package projectSDU2.data;
 
-import projectSDU2.domain.initialize.CreditingSystem;
-import projectSDU2.domain.user.SystemAdministratorLogin;
+import projectSDU2.business.domain.initialize.CreditingSystem;
+import projectSDU2.business.domain.user.SystemAdministratorLogin;
 
 import java.io.File;
 import java.io.IOException;
