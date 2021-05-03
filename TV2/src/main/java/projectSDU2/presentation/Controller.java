@@ -8,7 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import projectSDU2.Interfaces.DomainI;
-import projectSDU2.domain.DomainConnect;
+import projectSDU2.business.domain.DomainConnect;
 
 import java.io.IOException;
 

@@ -1,5 +1,7 @@
 package projectSDU2.Interfaces;
 
+import projectSDU2.technicalServices.persistence.PersistenceFacade;
+
 import java.util.ArrayList;
 
 public interface PersistenceI {
@@ -8,5 +10,5 @@ public interface PersistenceI {
 
     String findType(String email);
 
-    ArrayList<String[]> getAccounts();
+    PersistenceFacade getFacade();
 }

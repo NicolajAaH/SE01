@@ -1,12 +1,11 @@
 package projectSDU2.Interfaces;
 
 import javafx.collections.ObservableList;
-import projectSDU2.domain.credit.Credit;
-import projectSDU2.domain.credit.Production;
-import projectSDU2.domain.credit.Roles;
-import projectSDU2.domain.user.Account;
-import projectSDU2.domain.user.Person;
-import projectSDU2.domain.user.Producer;
+import projectSDU2.business.domain.credit.Credit;
+import projectSDU2.business.domain.credit.Production;
+import projectSDU2.business.domain.credit.Roles;
+import projectSDU2.business.domain.user.Person;
+import projectSDU2.business.domain.user.Producer;
 
 import java.util.ArrayList;
 
@@ -17,7 +16,6 @@ public interface DomainI {
 
     String findType(String email);
 
-    Account findAccount(String email);
 
     void runSetup();
 
@@ -40,4 +38,6 @@ public interface DomainI {
     Production createProduction(int id, ObservableList observableList, String name, String company);
 
     Person findPerson(int id);
+
+    Person findPerson(String email);
 }

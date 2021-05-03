@@ -1,4 +1,4 @@
-package projectSDU2.domain.credit;
+package projectSDU2.business.domain.credit;
 
 import java.util.ArrayList;
 
@@ -52,6 +52,15 @@ public class Production {
         sent = false;
     }
 
+    public Production(int productionID, String company, String name, boolean status, boolean sent){
+        this.productionID = productionID;
+        this.credits = new ArrayList<>();
+        this.company = company;
+        this.name = name;
+        this.status = status;
+        this.sent = sent;
+    }
+
     public String getCompany() {
         return company;
     }
@@ -78,6 +87,6 @@ public class Production {
 
     @Override
     public String toString(){
-        return ""+productionID;
+        return ""+productionID + " NAME: " + name;
     }
 }

@@ -1,4 +1,4 @@
-package projectSDU2.domain.email;
+package projectSDU2.business.domain.email;
 
 public class Notification {
     private String message;

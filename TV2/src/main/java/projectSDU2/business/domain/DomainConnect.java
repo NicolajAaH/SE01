@@ -1,14 +1,13 @@
-package projectSDU2.domain;
+package projectSDU2.business.domain;
 
 import javafx.collections.ObservableList;
 import projectSDU2.Interfaces.DomainI;
-import projectSDU2.domain.credit.Credit;
-import projectSDU2.domain.credit.Production;
-import projectSDU2.domain.credit.Roles;
-import projectSDU2.domain.initialize.CreditingSystem;
-import projectSDU2.domain.user.Account;
-import projectSDU2.domain.user.Person;
-import projectSDU2.domain.user.Producer;
+import projectSDU2.business.domain.credit.Credit;
+import projectSDU2.business.domain.credit.Production;
+import projectSDU2.business.domain.credit.Roles;
+import projectSDU2.business.domain.initialize.CreditingSystem;
+import projectSDU2.business.domain.user.Person;
+import projectSDU2.business.domain.user.Producer;
 
 import java.util.ArrayList;
 
@@ -24,11 +23,6 @@ public class DomainConnect implements DomainI {
     @Override
     public String findType(String email) {
         return creditingSystem.findType(email);
-    }
-
-    @Override
-    public Account findAccount(String email) {
-        return creditingSystem.findAccount(email);
     }
 
     @Override
@@ -93,6 +87,11 @@ public class DomainConnect implements DomainI {
     @Override
     public Person findPerson(int id) {
         return creditingSystem.findPerson(id);
+    }
+
+    @Override
+    public Person findPerson(String email) {
+        return creditingSystem.findPerson(email);
     }
 
 

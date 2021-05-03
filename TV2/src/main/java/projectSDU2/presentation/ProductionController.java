@@ -4,9 +4,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import projectSDU2.domain.credit.Roles;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ProductionController extends Controller{
@@ -119,8 +116,12 @@ public class ProductionController extends Controller{
 
     public void finishHandler2(){
         if(descLabelCredit.getText().equals("Add credit")) {
-            getDomainI().findProduction(productionsList.getSelectionModel().getSelectedIndex() + 1)
-                    .addCredit(getDomainI().createCredit(Integer.parseInt(idFieldCredit.getText()), getDomainI().findProducer("producer@test.dk"), rolesList.getItems()));
+            if(getDomainI().findProduction(productionsList.getSelectionModel().getSelectedIndex() + 1) == null){
+                //MANGLER NOGET HER
+            }else {
+                getDomainI().findProduction(productionsList.getSelectionModel().getSelectedIndex() + 1)
+                        .addCredit(getDomainI().createCredit(Integer.parseInt(idFieldCredit.getText()), getDomainI().findProducer("producer@test.dk"), rolesList.getItems()));
+            }
         }else if(descLabelCredit.getText().equals("Edit credit")){
             getDomainI().findProduction(productionsList.getSelectionModel().getSelectedIndex() + 1)
                     .getCredits().get(creditsProductionList.getSelectionModel().getSelectedIndex()).setRoles(rolesList.getItems());

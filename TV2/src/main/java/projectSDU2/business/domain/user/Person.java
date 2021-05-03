@@ -1,10 +1,11 @@
-package projectSDU2.domain.user;
+package projectSDU2.business.domain.user;
 
 public abstract class Person {
     String name;
     int id;
     int phone;
     String email;
+    String password;
 
     public String getName() {
         return name;
@@ -32,5 +33,13 @@ public abstract class Person {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

@@ -1,7 +1,7 @@
-package projectSDU2.domain.report;
+package projectSDU2.business.domain.report;
 
-import projectSDU2.domain.credit.Credit;
-import projectSDU2.domain.user.Person;
+import projectSDU2.business.domain.credit.Credit;
+import projectSDU2.business.domain.user.Person;
 
 import java.util.ArrayList;
 import java.util.HashMap;

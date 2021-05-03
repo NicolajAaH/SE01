@@ -1,7 +1,7 @@
-package projectSDU2.domain.credit;
+package projectSDU2.business.domain.credit;
 
 import javafx.collections.ObservableList;
-import projectSDU2.domain.user.Person;
+import projectSDU2.business.domain.user.Person;
 
 import java.util.ArrayList;
 
@@ -50,6 +50,11 @@ public class Credit {
     }
 
     public String toString(){
-        return ""+creditID;
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("ID: " + creditID + " Roles: ");
+        for (Roles role : roles){
+            stringBuilder.append(role.toString() + "\n");
+        }
+        return stringBuilder.toString();
     }
 }

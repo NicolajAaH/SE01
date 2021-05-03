@@ -1,4 +1,4 @@
-package projectSDU2.domain.initialize;
+package projectSDU2.business.domain.initialize;
 
 public class Server {
     private static CreditingSystem creditingSystem = CreditingSystem.getInstance();

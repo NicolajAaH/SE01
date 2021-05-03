@@ -1,8 +1,6 @@
-package projectSDU2.data;
-
+package projectSDU2.technicalServices;
 import projectSDU2.Interfaces.PersistenceI;
-
-import java.util.ArrayList;
+import projectSDU2.technicalServices.persistence.PersistenceFacade;
 
 public class PersistenceConnect implements PersistenceI {
 
@@ -18,8 +16,8 @@ public class PersistenceConnect implements PersistenceI {
     }
 
     @Override
-    public ArrayList<String[]> getAccounts() {
-        return PersistenceHandler.getAccounts();
+    public PersistenceFacade getFacade() {
+        return PersistenceFacade.getInstance();
     }
 
 

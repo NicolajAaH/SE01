@@ -1,7 +1,12 @@
-package projectSDU2.domain.credit;
+package projectSDU2.business.domain.credit;
 
 public enum Roles {
-    producer, sound, light
+    producer, sound, light, TestRole;
 
     //TODO IMPLEMENTER ROLLERNE
+
+
+    Roles() {
+
+    }
 }

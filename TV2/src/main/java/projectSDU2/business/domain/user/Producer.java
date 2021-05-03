@@ -1,12 +1,11 @@
-package projectSDU2.domain.user;
+package projectSDU2.business.domain.user;
 
-import projectSDU2.domain.credit.Production;
+import projectSDU2.business.domain.credit.Production;
 
 import java.util.ArrayList;
 
 public class Producer extends Person{
     private String company;
-    private ProducerLogin producerLogin = new ProducerLogin(this);
     private ArrayList<Production> productions;
 
     public Producer(String name, int phone, int ID, String email, String company, ArrayList<Production> productions){
@@ -16,6 +15,14 @@ public class Producer extends Person{
         this.email = email;
         this.company = company;
         this.productions = productions;
+    }
+
+    public Producer(String name, int phone, int oid, String email, String company) {
+        this.name = name;
+        this.phone = phone;
+        this.id = oid;
+        this.email = email;
+        this.company = company;
     }
 
     public String getCompany() {
