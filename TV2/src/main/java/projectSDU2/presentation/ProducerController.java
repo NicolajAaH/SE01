@@ -47,9 +47,9 @@ public class ProducerController extends Controller{
 
     @Override
     public void initialize(){
-        Object[] producersString = getDomainI().getProducers().toArray();
-        ObservableList<Object> strings = FXCollections.observableArrayList(Arrays.asList(producersString));
-        producersList.setItems(strings);
+        //Object[] producersString = getDomainI().getProducers().toArray();
+        //ObservableList<Object> strings = FXCollections.observableArrayList(Arrays.asList(producersString));
+        //producersList.setItems(strings);
         addProducerpane.setDisable(true);
         addProducerpane.setVisible(false);
     }
@@ -80,13 +80,12 @@ public class ProducerController extends Controller{
             addProducerpane.setVisible(true);
             addProducerpane.setDisable(false);
             descLabel.setText("Edit producer");
-            nameFieldProducer.setText(getDomainI().findProducer(email).getName());
-            phoneFieldProducer.setText("" + getDomainI().findProducer(email).getPhone());
-            emailFieldProducer.setText(getDomainI().findProducer(email).getEmail());
-            companyFieldProducer.setText(getDomainI().findProducer(email).getCompany());
-            Object[] productionString = getDomainI().findProducer(email).getProductions().toArray();
-            ObservableList<Object> strings = FXCollections.observableArrayList(Arrays.asList(productionString));
-            productionsListProducer.setItems(strings);
+            nameFieldProducer.setText(getDomainI().findPerson(email).getName());
+            phoneFieldProducer.setText("" + getDomainI().findPerson(email).getPhone());
+            emailFieldProducer.setText(getDomainI().findPerson(email).getEmail());
+            //Object[] productionString = getDomainI().findPerson(email).getProductions().toArray();
+            //ObservableList<Object> strings = FXCollections.observableArrayList(Arrays.asList(productionString));
+            //productionsListProducer.setItems(strings);
         }
     }
 

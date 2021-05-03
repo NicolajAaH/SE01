@@ -1,9 +1,7 @@
 package projectSDU2.business.nextGenPersistence;
 
-import projectSDU2.business.domain.user.Participant;
 import projectSDU2.business.domain.user.Person;
-import projectSDU2.business.domain.user.Producer;
-import projectSDU2.business.domain.user.Systemadministrator;
+
 import projectSDU2.technicalServices.PersistenceHandler;
 import projectSDU2.technicalServices.persistence.RDBMapper;
 
@@ -25,18 +23,27 @@ public class PersonMapper extends RDBMapper {
             String email = resultSet.getString("email");
             String password = resultSet.getString("password");
             String type = resultSet.getString("type");
-            if(type.equals("systemadministrator")){
-                return new Systemadministrator(oid, name, phone, email, password);
-            }
-            else if(type.equals("producer")){
-                String company = resultSet.getString("company");
-                return new Producer(name, phone, oid, email, company); //mangler productions
-            }else if(type.equals("participant")){
-                return new Participant(oid, name, phone, email, password);
-            }
+            return new Person(name, oid, phone, email, password, type);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         return null;
     }
-}
+
+    @Override
+    protected void putObject(Object object) {
+        try {
+            Person person = (Person) object;
+            PreparedStatement statement = PersistenceHandler.getInstance().getConnection().prepareStatement("INSERT INTO person(name, phone, email, password, type) VALUES (?,?,?,?,?);");
+            statement.setString(1, person.getName());
+            statement.setInt(2, person.getPhone());
+            statement.setString(3, person.getEmail());
+            statement.setString(4, person.getPassword());
+            statement.setString(5, person.getType());
+            statement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+    }
+

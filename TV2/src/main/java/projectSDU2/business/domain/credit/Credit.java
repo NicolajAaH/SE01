@@ -17,6 +17,11 @@ public class Credit {
         this.roles = roles;
     }
 
+    public Credit(Person person, ArrayList<Roles> roles) {
+        this.person = person;
+        this.roles = roles;
+    }
+
     public void setCreditID(int creditID) {
         this.creditID = creditID;
     }
@@ -51,9 +56,9 @@ public class Credit {
 
     public String toString(){
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("ID: " + creditID + " Roles: ");
+        stringBuilder.append("ID: " + creditID + " Belongs to: " +person.getName()+ " Roles: ");
         for (Roles role : roles){
-            stringBuilder.append(role.toString() + "\n");
+            stringBuilder.append(role.toString() + ", ");
         }
         return stringBuilder.toString();
     }

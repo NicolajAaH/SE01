@@ -52,6 +52,14 @@ public class Production {
         sent = false;
     }
 
+    public Production(ArrayList<Credit> credits, String company, String name){
+        this.credits = credits;
+        this.company = company;
+        this.name = name;
+        status = false;
+        sent = false;
+    }
+
     public Production(int productionID, String company, String name, boolean status, boolean sent){
         this.productionID = productionID;
         this.credits = new ArrayList<>();
@@ -59,6 +67,16 @@ public class Production {
         this.name = name;
         this.status = status;
         this.sent = sent;
+    }
+
+    public Production(int productionID, String company, String name, boolean status, boolean sent, ArrayList<Credit> credits){
+        this.productionID = productionID;
+        this.credits = new ArrayList<>();
+        this.company = company;
+        this.name = name;
+        this.status = status;
+        this.sent = sent;
+        this.credits = credits;
     }
 
     public String getCompany() {
@@ -87,6 +105,13 @@ public class Production {
 
     @Override
     public String toString(){
-        return ""+productionID + " NAME: " + name;
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("ID: "+productionID + " NAME: " + name + " Credits: \n");
+        stringBuilder.append("[");
+        for (Credit credit : credits){
+            stringBuilder.append(credit.toString() + "\n");
+        }
+        stringBuilder.append("]");
+        return stringBuilder.toString();
     }
 }

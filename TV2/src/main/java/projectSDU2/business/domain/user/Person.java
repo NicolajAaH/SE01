@@ -1,11 +1,29 @@
 package projectSDU2.business.domain.user;
 
-public abstract class Person {
+public class Person {
     String name;
     int id;
     int phone;
     String email;
     String password;
+    String type;
+
+    public Person(String name, int id, int phone, String email, String password, String type) {
+        this.name = name;
+        this.id = id;
+        this.phone = phone;
+        this.email = email;
+        this.password = password;
+        this.type = type;
+    }
+
+    public Person(String name, int phone, String email, String password, String type) {
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.password = password;
+        this.type = type;
+    }
 
     public String getName() {
         return name;
@@ -41,5 +59,14 @@ public abstract class Person {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    @Override
+    public String toString(){
+        return "ID: "+id+"\t"+"Name :"+name+"\t"+"Phone: "+phone+"\t"+"Email: "+email+"\t"+"Type: "+type;
     }
 }

@@ -32,5 +32,10 @@ public abstract class RDBMapper extends PersistenceMapper{
         return statement.executeQuery();
     }
 
+    @Override
+    protected void putObjectToStorage(Object object) {
+       putObject(object);
+    }
 
+    protected abstract void putObject(Object object);
 }

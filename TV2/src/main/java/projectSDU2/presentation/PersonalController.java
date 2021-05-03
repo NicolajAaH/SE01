@@ -50,10 +50,10 @@ public class PersonalController extends Controller{
             productionLabel.setVisible(false);
             companyLabel.setVisible(false);
         }else if(type.equals("producer")){
-            companyField.setText(getDomainI().findProducer(email).getEmail());
-            Object[] productionString = getDomainI().findProducer(email).getProductions().toArray();
-            ObservableList<Object> strings = FXCollections.observableArrayList(Arrays.asList(productionString));
-            productionsList.setItems(strings);
+            companyField.setText(getDomainI().findPerson(email).getEmail());
+            //Object[] productionString = getDomainI().findPerson(email).getProductions().toArray();
+            //ObservableList<Object> strings = FXCollections.observableArrayList(Arrays.asList(productionString));
+            //productionsList.setItems(strings);
         }else if(type.equals("systemadministrator")){
             nameField.setDisable(true);
             nameField.setVisible(false);

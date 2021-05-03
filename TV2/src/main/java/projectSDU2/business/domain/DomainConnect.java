@@ -7,7 +7,6 @@ import projectSDU2.business.domain.credit.Production;
 import projectSDU2.business.domain.credit.Roles;
 import projectSDU2.business.domain.initialize.CreditingSystem;
 import projectSDU2.business.domain.user.Person;
-import projectSDU2.business.domain.user.Producer;
 
 import java.util.ArrayList;
 
@@ -27,22 +26,12 @@ public class DomainConnect implements DomainI {
 
     @Override
     public void runSetup() {
-        creditingSystem.setup();
+
     }
 
     @Override
     public void addProducer() {
 
-    }
-
-    @Override
-    public Producer findProducer(String email) {
-        return (Producer) creditingSystem.findPerson(email);
-    }
-
-    @Override
-    public ArrayList<Producer> getProducers() {
-        return creditingSystem.getProducers();
     }
 
     @Override

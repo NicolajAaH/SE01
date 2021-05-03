@@ -120,7 +120,7 @@ public class ProductionController extends Controller{
                 //MANGLER NOGET HER
             }else {
                 getDomainI().findProduction(productionsList.getSelectionModel().getSelectedIndex() + 1)
-                        .addCredit(getDomainI().createCredit(Integer.parseInt(idFieldCredit.getText()), getDomainI().findProducer("producer@test.dk"), rolesList.getItems()));
+                        .addCredit(getDomainI().createCredit(Integer.parseInt(idFieldCredit.getText()), getDomainI().findPerson("producer@test.dk"), rolesList.getItems()));
             }
         }else if(descLabelCredit.getText().equals("Edit credit")){
             getDomainI().findProduction(productionsList.getSelectionModel().getSelectedIndex() + 1)

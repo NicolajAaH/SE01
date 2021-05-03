@@ -14,7 +14,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CreditMapper extends RDBMapper {
-    private CreditingSystem creditingSystem = CreditingSystem.getInstance();
     public CreditMapper(String tableName) {
         super(tableName);
     }
@@ -30,11 +29,16 @@ public class CreditMapper extends RDBMapper {
             while(resultSetRoles.next()){
                 roles.add(Roles.valueOf(resultSetRoles.getString("role")));
             }
-            Person person = creditingSystem.findPerson(resultSet.getInt("personID"));
+            Person person = (Person) PersistenceFacade.getInstance().get(resultSet.getInt("personid"), "personmapper");
             return new Credit(oid, person, roles);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    protected void putObject(Object object) {
+
     }
 }

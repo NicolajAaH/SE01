@@ -12,7 +12,11 @@ public abstract class PersistenceMapper implements IMapper{
     }
 
     @Override
-    public void put(int oid, Object object) {
+    public void put(Object object) {
+        putObjectToStorage(object);
+    }
+
+    protected void putObjectToStorage(Object object) {
 
     }
 }

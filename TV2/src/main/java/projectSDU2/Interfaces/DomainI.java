@@ -5,7 +5,6 @@ import projectSDU2.business.domain.credit.Credit;
 import projectSDU2.business.domain.credit.Production;
 import projectSDU2.business.domain.credit.Roles;
 import projectSDU2.business.domain.user.Person;
-import projectSDU2.business.domain.user.Producer;
 
 import java.util.ArrayList;
 
@@ -20,10 +19,6 @@ public interface DomainI {
     void runSetup();
 
     void addProducer();
-
-    Producer findProducer(String email);
-
-    ArrayList<Producer> getProducers();
 
     ArrayList<Production> getProductions();
 

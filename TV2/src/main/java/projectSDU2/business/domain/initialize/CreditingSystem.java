@@ -30,11 +30,6 @@ public class CreditingSystem {
     private ArrayList<Production> productions = new ArrayList<>();
     private ArrayList<Person> persons = new ArrayList<>();
 
-    public void setup(){
-        //test participant
-        persons.add(new Participant("testny", 12345678, "testny@asd.dk"));
-        productions.add(new Production(1, new ArrayList<>(), "Company", "Name"));
-    }
 
     public void addPerson(Person person){
         persons.add(person);
@@ -82,15 +77,6 @@ public class CreditingSystem {
         productions.remove(findProduction(productionID));
     }
 
-    public ArrayList<Producer> getProducers() {
-        ArrayList<Producer> producers = new ArrayList<>();
-        persons.forEach(person -> {
-            if(person instanceof Producer){
-                producers.add((Producer) person);
-            }
-        });
-        return producers;
-    }
 
     public Roles[] getRoles(){
         Roles[] roles = Roles.values();
