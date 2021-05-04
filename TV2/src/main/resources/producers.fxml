@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectSDU2.presentation.ProducerController">
+   <children>
+      <Button fx:id="signout" layoutX="931.0" layoutY="14.0" mnemonicParsing="false" onAction="#signoutHandler" text="Sign out" />
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#backHandler" text="Back" />
+      <ListView fx:id="producersList" layoutX="42.0" layoutY="91.0" prefHeight="466.0" prefWidth="693.0" />
+      <Label layoutX="42.0" layoutY="68.0" text="Producers" />
+      <Button fx:id="addProducerButton" layoutX="766.0" layoutY="91.0" mnemonicParsing="false" onAction="#addProducerHandler" prefHeight="27.0" prefWidth="106.0" text="Add producer" />
+      <Button fx:id="deleteProducerButton" layoutX="766.0" layoutY="145.0" mnemonicParsing="false" text="Delete producer" />
+      <Button fx:id="editProducerButton" layoutX="766.0" layoutY="200.0" mnemonicParsing="false" onAction="#editProducerHandler" prefHeight="27.0" prefWidth="106.0" text="Edit producer" />
+      <Label fx:id="producersLabelStatus" layoutX="449.0" layoutY="248.0" prefHeight="115.0" prefWidth="136.0" />
+      <DialogPane fx:id="addProducerpane" layoutY="-1.0" prefHeight="600.0" prefWidth="1000.0">
+         <content>
+            <AnchorPane prefHeight="600.0" prefWidth="1000.0">
+               <children>
+                  <Label fx:id="descLabel" layoutX="467.0" layoutY="14.0" text="Add producer" />
+                  <Label layoutX="120.0" layoutY="110.0" text="Name:" />
+                  <Label layoutX="121.0" layoutY="210.0" text="Phone:" />
+                  <Label layoutX="122.0" layoutY="310.0" text="Email:" />
+                  <TextField fx:id="nameFieldProducer" layoutX="175.0" layoutY="105.0" />
+                  <TextField fx:id="phoneFieldProducer" layoutX="175.0" layoutY="205.0" />
+                  <TextField fx:id="emailFieldProducer" layoutX="173.0" layoutY="305.0" />
+                  <Label layoutX="519.0" layoutY="53.0" text="Productions:" />
+                  <ListView fx:id="productionsListProducer" layoutX="519.0" layoutY="82.0" prefHeight="483.0" prefWidth="446.0" />
+                  <Label layoutX="108.0" layoutY="410.0" text="Production:" />
+                  <TextField fx:id="productionFieldProducer" layoutX="175.0" layoutY="405.0" />
+                  <Button fx:id="productionButton" layoutX="202.0" layoutY="470.0" mnemonicParsing="false" text="Add production" />
+                  <Button fx:id="finishButton" layoutX="935.0" layoutY="9.0" mnemonicParsing="false" onAction="#finishHandler" text="Finish" />
+                  <Button fx:id="cancelButton" layoutX="10.0" layoutY="9.0" mnemonicParsing="false" onAction="#cancelHandler" text="Cancel" />
+                  <Button fx:id="deleteProd" layoutX="616.0" layoutY="48.0" mnemonicParsing="false" text="Delete production" />
+               </children>
+            </AnchorPane>
+         </content>
+      </DialogPane>
+   </children>
+</AnchorPane>

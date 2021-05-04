@@ -1,0 +1,4 @@
+email,password,type
+admin@test.dk,admin123,systemadministrator
+producer@test.dk,producer123,producer
+participant@test.dk,participant123,participant
