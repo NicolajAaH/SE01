@@ -10,9 +10,9 @@ import java.util.ArrayList;
 
 public class CreditingSystem {
     //singleton pattern
+    private static PersistenceI persistenceI = new PersistenceConnect();
     private static CreditingSystem instance = new CreditingSystem();
 
-    private static PersistenceI persistenceI = new PersistenceConnect();
 
 
     public static PersistenceI getPersistenceI() {
@@ -20,16 +20,38 @@ public class CreditingSystem {
     }
 
     private CreditingSystem(){
+        setup();
+    }
 
+    public void setup(){
+        productions = new ArrayList<>();
+        for (Object production : persistenceI.getFacade().getAll("productionmapper")){
+            productions.add((Production) production);
+        }
+
+        persons = new ArrayList<>();
+        for (Object person : persistenceI.getFacade().getAll("personmapper")){
+            persons.add((Person) person);
+        }
+
+        rolesdb = new ArrayList<>();
+        for (Object role : persistenceI.getFacade().getAll("rolemapper")){
+            rolesdb.add((Roles) role);
+        }
+        
     }
 
     public static CreditingSystem getInstance() {
         return instance;
     }
 
-    private ArrayList<Production> productions = new ArrayList<>();
-    private ArrayList<Person> persons = new ArrayList<>();
+    private ArrayList<Production> productions;
+    private ArrayList<Person> persons;
+    private ArrayList<Roles> rolesdb;
 
+    public ArrayList<Roles> getRolesdb() {
+        return rolesdb;
+    }
 
     public void addPerson(Person person){
         persons.add(person);

@@ -8,6 +8,7 @@ import projectSDU2.technicalServices.persistence.RDBMapper;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class PersonMapper extends RDBMapper {
     public PersonMapper(String tableName) {
@@ -45,5 +46,24 @@ public class PersonMapper extends RDBMapper {
             throwables.printStackTrace();
         }
     }
+
+    @Override
+    protected ArrayList<Object> getObjectsFromRecord(ResultSet resultSet) {
+        ArrayList<Object> persons = new ArrayList<>();
+        try {
+            while (resultSet.next()) {
+                int oid = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                int phone = resultSet.getInt("phone");
+                String email = resultSet.getString("email");
+                String password = resultSet.getString("password");
+                String type = resultSet.getString("type");
+                persons.add(new Person(name, oid, phone, email, password, type));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return persons;
     }
+}
 

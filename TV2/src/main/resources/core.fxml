@@ -3,12 +3,12 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectSDU2.presentation.CoreController">
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectSDU2.presentation.CoreController">
    <children>
-      <Button fx:id="personal" layoutX="218.0" layoutY="80.0" mnemonicParsing="false" text="Edit personal information" onAction="#personalHandler"/>
-      <Button fx:id="participants" layoutX="218.0" layoutY="140.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="153.0" text="Participants" />
-      <Button fx:id="productions" layoutX="218.0" layoutY="200.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="153.0" text="Productions" onAction="#productionsHandler"/>
-      <Button fx:id="producers" layoutX="218.0" layoutY="260.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="153.0" text="Producers" onAction="#producersHandler"/>
-      <Button fx:id="signout" layoutX="531.0" layoutY="14.0" mnemonicParsing="false" onAction="#signoutHandler" text="Sign out" />
+      <Button fx:id="personal" layoutX="424.0" layoutY="150.0" mnemonicParsing="false" onAction="#personalHandler" prefHeight="50.0" prefWidth="153.0" text="Edit personal information" />
+      <Button fx:id="participants" layoutX="424.0" layoutY="350.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="153.0" text="Participants" />
+      <Button fx:id="productions" layoutX="424.0" layoutY="450.0" mnemonicParsing="false" onAction="#productionsHandler" prefHeight="50.0" prefWidth="153.0" text="Productions" />
+      <Button fx:id="producers" layoutX="424.0" layoutY="250.0" mnemonicParsing="false" onAction="#producersHandler" prefHeight="50.0" prefWidth="153.0" text="Producers" />
+      <Button fx:id="signout" layoutX="923.0" layoutY="14.0" mnemonicParsing="false" onAction="#signoutHandler" text="Sign out" />
    </children>
 </AnchorPane>

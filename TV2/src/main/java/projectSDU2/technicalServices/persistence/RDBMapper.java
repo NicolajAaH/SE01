@@ -5,6 +5,7 @@ import projectSDU2.technicalServices.PersistenceHandler;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public abstract class RDBMapper extends PersistenceMapper{
     private String tableName;
@@ -38,4 +39,22 @@ public abstract class RDBMapper extends PersistenceMapper{
     }
 
     protected abstract void putObject(Object object);
+
+    @Override
+    protected ArrayList<Object> getAllFromStorage() {
+        try {
+            ResultSet resultSet = getResultSetAll();
+            return getObjectsFromRecord(resultSet);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+    private ResultSet getResultSetAll() throws SQLException {
+        PreparedStatement statement = PersistenceHandler.getInstance().getConnection().prepareStatement("SELECT * FROM " +tableName+ ";");
+        return statement.executeQuery();
+    }
+
+    protected abstract ArrayList<Object> getObjectsFromRecord(ResultSet resultSet);
 }

@@ -2,6 +2,8 @@ package projectSDU2.technicalServices;
 import projectSDU2.Interfaces.PersistenceI;
 import projectSDU2.technicalServices.persistence.PersistenceFacade;
 
+import java.util.ArrayList;
+
 public class PersistenceConnect implements PersistenceI {
 
 
@@ -19,6 +21,8 @@ public class PersistenceConnect implements PersistenceI {
     public PersistenceFacade getFacade() {
         return PersistenceFacade.getInstance();
     }
+
+
 
 
 }

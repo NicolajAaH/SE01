@@ -41,4 +41,26 @@ public class CreditMapper extends RDBMapper {
     protected void putObject(Object object) {
 
     }
+
+    @Override
+    protected ArrayList<Object> getObjectsFromRecord(ResultSet resultSet) {
+        ArrayList<Object> credits = new ArrayList<>();
+        try {
+            while (resultSet.next()) {
+                ArrayList<Roles> roles = new ArrayList<>();
+                int oid = resultSet.getInt("id");
+                PreparedStatement statement = PersistenceHandler.getInstance().getConnection().prepareStatement("SELECT * FROM " + "CreditRoles, Roles" + " WHERE CreditID = ? AND RoleID = Roles.id;");
+                statement.setInt(1, oid);
+                ResultSet resultSetRoles = statement.executeQuery();
+                while(resultSetRoles.next()){
+                    roles.add(Roles.valueOf(resultSetRoles.getString("role")));
+                }
+                Person person = (Person) PersistenceFacade.getInstance().get(resultSet.getInt("personid"), "personmapper");
+                credits.add(new Credit(oid, person, roles));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return credits;
+    }
 }

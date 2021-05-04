@@ -7,6 +7,7 @@ import projectSDU2.technicalServices.persistence.RDBMapper;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class RoleMapper extends RDBMapper {
     public RoleMapper(String tableName) {
@@ -35,5 +36,19 @@ public class RoleMapper extends RDBMapper {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+    }
+
+    @Override
+    protected ArrayList<Object> getObjectsFromRecord(ResultSet resultSet) {
+        ArrayList<Object> roles = new ArrayList<>();
+        try {
+            while (resultSet.next()) {
+                Roles role = Roles.valueOf((String) resultSet.getObject("role"));
+                roles.add(role);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return roles;
     }
 }

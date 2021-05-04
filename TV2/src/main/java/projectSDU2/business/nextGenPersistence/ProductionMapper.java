@@ -49,8 +49,8 @@ public class ProductionMapper extends RDBMapper {
             PreparedStatement statement = PersistenceHandler.getInstance().getConnection().prepareStatement("INSERT INTO production(status, sent, company, name) VALUES (?,?,?,?);");
             statement.setBoolean(1, false);
             statement.setBoolean(2, false);
-            statement.setString(3, "TestCompany");
-            statement.setString(4, "Nametest");
+            statement.setString(3, production.getCompany());
+            statement.setString(4, production.getName());
             statement.execute();
 
             PreparedStatement statementForID = PersistenceHandler.getInstance().getConnection().prepareStatement("SELECT id FROM production;");
@@ -86,5 +86,30 @@ public class ProductionMapper extends RDBMapper {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+    }
+
+    @Override
+    protected ArrayList<Object> getObjectsFromRecord(ResultSet resultSet) {
+        ArrayList<Object> productions = new ArrayList<>();
+        try {
+            while (resultSet.next()) {
+                int oid = resultSet.getInt("id");
+                ArrayList<Credit> credits = new ArrayList<>();
+                PreparedStatement statement = PersistenceHandler.getInstance().getConnection().prepareStatement("SELECT * FROM " + "credit" + " WHERE productionID = ?;");
+                statement.setInt(1, oid);
+                ResultSet resultSetCredits = statement.executeQuery();
+                while(resultSetCredits.next()){
+                    credits.add((Credit) PersistenceFacade.getInstance().get(resultSetCredits.getInt("id"), "creditmapper"));
+                }
+                String company = resultSet.getString("company");
+                String name = resultSet.getString("name");
+                boolean sent = resultSet.getBoolean("sent");
+                boolean status = resultSet.getBoolean("status");
+                productions.add(new Production(oid, company, name, status, sent, credits));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return productions;
     }
 }

@@ -33,11 +33,16 @@ public class PersistenceFacade {
         return mapper.get(oid);
     }
 
+    public ArrayList<Object> getAll(String persClass){
+        IMapper mapper = imapperMap.get(persClass);
+        return mapper.getAll();
+    }
+
     public void put(Object object, String persClass){
         IMapper mapper = imapperMap.get(persClass);
         mapper.put(object);
     }
-
+    //slet hele main!!
     public static void main(String[] args) {
         //System.out.println(instance.get(1, "personmapper"));
         //System.out.println(instance.get(1, "productionmapper"));
@@ -53,6 +58,19 @@ public class PersistenceFacade {
         credits.add(new Credit(person, roles));
         Production production = new Production(credits, "companynyy", "navnny");
         instance.put(production, "productionmapper");*/
-        System.out.println(instance.get(13, "productionmapper"));
+        //System.out.println(instance.get(13, "productionmapper"));
+        /*for (Object person : instance.getAll("personmapper")){
+            System.out.println(person.toString());
+        }*/
+
+        /*for (Object credit : instance.getAll("creditmapper")){
+            System.out.println(credit.toString());
+        }*/
+        /*for (Object production : instance.getAll("productionmapper")){
+            System.out.println(production.toString());
+        }*/
+        /*for (Object role : instance.getAll("rolemapper")){
+            System.out.println(role.toString());
+        }*/
     }
 }

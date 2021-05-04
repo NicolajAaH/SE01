@@ -11,4 +11,5 @@ public interface PersistenceI {
     String findType(String email);
 
     PersistenceFacade getFacade();
+
 }
