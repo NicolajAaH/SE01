@@ -1,12 +1,12 @@
 package projectSDU2.business.domain.user;
 
 public class Person {
-    String name;
     int id;
+    String name;
     int phone;
     String email;
-    String password;
-    String type;
+    transient String password;
+    transient String type;
 
     public Person(String name, int id, int phone, String email, String password, String type) {
         this.name = name;
@@ -66,7 +66,7 @@ public class Person {
     }
 
     @Override
-    public String toString(){
-        return "ID: "+id+"\t"+"Name :"+name+"\t"+"Phone: "+phone+"\t"+"Email: "+email+"\t"+"Type: "+type;
+    public String toString() {
+        return "ID: " + id + "\t" + "Name :" + name + "\t" + "Phone: " + phone + "\t" + "Email: " + email + "\t" + "Type: " + type;
     }
 }
