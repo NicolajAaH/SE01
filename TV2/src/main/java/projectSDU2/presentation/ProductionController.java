@@ -9,6 +9,10 @@ import java.util.Arrays;
 public class ProductionController extends Controller{
 
     @FXML
+    private TextField searchField;
+    @FXML
+    private Button searchButton;
+    @FXML
     private ChoiceBox rolesMenu;
     @FXML
     private TextField idFieldProduction;
@@ -226,6 +230,8 @@ public class ProductionController extends Controller{
         }
     }
 
-
+    public void searchHandler(){
+        productionsList.setItems(FXCollections.observableArrayList(getDomainI().searchProductions(searchField.getText())));
+    }
 
 }
