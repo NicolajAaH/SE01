@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -14,14 +13,10 @@
       <Label fx:id="nameLabel" layoutX="120.0" layoutY="208.0" text="Name:" />
       <Label fx:id="phoneLabel" layoutX="119.0" layoutY="260.0" text="Phone:" />
       <Label layoutX="121.0" layoutY="93.0" text="Email:" />
-      <Label fx:id="companyLabel" layoutX="119.0" layoutY="314.0" text="Company:" />
-      <Label fx:id="productionLabel" layoutX="538.0" layoutY="64.0" text="Productions:" />
       <TextField fx:id="nameField" layoutX="188.0" layoutY="203.0" />
       <TextField fx:id="phoneField" layoutX="188.0" layoutY="255.0" />
       <TextField fx:id="emailField" layoutX="187.0" layoutY="88.0" />
-      <TextField fx:id="companyField" layoutX="188.0" layoutY="309.0" />
-      <ListView fx:id="productionsList" layoutX="538.0" layoutY="88.0" prefHeight="475.0" prefWidth="423.0" />
-      <Button fx:id="updateButton" layoutX="111.0" layoutY="377.0" mnemonicParsing="false" text="Update information" />
+      <Button fx:id="updateButton" layoutX="111.0" layoutY="377.0" mnemonicParsing="false" text="Update information" onAction="#updateHandler"/>
       <Label fx:id="updateLabel" layoutX="275.0" layoutY="321.0" prefHeight="27.0" prefWidth="279.0" wrapText="true" />
       <Label layoutX="119.0" layoutY="152.0" text="Password:" />
       <PasswordField fx:id="password" layoutX="188.0" layoutY="147.0" />

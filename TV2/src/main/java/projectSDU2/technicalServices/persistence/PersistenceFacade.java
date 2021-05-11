@@ -9,7 +9,6 @@ import projectSDU2.business.nextGenPersistence.PersonMapper;
 import projectSDU2.business.nextGenPersistence.ProductionMapper;
 import projectSDU2.business.nextGenPersistence.RoleMapper;
 import projectSDU2.technicalServices.PersistenceHandler;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -42,6 +41,21 @@ public class PersistenceFacade {
         IMapper mapper = imapperMap.get(persClass);
         mapper.put(object);
     }
+
+    public void delete(int oid, String persClass){
+        IMapper mapper = imapperMap.get(persClass);
+        mapper.delete(oid);
+    }
+
+    public void edit(int oid, Object object, String persClass){
+        IMapper mapper = imapperMap.get(persClass);
+        mapper.edit(oid, object);
+    }
+
+    public int getNextInt(String persClass){
+        IMapper mapper = imapperMap.get(persClass);
+        return mapper.getNextInt();
+    }
     //slet hele main!!
     public static void main(String[] args) {
         //System.out.println(instance.get(1, "personmapper"));
@@ -72,5 +86,6 @@ public class PersistenceFacade {
         /*for (Object role : instance.getAll("rolemapper")){
             System.out.println(role.toString());
         }*/
+        //instance.put(new Person("adminname",12332111, "admin@test.dk", "adminpass", "systemadministrator"), "personmapper");
     }
 }

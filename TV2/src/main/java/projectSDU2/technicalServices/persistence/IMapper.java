@@ -9,4 +9,10 @@ public interface IMapper {
     void put(Object object);
 
     ArrayList<Object> getAll();
+
+    void delete(int oid);
+
+    void edit(int oid, Object object);
+
+    int getNextInt();
 }

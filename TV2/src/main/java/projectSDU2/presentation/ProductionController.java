@@ -74,19 +74,18 @@ public class ProductionController extends Controller{
     private Button finishButton;
 
     ObservableList<Object> roles = FXCollections.observableArrayList();
+    ObservableList<Object> credits = FXCollections.observableArrayList();
 
     @Override
     public void initialize(){
-        Object[] producersString = getDomainI().getProductions().toArray();
-        ObservableList<Object> strings = FXCollections.observableArrayList(Arrays.asList(producersString));
-        productionsList.setItems(strings);
+        productionsList.setItems(FXCollections.observableArrayList(getDomainI().getProductions()));
         addProductionpane.setDisable(true);
         addProductionpane.setVisible(false);
         addCreditProduction.setDisable(true);
         addCreditProduction.setVisible(false);
 
-        for (int i = 0; i < getDomainI().getRoles().length; i++) {
-            rolesMenu.getItems().add(getDomainI().getRoles()[i]);
+        for (int i = 0; i < getDomainI().getRoles().size(); i++) {
+            rolesMenu.getItems().add(getDomainI().getRoles().get(i));
         }
     }
 
@@ -96,16 +95,16 @@ public class ProductionController extends Controller{
         addProductionpane.setVisible(false);
     }
 
-    public void finishHandler1(){ //TODO MANGLER ALLE SET
+    public void finishHandler1(){
         if(descLabel.getText().equals("Add production")){
-            getDomainI().getProductions().add(getDomainI().createProduction(Integer.parseInt(idFieldProduction.getText()), creditsProductionList.getItems(), nameFieldProduction.getText(), companyFieldProduction.getText()));
+            getDomainI().addProduction(creditsProductionList.getItems(), nameFieldProduction.getText(), companyFieldProduction.getText());
+        }else{
+            //edit
+            getDomainI().editProduction(getDomainI().castToProduction(productionsList.getSelectionModel().getSelectedItem()).getProductionID(), nameFieldProduction.getText(),
+                    companyFieldProduction.getText(), credits, validatedProduction.isSelected(), sentProduction.isSelected());
         }
 
-        Object[] producersString = getDomainI().getProductions().toArray();
-        ObservableList<Object> strings = FXCollections.observableArrayList(Arrays.asList(producersString));
-        productionsList.setItems(strings);
-        addProductionpane.setDisable(true);
-        addProductionpane.setVisible(false);
+        initialize();
     }
 
     public void cancelHandler2(){
@@ -116,28 +115,17 @@ public class ProductionController extends Controller{
 
     public void finishHandler2(){
         if(descLabelCredit.getText().equals("Add credit")) {
-            if(getDomainI().findProduction(productionsList.getSelectionModel().getSelectedIndex() + 1) == null){
-                //MANGLER NOGET HER
-            }else {
-                getDomainI().findProduction(productionsList.getSelectionModel().getSelectedIndex() + 1)
-                        .addCredit(getDomainI().createCredit(Integer.parseInt(idFieldCredit.getText()), getDomainI().findPerson("producer@test.dk"), rolesList.getItems()));
-            }
+            credits.add(getDomainI().createCredit(Integer.parseInt(idFieldCreditPerson.getText()), roles));
         }else if(descLabelCredit.getText().equals("Edit credit")){
-            getDomainI().findProduction(productionsList.getSelectionModel().getSelectedIndex() + 1)
-                    .getCredits().get(creditsProductionList.getSelectionModel().getSelectedIndex()).setRoles(rolesList.getItems());
-            getDomainI().findProduction(productionsList.getSelectionModel().getSelectedIndex() + 1)
-                    .getCredits().get(creditsProductionList.getSelectionModel().getSelectedIndex()).setPerson(getDomainI().findPerson(Integer.parseInt(idFieldCreditPerson.getText())));
-            //GEMMER IKKE ORDENTLIGT!
+            //edit
+            credits.add(getDomainI().createCredit(Integer.parseInt(idFieldCreditPerson.getText()), roles));
+            //getDomainI().editCredit(getDomainI().castToProduction(productionsList.getSelectionModel().getSelectedItem()).getProductionID(),
+              //      Integer.parseInt(idFieldCreditPerson.getText()), roles);
         }
-        Object[] creditsString = getDomainI().findProduction(Integer.parseInt(idFieldProduction.getText())).getCredits().toArray();
-        ObservableList<Object> strings = FXCollections.observableArrayList(Arrays.asList(creditsString));
-        creditsProductionList.setItems(strings);
+
+        creditsProductionList.setItems(credits);
         addCreditProduction.setDisable(true);
         addCreditProduction.setVisible(false);
-
-        //GØR NOGET FØRST.
-        //resetFields();
-        //fix at man skal kunne tilføje produktion med krediteringer!!
     }
 
     public void addProductionHandler(){
@@ -155,6 +143,7 @@ public class ProductionController extends Controller{
         descLabelCredit.setText("Add credit");
         roles.removeAll(roles);
         idFieldCredit.setText("");
+        idFieldCreditPerson.setText("");
         nameFieldPerson.setText("");
         phoneFieldPerson.setText("");
         emailFieldPerson.setText("");
@@ -162,18 +151,16 @@ public class ProductionController extends Controller{
         addCreditProduction.setVisible(true);
     }
 
-    public void editProductionHandler(){
+    public void editProductionHandler(){ //TODO
         if(productionsList.getSelectionModel().getSelectedItem() == null){
             productionsLabelStatus.setText("Select producer");
         }else {
             descLabel.setText("Edit production");
             productionsLabelStatus.setText("");
-            String selected = productionsList.getSelectionModel().getSelectedItem().toString();
-            //String[] split = selected.split("\t");
-            int id = Integer.parseInt(selected); //FIX TAL!!
+            credits.removeAll(credits);
+            int id = getDomainI().castToProduction(productionsList.getSelectionModel().getSelectedItem()).getProductionID();
             addProductionpane.setVisible(true);
             addProductionpane.setDisable(false);
-            descLabel.setText("Edit production");
             idFieldProduction.setText(""+getDomainI().findProduction(id).getProductionID());
             nameFieldProduction.setText(""+getDomainI().findProduction(id).getName());
             companyFieldProduction.setText(""+getDomainI().findProduction(id).getCompany());
@@ -182,6 +169,9 @@ public class ProductionController extends Controller{
             Object[] creditsString = getDomainI().findProduction(id).getCredits().toArray();
             ObservableList<Object> strings = FXCollections.observableArrayList(Arrays.asList(creditsString));
             creditsProductionList.setItems(strings);
+            for (Object object : creditsString){
+                credits.add(getDomainI().castToCredit(object));
+            }
         }
     }
 
@@ -190,11 +180,8 @@ public class ProductionController extends Controller{
             productionsLabelStatus.setText("Select production");
         }else {
             productionsLabelStatus.setText("");
-            int selected = productionsList.getSelectionModel().getSelectedIndex()+1;
-            getDomainI().getProductions().remove(getDomainI().findProduction(selected));
-            Object[] productionsString = getDomainI().getProductions().toArray();
-            ObservableList<Object> strings = FXCollections.observableArrayList(Arrays.asList(productionsString));
-            productionsList.setItems(strings);
+            getDomainI().deleteProduction(getDomainI().castToProduction(productionsList.getSelectionModel().getSelectedItem()).getProductionID());
+            productionsList.setItems(FXCollections.observableArrayList(getDomainI().getProductions()));
         }
     }
 
@@ -206,37 +193,35 @@ public class ProductionController extends Controller{
     }
 
     public void deleteRoleHandler(){
-        if(roles.contains(getDomainI().findRole(rolesMenu.getSelectionModel().getSelectedItem().toString()))) {
-            roles.remove(rolesMenu.getSelectionModel().getSelectedIndex() - 1);
+        if(roles.contains(getDomainI().findRole(rolesList.getSelectionModel().getSelectedItem().toString()))) {
+            roles.remove(rolesList.getSelectionModel().getSelectedIndex());
             rolesList.setItems(roles);
         }
     }
 
     public void deleteCreditHandler(){
         if(productionsList.getSelectionModel().getSelectedItem() != null){
-            getDomainI().findProduction(productionsList.getSelectionModel().getSelectedIndex()+1).getCredits()
-                    .remove(getDomainI().findProduction(productionsList.getSelectionModel().getSelectedIndex()+1).
-                            findCredit(creditsProductionList.getSelectionModel().getSelectedIndex()+1));
-            Object[] creditsString = getDomainI().findProduction(Integer.parseInt(idFieldProduction.getText())).getCredits().toArray();
+            getDomainI().deleteCredit(getDomainI().castToCredit(creditsProductionList.getSelectionModel().getSelectedItem()).getCreditID());
+            Object[] creditsString = getDomainI().castToProduction(productionsList.getSelectionModel().getSelectedItem()).getCredits().toArray();
             ObservableList<Object> strings = FXCollections.observableArrayList(Arrays.asList(creditsString));
             creditsProductionList.setItems(strings);
         }
     }
 
-    public void editCreditHandler(){ //LIGE NU GEMMER DEN IKKE ÆNDRINGER I ROLES I EN CREDIT
+    public void editCreditHandler(){
         if(creditsProductionList.getSelectionModel().getSelectedItem() == null){
             productionsLabelStatus.setText("Select credit");
         }else{
             descLabelCredit.setText("Edit credit");
             addCreditProduction.setDisable(false);
             addCreditProduction.setVisible(true);
-            idFieldCredit.setText(""+getDomainI().findProduction(productionsList.getSelectionModel().getSelectedIndex()+1).findCredit(creditsProductionList.getSelectionModel().getSelectedIndex()+1).getCreditID());
-            idFieldCreditPerson.setText(""+getDomainI().findProduction(productionsList.getSelectionModel().getSelectedIndex()+1).findCredit(creditsProductionList.getSelectionModel().getSelectedIndex()+1).getPerson().getId());
-            nameFieldPerson.setText(""+getDomainI().findProduction(productionsList.getSelectionModel().getSelectedIndex()+1).findCredit(creditsProductionList.getSelectionModel().getSelectedIndex()+1).getPerson().getName());
-            phoneFieldPerson.setText(""+getDomainI().findProduction(productionsList.getSelectionModel().getSelectedIndex()+1).findCredit(creditsProductionList.getSelectionModel().getSelectedIndex()+1).getPerson().getPhone());
-            emailFieldPerson.setText(""+getDomainI().findProduction(productionsList.getSelectionModel().getSelectedIndex()+1).findCredit(creditsProductionList.getSelectionModel().getSelectedIndex()+1).getPerson().getEmail());
+            idFieldCredit.setText(""+getDomainI().castToCredit(creditsProductionList.getSelectionModel().getSelectedItem()).getCreditID());
+            idFieldCreditPerson.setText(""+getDomainI().castToCredit(creditsProductionList.getSelectionModel().getSelectedItem()).getPerson().getId());
+            nameFieldPerson.setText(getDomainI().castToCredit(creditsProductionList.getSelectionModel().getSelectedItem()).getPerson().getName());
+            phoneFieldPerson.setText(""+getDomainI().castToCredit(creditsProductionList.getSelectionModel().getSelectedItem()).getPerson().getPhone());
+            emailFieldPerson.setText(getDomainI().castToCredit(creditsProductionList.getSelectionModel().getSelectedItem()).getPerson().getEmail());
             roles.removeAll(roles); //Reset listen
-            roles.addAll(getDomainI().findProduction(productionsList.getSelectionModel().getSelectedIndex()+1).findCredit(creditsProductionList.getSelectionModel().getSelectedIndex()+1).getRoles());
+            roles.addAll(getDomainI().castToCredit(creditsProductionList.getSelectionModel().getSelectedItem()).getRoles());
             rolesList.setItems(roles);
         }
     }

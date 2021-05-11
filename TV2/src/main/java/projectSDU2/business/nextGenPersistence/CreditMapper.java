@@ -1,6 +1,7 @@
 package projectSDU2.business.nextGenPersistence;
 
 import projectSDU2.business.domain.credit.Credit;
+import projectSDU2.business.domain.credit.Production;
 import projectSDU2.business.domain.credit.Roles;
 import projectSDU2.business.domain.initialize.CreditingSystem;
 import projectSDU2.business.domain.user.Person;
@@ -26,20 +27,18 @@ public class CreditMapper extends RDBMapper {
             PreparedStatement statement = PersistenceHandler.getInstance().getConnection().prepareStatement("SELECT * FROM " + "CreditRoles, Roles" + " WHERE CreditID = ? AND RoleID = Roles.id;");
             statement.setInt(1, oid);
             ResultSet resultSetRoles = statement.executeQuery();
-            while(resultSetRoles.next()){
+            while (resultSetRoles.next()) {
                 roles.add(Roles.valueOf(resultSetRoles.getString("role")));
             }
             Person person = (Person) PersistenceFacade.getInstance().get(resultSet.getInt("personid"), "personmapper");
             return new Credit(oid, person, roles);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
         }
         return null;
-    }
+    }//tjek redigering
 
     @Override
     protected void putObject(Object object) {
-
     }
 
     @Override
@@ -52,7 +51,7 @@ public class CreditMapper extends RDBMapper {
                 PreparedStatement statement = PersistenceHandler.getInstance().getConnection().prepareStatement("SELECT * FROM " + "CreditRoles, Roles" + " WHERE CreditID = ? AND RoleID = Roles.id;");
                 statement.setInt(1, oid);
                 ResultSet resultSetRoles = statement.executeQuery();
-                while(resultSetRoles.next()){
+                while (resultSetRoles.next()) {
                     roles.add(Roles.valueOf(resultSetRoles.getString("role")));
                 }
                 Person person = (Person) PersistenceFacade.getInstance().get(resultSet.getInt("personid"), "personmapper");
@@ -62,5 +61,77 @@ public class CreditMapper extends RDBMapper {
             throwables.printStackTrace();
         }
         return credits;
+    }
+
+    @Override
+    protected void deleteObject(int oid) {
+        try {
+            PreparedStatement statement = PersistenceHandler.getInstance().getConnection().prepareStatement("DELETE FROM Credit WHERE id = ?");
+            statement.setInt(1, oid);
+            statement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void editObject(int oid, Object object) {
+        Credit credit = (Credit) object;
+        try {
+            if(PersistenceFacade.getInstance().get(credit.getCreditID(), "creditmapper") == null){
+                PreparedStatement statement2 = PersistenceHandler.getInstance().getConnection().prepareStatement("INSERT INTO credit(productionID, personID) VALUES (?,?);");
+                statement2.setInt(1, oid);
+                statement2.setInt(2, credit.getPerson().getId());
+                statement2.execute();
+
+                PreparedStatement statementForIDCredit = PersistenceHandler.getInstance().getConnection().prepareStatement("SELECT * FROM credit;");
+                ResultSet resultSetIDCredit = statementForIDCredit.executeQuery();
+                int resultId = -1;
+                while (resultSetIDCredit.next()) {
+                    resultId = resultSetIDCredit.getInt("id");
+                }//FÅ ID fra credit
+                for (Roles role : credit.getRoles()) {
+                    PreparedStatement preparedStatement = PersistenceHandler.getInstance().getConnection().prepareStatement("SELECT id FROM Roles WHERE role = ?;");
+                    preparedStatement.setString(1, role.name());
+                    ResultSet resultSet = preparedStatement.executeQuery();
+                    resultSet.next();
+                    PreparedStatement statement3 = PersistenceHandler.getInstance().getConnection().prepareStatement("INSERT INTO creditroles(roleID, creditID) VALUES (?,?);");
+                    statement3.setInt(1, resultSet.getInt("id"));
+                    statement3.setInt(2, resultId);
+                    statement3.execute();
+                }
+            }else {
+                PreparedStatement statement = PersistenceHandler.getInstance().getConnection().prepareStatement("UPDATE credit SET productionid = ?, personid = ? WHERE id=?;");
+                statement.setInt(1, oid);
+                statement.setInt(2, credit.getPerson().getId());
+                statement.setInt(3, credit.getCreditID());
+                statement.execute();
+
+                PreparedStatement statement2 = PersistenceHandler.getInstance().getConnection().prepareStatement("DELETE FROM creditroles WHERE creditid = ?;");
+                statement2.setInt(1, credit.getCreditID());
+                statement2.execute();
+
+                for (Roles role : credit.getRoles()) {
+                    PreparedStatement preparedStatement = PersistenceHandler.getInstance().getConnection().prepareStatement("SELECT id FROM Roles WHERE role = ?;");
+                    preparedStatement.setString(1, role.name());
+                    ResultSet resultSet = preparedStatement.executeQuery();
+                    resultSet.next();
+                    PreparedStatement statement3 = PersistenceHandler.getInstance().getConnection().prepareStatement("INSERT INTO creditroles(roleid, creditid) VALUES (?,?);");
+                    statement3.setInt(1, resultSet.getInt("id"));
+                    statement3.setInt(2, credit.getCreditID());
+                    statement3.execute();
+                }
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    @Override
+    protected int getNextSerial() {
+            ArrayList<Object> all = getAll();
+            Credit credit = (Credit) all.get(all.size()-1);
+            return credit.getCreditID()+1;
     }
 }

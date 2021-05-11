@@ -30,4 +30,31 @@ public abstract class PersistenceMapper implements IMapper{
     protected ArrayList<Object> getAllFromStorage(){
         return null;
     }
+
+    @Override
+    public void delete(int oid) {
+        deleteObjectFromStorage(oid);
+    }
+
+    protected void deleteObjectFromStorage(int oid){
+
+    }
+
+    @Override
+    public void edit(int oid, Object object) {
+        editObjectFromStorage(oid, object);
+    }
+
+    protected void editObjectFromStorage(int oid, Object object){
+
+    }
+
+    @Override
+    public int getNextInt() {
+        return getNextIntFromStorage();
+    }
+
+    protected int getNextIntFromStorage(){
+        return -1;
+    }
 }

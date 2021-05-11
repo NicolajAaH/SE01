@@ -4,11 +4,13 @@ import java.util.ArrayList;
 
 public class Production {
     private int productionID;
-    private ArrayList<Credit> credits;
-    private boolean status;
-    private boolean sent;
-    private String company;
     private String name;
+    private String company;
+    private ArrayList<Credit> credits;
+    private transient boolean status;
+    private transient boolean sent;
+
+
 
     public void setStatus(boolean status) {
         this.status = status;
@@ -43,6 +45,8 @@ public class Production {
         return null;
     }
 
+
+
     public Production(int productionID, ArrayList<Credit> credits, String company, String name){
         this.productionID = productionID;
         this.credits = credits;
@@ -58,6 +62,14 @@ public class Production {
         this.name = name;
         status = false;
         sent = false;
+    }
+
+    public Production(ArrayList<Credit> credits, String company, String name, boolean status, boolean sent){
+        this.credits = credits;
+        this.company = company;
+        this.name = name;
+        this.status = status;
+        this.sent = sent;
     }
 
     public Production(int productionID, String company, String name, boolean status, boolean sent){

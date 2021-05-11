@@ -65,5 +65,45 @@ public class PersonMapper extends RDBMapper {
         }
         return persons;
     }
+
+    @Override
+    protected void deleteObject(int oid) {
+        try {
+            PreparedStatement statement2 = PersistenceHandler.getInstance().getConnection().prepareStatement("DELETE FROM person WHERE id = ?");
+            statement2.setInt(1, oid);
+            statement2.execute();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void editObject(int oid, Object object) {
+        Person person = (Person) object;
+        try {
+            PreparedStatement statement = PersistenceHandler.getInstance().getConnection().prepareStatement("UPDATE person SET name = ?, phone = ?, email = ?, password = ? WHERE id=?;");
+            statement.setString(1, person.getName());
+            statement.setInt(2, person.getPhone());
+            statement.setString(3, person.getEmail());
+            statement.setString(4, person.getPassword());
+            statement.setInt(5, oid);
+            statement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    @Override
+    protected int getNextSerial() {
+        try {
+            PreparedStatement statement = PersistenceHandler.getInstance().getConnection().prepareStatement("SELECT nextval(pg_get_serial_sequence('person', 'id')) as new_id;");
+            ResultSet resultSet = statement.executeQuery();
+            return resultSet.getInt("new_id");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return -1;
+    }
 }
 
