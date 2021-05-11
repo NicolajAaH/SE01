@@ -42,7 +42,7 @@ public class Controller {
     @FXML
     private void loginHandler(){
         if(domainI.authorize(emailField.getText(), passwordField.getText())){ //tjek om det er producer, admin osv. og giv næste scene afhængig af det
-            type = domainI.findType(emailField.getText());
+            type = domainI.findPerson(emailField.getText()).getType();
             email = emailField.getText();
             accountPassword = passwordField.getText();
             newFxml("core.fxml");

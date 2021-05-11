@@ -57,4 +57,25 @@ public abstract class RDBMapper extends PersistenceMapper{
     }
 
     protected abstract ArrayList<Object> getObjectsFromRecord(ResultSet resultSet);
+
+    @Override
+    protected void deleteObjectFromStorage(int oid) {
+        deleteObject(oid);
+    }
+
+    protected abstract void deleteObject(int oid);
+
+    @Override
+    protected void editObjectFromStorage(int oid, Object object) {
+        editObject(oid, object);
+    }
+
+    protected abstract void editObject(int oid, Object object);
+
+    @Override
+    protected int getNextIntFromStorage() {
+        return getNextSerial();
+    }
+
+    protected abstract int getNextSerial();
 }

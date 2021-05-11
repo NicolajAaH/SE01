@@ -19,7 +19,7 @@
       <Button fx:id="deleteProductionButton" layoutX="816.0" layoutY="145.0" mnemonicParsing="false" onAction="#deleteProductionHandler" text="Delete production" />
       <Button fx:id="editProductionButton" layoutX="816.0" layoutY="200.0" mnemonicParsing="false" onAction="#editProductionHandler" prefHeight="27.0" prefWidth="106.0" text="Edit production" />
       <Label fx:id="productionsLabelStatus" layoutX="449.0" layoutY="248.0" prefHeight="115.0" prefWidth="136.0" />
-      <DialogPane fx:id="addProductionpane" prefHeight="600.0" prefWidth="1000.0">
+      <DialogPane fx:id="addProductionpane" prefHeight="600.0" prefWidth="1000.0" minHeight="600" maxHeight="600" minWidth="1000" maxWidth="1000">
          <content>
             <AnchorPane prefHeight="600.0" prefWidth="1000.0">
                <children>
@@ -45,7 +45,7 @@
             </AnchorPane>
          </content>
       </DialogPane>
-      <DialogPane fx:id="addCreditProduction" prefHeight="600.0" prefWidth="1000.0">
+      <DialogPane fx:id="addCreditProduction" prefHeight="600.0" prefWidth="1000.0" minHeight="600" maxHeight="600" minWidth="1000" maxWidth="1000">
          <content>
             <AnchorPane prefHeight="600.0" prefWidth="1000.0">
                <children>

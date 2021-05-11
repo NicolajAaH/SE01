@@ -5,8 +5,8 @@ public class Person {
     int id;
     int phone;
     String email;
-    String password;
-    String type;
+    transient String password;
+    transient String type;
 
     public Person(String name, int id, int phone, String email, String password, String type) {
         this.name = name;

@@ -21,6 +21,8 @@ public class ProducerController extends Controller{
     @FXML
     private TextField emailFieldProducer;
     @FXML
+    private PasswordField passwordFieldProducer;
+    @FXML
     private TextField companyFieldProducer;
     @FXML
     private ListView productionsListProducer;
@@ -47,9 +49,7 @@ public class ProducerController extends Controller{
 
     @Override
     public void initialize(){
-        //Object[] producersString = getDomainI().getProducers().toArray();
-        //ObservableList<Object> strings = FXCollections.observableArrayList(Arrays.asList(producersString));
-        //producersList.setItems(strings);
+        producersList.setItems(FXCollections.observableArrayList(getDomainI().getProducers()));
         addProducerpane.setDisable(true);
         addProducerpane.setVisible(false);
     }
@@ -59,7 +59,7 @@ public class ProducerController extends Controller{
         nameFieldProducer.setText("");
         phoneFieldProducer.setText("");
         emailFieldProducer.setText("");
-        companyFieldProducer.setText("");
+        passwordFieldProducer.setText("");
         productionsListProducer.setItems(empty);
     }
 
@@ -74,15 +74,13 @@ public class ProducerController extends Controller{
             producersLabelStatus.setText("Select producer");
         }else {
             producersLabelStatus.setText("");
-            String selected = producersList.getSelectionModel().getSelectedItem().toString();
-            String[] split = selected.split("\t");
-            String email = split[2].substring(7);
             addProducerpane.setVisible(true);
             addProducerpane.setDisable(false);
             descLabel.setText("Edit producer");
-            nameFieldProducer.setText(getDomainI().findPerson(email).getName());
-            phoneFieldProducer.setText("" + getDomainI().findPerson(email).getPhone());
-            emailFieldProducer.setText(getDomainI().findPerson(email).getEmail());
+            nameFieldProducer.setText(getDomainI().castToPerson(producersList.getSelectionModel().getSelectedItem()).getName());
+            phoneFieldProducer.setText(""+getDomainI().castToPerson(producersList.getSelectionModel().getSelectedItem()).getPhone());
+            emailFieldProducer.setText(getDomainI().castToPerson(producersList.getSelectionModel().getSelectedItem()).getEmail());
+            passwordFieldProducer.setText(getDomainI().castToPerson(producersList.getSelectionModel().getSelectedItem()).getPassword());
             //Object[] productionString = getDomainI().findPerson(email).getProductions().toArray();
             //ObservableList<Object> strings = FXCollections.observableArrayList(Arrays.asList(productionString));
             //productionsListProducer.setItems(strings);
@@ -96,10 +94,28 @@ public class ProducerController extends Controller{
     }
 
     public void finishHandler(){
-        addProducerpane.setDisable(true);
-        addProducerpane.setVisible(false);
-
-        //GØR NOGET FØRST.
+        //try catch her
+        if(descLabel.getText().equals("Edit producer")){
+            int oid = getDomainI().castToPerson(producersList.getSelectionModel().getSelectedItem()).getId();
+            String name = nameFieldProducer.getText();
+            int phone = Integer.parseInt(phoneFieldProducer.getText());
+            String email = emailFieldProducer.getText();
+            String password = passwordFieldProducer.getText();
+            getDomainI().editPerson(oid, name, phone, email, password);
+        }else{
+            //add
+            String name = nameFieldProducer.getText();
+            int phone = Integer.parseInt(phoneFieldProducer.getText());
+            String email = emailFieldProducer.getText();
+            String password = passwordFieldProducer.getText();
+            getDomainI().addProducer(name, phone, email, password);
+        }
         resetFields();
+        initialize();
+    }
+
+    public void deleteHandler(){
+        getDomainI().deletePerson(getDomainI().castToPerson(producersList.getSelectionModel().getSelectedItem()).getId());
+        producersList.setItems(FXCollections.observableArrayList(getDomainI().getProducers()));
     }
 }

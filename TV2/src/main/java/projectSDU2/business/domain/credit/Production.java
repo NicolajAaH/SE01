@@ -43,6 +43,8 @@ public class Production {
         return null;
     }
 
+
+
     public Production(int productionID, ArrayList<Credit> credits, String company, String name){
         this.productionID = productionID;
         this.credits = credits;
@@ -58,6 +60,14 @@ public class Production {
         this.name = name;
         status = false;
         sent = false;
+    }
+
+    public Production(ArrayList<Credit> credits, String company, String name, boolean status, boolean sent){
+        this.credits = credits;
+        this.company = company;
+        this.name = name;
+        this.status = status;
+        this.sent = sent;
     }
 
     public Production(int productionID, String company, String name, boolean status, boolean sent){

@@ -38,7 +38,7 @@ public class CreditingSystem {
         for (Object role : persistenceI.getFacade().getAll("rolemapper")){
             rolesdb.add((Roles) role);
         }
-        
+
     }
 
     public static CreditingSystem getInstance() {
@@ -50,6 +50,7 @@ public class CreditingSystem {
     private ArrayList<Roles> rolesdb;
 
     public ArrayList<Roles> getRolesdb() {
+        setup();
         return rolesdb;
     }
 
@@ -58,10 +59,12 @@ public class CreditingSystem {
     }
 
     public ArrayList<Production> getProductions() {
+        setup();
         return productions;
     }
 
     public ArrayList<Person> getPersons() {
+        setup();
         return persons;
     }
 
@@ -70,7 +73,12 @@ public class CreditingSystem {
     }
 
     public boolean authorizeAccount(String email, String password){
-        return persistenceI.findAccount(email, password);
+        for (Person person : persons){
+            if(person.getEmail().equals(email) && person.getPassword().equals(password)){
+                return true;
+            }
+        }
+        return false;
     }
 
     public String findType(String email){

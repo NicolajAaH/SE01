@@ -42,6 +42,7 @@ public class CoreController extends Controller{
         newFxml("personal.fxml");
     }
 
+    @FXML
     private void participantsHandler(){
         newFxml("participants.fxml");
     }

@@ -7,6 +7,7 @@ import projectSDU2.business.domain.credit.Roles;
 import projectSDU2.business.domain.user.Person;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public interface DomainI {
 
@@ -18,21 +19,47 @@ public interface DomainI {
 
     void runSetup();
 
-    void addProducer();
+    void addProducer(String name, int phone, String email, String password);
 
     ArrayList<Production> getProductions();
 
     Production findProduction(int id);
 
-    Roles[] getRoles();
+    ArrayList<Roles> getRoles();
 
-    Credit createCredit(int id, Person person, ObservableList observableList);
+    Credit createCredit(int id, ObservableList observableList);
 
     Roles findRole(String role);
 
-    Production createProduction(int id, ObservableList observableList, String name, String company);
+    void addProduction(ObservableList observableList, String name, String company);
 
     Person findPerson(int id);
 
     Person findPerson(String email);
+
+    ArrayList<Person> getProducers();
+
+    Person castToPerson(Object object);
+
+    ArrayList<Person> getParticipants();
+
+    Production castToProduction(Object object);
+
+    void addParticipant(String name, int phone, String email, String password);
+
+    void editPerson(int oid, String name, int phone, String email, String password);
+
+    Credit castToCredit(Object object);
+
+    void editCredit(int productionID, int personID, ObservableList observableList);
+
+    void editProduction(int oid, String name, String company, ObservableList credits, boolean status, boolean sent);
+
+    void editPerson(int oid, String name, int phone, String email, String password, String type);
+
+    void deletePerson(int id);
+
+    void deleteProduction(int productionID);
+
+    void deleteCredit(int creditID);
 }

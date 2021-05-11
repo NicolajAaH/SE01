@@ -7,6 +7,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
+<?import javafx.scene.control.PasswordField?>
 <AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectSDU2.presentation.ProducerController">
    <children>
       <Button fx:id="signout" layoutX="931.0" layoutY="14.0" mnemonicParsing="false" onAction="#signoutHandler" text="Sign out" />
@@ -14,7 +15,7 @@
       <ListView fx:id="producersList" layoutX="42.0" layoutY="91.0" prefHeight="466.0" prefWidth="693.0" />
       <Label layoutX="42.0" layoutY="68.0" text="Producers" />
       <Button fx:id="addProducerButton" layoutX="766.0" layoutY="91.0" mnemonicParsing="false" onAction="#addProducerHandler" prefHeight="27.0" prefWidth="106.0" text="Add producer" />
-      <Button fx:id="deleteProducerButton" layoutX="766.0" layoutY="145.0" mnemonicParsing="false" text="Delete producer" />
+      <Button fx:id="deleteProducerButton" layoutX="766.0" layoutY="145.0" mnemonicParsing="false" text="Delete producer" onAction="#deleteHandler"/>
       <Button fx:id="editProducerButton" layoutX="766.0" layoutY="200.0" mnemonicParsing="false" onAction="#editProducerHandler" prefHeight="27.0" prefWidth="106.0" text="Edit producer" />
       <Label fx:id="producersLabelStatus" layoutX="449.0" layoutY="248.0" prefHeight="115.0" prefWidth="136.0" />
       <DialogPane fx:id="addProducerpane" layoutY="-1.0" prefHeight="600.0" prefWidth="1000.0">
@@ -36,6 +37,8 @@
                   <Button fx:id="finishButton" layoutX="935.0" layoutY="9.0" mnemonicParsing="false" onAction="#finishHandler" text="Finish" />
                   <Button fx:id="cancelButton" layoutX="10.0" layoutY="9.0" mnemonicParsing="false" onAction="#cancelHandler" text="Cancel" />
                   <Button fx:id="deleteProd" layoutX="616.0" layoutY="48.0" mnemonicParsing="false" text="Delete production" />
+                  <Label layoutX="112.0" layoutY="363.0" text="Password:" />
+                  <PasswordField fx:id="passwordFieldProducer" layoutX="175.0" layoutY="358.0" />
                </children>
             </AnchorPane>
          </content>

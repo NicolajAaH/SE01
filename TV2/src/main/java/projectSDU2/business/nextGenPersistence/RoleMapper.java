@@ -51,4 +51,19 @@ public class RoleMapper extends RDBMapper {
         }
         return roles;
     }
+
+    @Override
+    protected void deleteObject(int oid) {
+        //giver det mening at slette en role???
+    }
+
+    @Override
+    protected void editObject(int oid, Object object) {
+        //giver det mening at ændre en role?
+    }
+
+    @Override
+    protected int getNextSerial() {
+        return -1;
+    }
 }

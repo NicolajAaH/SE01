@@ -112,4 +112,48 @@ public class ProductionMapper extends RDBMapper {
         }
         return productions;
     }
+
+    @Override
+    protected void deleteObject(int oid) {
+        try {
+            PreparedStatement statement = PersistenceHandler.getInstance().getConnection().prepareStatement("DELETE FROM production WHERE id = ?");
+            statement.setInt(1, oid);
+            statement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void editObject(int oid, Object object) {
+        Production production = (Production) object;
+        try {
+            PreparedStatement statement = PersistenceHandler.getInstance().getConnection().prepareStatement("UPDATE production SET status = ?, sent = ?, company = ?, name = ? WHERE id=?;");
+            statement.setBoolean(1, production.isStatus());
+            statement.setBoolean(2, production.isSent());
+            statement.setString(3, production.getCompany());
+            statement.setString(4, production.getName());
+            statement.setInt(5, oid);
+            statement.execute();
+            for (Credit credit : production.getCredits()){
+                PersistenceFacade.getInstance().edit(oid, credit, "creditmapper");
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
+
+    @Override
+    protected int getNextSerial() {
+        try {
+            PreparedStatement statement = PersistenceHandler.getInstance().getConnection().prepareStatement("SELECT nextval(pg_get_serial_sequence('production', 'id')) as new_id;");
+            ResultSet resultSet = statement.executeQuery();
+            return resultSet.getInt("new_id");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return -1;
+    }
 }
