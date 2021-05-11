@@ -1,6 +1,7 @@
 package projectSDU2.business.domain.initialize;
 
 import projectSDU2.Interfaces.PersistenceI;
+import projectSDU2.business.domain.report.CreditingReport;
 import projectSDU2.technicalServices.PersistenceConnect;
 import projectSDU2.business.domain.credit.Production;
 import projectSDU2.business.domain.credit.Roles;
@@ -120,5 +121,13 @@ public class CreditingSystem {
             }
         }
         return null;
+    }
+
+    public void generateCreditingReport(){
+        new CreditingReport().generateCreditingReport();
+    }
+
+    public void setSentProduction(Production production) {
+        getPersistenceI().getFacade().edit(production.getProductionID(), production, "productionmapper");
     }
 }

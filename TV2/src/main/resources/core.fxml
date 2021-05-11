@@ -6,9 +6,10 @@
 <AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectSDU2.presentation.CoreController">
    <children>
       <Button fx:id="personal" layoutX="424.0" layoutY="150.0" mnemonicParsing="false" onAction="#personalHandler" prefHeight="50.0" prefWidth="153.0" text="Edit personal information" />
-      <Button fx:id="participants" layoutX="424.0" layoutY="350.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="153.0" text="Participants" onAction="#participantsHandler"/>
+      <Button fx:id="participants" layoutX="424.0" layoutY="350.0" mnemonicParsing="false" onAction="#participantsHandler" prefHeight="50.0" prefWidth="153.0" text="Participants" />
       <Button fx:id="productions" layoutX="424.0" layoutY="450.0" mnemonicParsing="false" onAction="#productionsHandler" prefHeight="50.0" prefWidth="153.0" text="Productions" />
       <Button fx:id="producers" layoutX="424.0" layoutY="250.0" mnemonicParsing="false" onAction="#producersHandler" prefHeight="50.0" prefWidth="153.0" text="Producers" />
       <Button fx:id="signout" layoutX="923.0" layoutY="14.0" mnemonicParsing="false" onAction="#signoutHandler" text="Sign out" />
+      <Button fx:id="creditingReportButton" layoutX="423.0" layoutY="54.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="155.0" text="Generate crediting report" onAction="#generateCreditingReportHandler"/>
    </children>
 </AnchorPane>

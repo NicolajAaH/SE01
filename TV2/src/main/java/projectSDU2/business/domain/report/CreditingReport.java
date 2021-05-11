@@ -19,7 +19,7 @@ public class CreditingReport extends Report {
     private DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
     private Date today = new Date();
     private String todayNoTime = format.format(today);
-    private int index;
+    private static int index = 0;
     private String nameOfFile = "Krediteringsrapport " + todayNoTime + " ID " + index;
 
     public void generateCreditingReport() {
@@ -28,6 +28,7 @@ public class CreditingReport extends Report {
             while (production.isSent() == false && production.isStatus() == true) {
                 productionsToSend.add(production);
                 production.setSent(true);
+                cs.setSentProduction(production);
             }
         }
         writeToFile(nameOfFile);

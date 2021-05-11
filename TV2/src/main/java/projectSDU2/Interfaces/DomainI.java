@@ -62,4 +62,6 @@ public interface DomainI {
     void deleteProduction(int productionID);
 
     void deleteCredit(int creditID);
+
+    void generateCreditingReport();
 }

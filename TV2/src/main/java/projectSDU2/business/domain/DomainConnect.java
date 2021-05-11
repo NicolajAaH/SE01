@@ -175,5 +175,10 @@ public class DomainConnect implements DomainI {
         CreditingSystem.getPersistenceI().getFacade().delete(creditID, "creditmapper");
     }
 
+    @Override
+    public void generateCreditingReport() {
+        creditingSystem.generateCreditingReport();
+    }
+
 
 }
