@@ -64,4 +64,12 @@ public interface DomainI {
     void deleteCredit(int creditID);
 
     void generateCreditingReport();
+
+    ArrayList<Production> searchProductions(String search);
+
+    ArrayList<Production> findWhereProducer(int producerID);
+
+    ArrayList<Person> searchProducers(String search);
+
+    ArrayList<Person> searchParticipants(String search);
 }

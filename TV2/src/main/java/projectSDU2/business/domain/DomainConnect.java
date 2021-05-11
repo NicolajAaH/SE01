@@ -180,5 +180,62 @@ public class DomainConnect implements DomainI {
         creditingSystem.generateCreditingReport();
     }
 
+    @Override
+    public ArrayList<Production> searchProductions(String search) {
+        ArrayList<Production> matchingProductions = new ArrayList<>();
+        for (Production production : creditingSystem.getProductions()){
+            String id = production.getProductionID() +"";
+            String searchID = id.toLowerCase();
+            String name = production.getName();
+            String searchName = name.toLowerCase();
+            String searchInput = search.toLowerCase();
+            if(searchID.contains(searchInput) || searchName.contains(searchInput)){
+                matchingProductions.add(production);
+            }
+        }
+        return matchingProductions;
+    }
+
+    @Override
+    public ArrayList<Production> findWhereProducer(int producerID) {
+        return creditingSystem.findWhereProducer(producerID);
+    }
+
+    @Override
+    public ArrayList<Person> searchProducers(String search) {
+        String searchInput = search.toLowerCase();
+        ArrayList<Person> matchingPersons = new ArrayList<>();
+        for(Person person : creditingSystem.getPersons()){
+            if(person.getType().equals("producer")){
+                String id = person.getId() + "";
+                String searchID = id.toLowerCase();
+                String name = person.getName();
+                String searchName = name.toLowerCase();
+                if(searchID.contains(searchInput) || searchName.contains(searchInput)){
+                    matchingPersons.add(person);
+                }
+            }
+        }
+        return matchingPersons;
+    }
+
+    @Override
+    public ArrayList<Person> searchParticipants(String search) {
+        String searchInput = search.toLowerCase();
+        ArrayList<Person> matchingPersons = new ArrayList<>();
+        for(Person person : creditingSystem.getPersons()){
+            if(person.getType().equals("participant")){
+                String id = person.getId() + "";
+                String searchID = id.toLowerCase();
+                String name = person.getName();
+                String searchName = name.toLowerCase();
+                if(searchID.contains(searchInput) || searchName.contains(searchInput)){
+                    matchingPersons.add(person);
+                }
+            }
+        }
+        return matchingPersons;
+    }
+
 
 }

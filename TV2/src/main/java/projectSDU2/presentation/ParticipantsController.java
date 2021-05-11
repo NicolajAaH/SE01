@@ -7,6 +7,10 @@ import javafx.scene.control.*;
 public class ParticipantsController extends Controller{
 
     @FXML
+    private TextField searchField;
+    @FXML
+    private Button searchButton;
+    @FXML
     private ListView participantsList;
     @FXML
     private Button addParticipantButton;
@@ -90,5 +94,9 @@ public class ParticipantsController extends Controller{
     public void deleteHandler(){
         getDomainI().deletePerson(getDomainI().castToPerson(participantsList.getSelectionModel().getSelectedItem()).getId());
         participantsList.setItems(FXCollections.observableArrayList(getDomainI().getParticipants()));
+    }
+
+    public void searchHandler(){
+        participantsList.setItems(FXCollections.observableArrayList(getDomainI().searchParticipants(searchField.getText())));
     }
 }

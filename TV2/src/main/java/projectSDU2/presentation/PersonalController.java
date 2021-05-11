@@ -10,6 +10,10 @@ import java.util.Arrays;
 public class PersonalController extends Controller{
 
     @FXML
+    private ListView productionsList;
+    @FXML
+    private TextField idField;
+    @FXML
     private Button updateButton;
     @FXML
     private TextField nameField;
@@ -32,16 +36,19 @@ public class PersonalController extends Controller{
 
     @Override
     public void initialize(){
+        if(getDomainI().findPerson(email).getType().equals("producer")){
+            productionsList.setItems(FXCollections.observableArrayList(getDomainI().findWhereProducer(getDomainI().findPerson(email).getId())));
+        }else{
+            productionsList.setVisible(false);
+            productionsList.setDisable(true);
+            productionLabel.setVisible(false);
+            productionLabel.setDisable(true);
+        }
             nameField.setText(getDomainI().findPerson(email).getName());
             phoneField.setText("" + getDomainI().findPerson(email).getPhone());
             emailField.setText(getDomainI().findPerson(email).getEmail());
             password.setText(getDomainI().findPerson(email).getPassword());
-
-        //else{
-            //Object[] productionString = getDomainI().findPerson(email).getProductions().toArray();
-            //ObservableList<Object> strings = FXCollections.observableArrayList(Arrays.asList(productionString));
-            //productionsList.setItems(strings);
-        //}
+            idField.setText(getDomainI().findPerson(email).getId() + "");
     }
 
     public void updateHandler(){

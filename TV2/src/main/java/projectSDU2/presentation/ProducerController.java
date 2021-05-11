@@ -11,6 +11,10 @@ import java.util.Arrays;
 public class ProducerController extends Controller{
 
     @FXML
+    private TextField searchField;
+    @FXML
+    private Button searchButton;
+    @FXML
     private ListView producersList;
     @FXML
     private Label descLabel;
@@ -81,9 +85,7 @@ public class ProducerController extends Controller{
             phoneFieldProducer.setText(""+getDomainI().castToPerson(producersList.getSelectionModel().getSelectedItem()).getPhone());
             emailFieldProducer.setText(getDomainI().castToPerson(producersList.getSelectionModel().getSelectedItem()).getEmail());
             passwordFieldProducer.setText(getDomainI().castToPerson(producersList.getSelectionModel().getSelectedItem()).getPassword());
-            //Object[] productionString = getDomainI().findPerson(email).getProductions().toArray();
-            //ObservableList<Object> strings = FXCollections.observableArrayList(Arrays.asList(productionString));
-            //productionsListProducer.setItems(strings);
+            productionsListProducer.setItems(FXCollections.observableArrayList(getDomainI().findWhereProducer(getDomainI().castToPerson(producersList.getSelectionModel().getSelectedItem()).getId())));
         }
     }
 
@@ -117,5 +119,9 @@ public class ProducerController extends Controller{
     public void deleteHandler(){
         getDomainI().deletePerson(getDomainI().castToPerson(producersList.getSelectionModel().getSelectedItem()).getId());
         producersList.setItems(FXCollections.observableArrayList(getDomainI().getProducers()));
+    }
+
+    public void searchHandler(){
+        producersList.setItems(FXCollections.observableArrayList(getDomainI().searchProducers(searchField.getText())));
     }
 }

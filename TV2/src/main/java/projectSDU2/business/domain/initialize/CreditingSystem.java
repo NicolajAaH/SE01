@@ -1,6 +1,7 @@
 package projectSDU2.business.domain.initialize;
 
 import projectSDU2.Interfaces.PersistenceI;
+import projectSDU2.business.domain.credit.Credit;
 import projectSDU2.business.domain.report.CreditingReport;
 import projectSDU2.technicalServices.PersistenceConnect;
 import projectSDU2.business.domain.credit.Production;
@@ -129,5 +130,21 @@ public class CreditingSystem {
 
     public void setSentProduction(Production production) {
         getPersistenceI().getFacade().edit(production.getProductionID(), production, "productionmapper");
+    }
+
+    public ArrayList<Production> findWhereProducer(int producerID){
+        ArrayList<Production> matchingProductions = new ArrayList<>();
+        for (Production production : productions){
+            for (Credit credit : production.getCredits()){
+                if(credit.getPerson().getId() == producerID){
+                    for (Roles role : credit.getRoles()){
+                        if(role == Roles.producer){
+                            matchingProductions.add(production);
+                        }
+                    }
+                }
+            }
+        }
+        return matchingProductions;
     }
 }
