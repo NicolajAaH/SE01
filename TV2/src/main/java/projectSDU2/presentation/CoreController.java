@@ -6,6 +6,8 @@ import javafx.scene.control.Button;
 public class CoreController extends Controller{
 
     @FXML
+    private Button verifyButton;
+    @FXML
     private Button creditingReportButton;
     @FXML
     private Button personal;
@@ -28,6 +30,8 @@ public class CoreController extends Controller{
             producers.setVisible(false);
             creditingReportButton.setDisable(true);
             creditingReportButton.setVisible(false);
+            verifyButton.setDisable(true);
+            verifyButton.setVisible(false);
         }
         else if(type.equals("participant")){
             producers.setDisable(true);
@@ -41,6 +45,8 @@ public class CoreController extends Controller{
 
             creditingReportButton.setDisable(true);
             creditingReportButton.setVisible(false);
+            verifyButton.setDisable(true);
+            verifyButton.setVisible(false);
         }
     }
 
@@ -62,6 +68,11 @@ public class CoreController extends Controller{
     @FXML
     private void producersHandler(){
         newFxml("producers.fxml");
+    }
+
+    @FXML
+    private void verifyHandler(){
+        newFxml("validate.fxml");
     }
 
     public void generateCreditingReportHandler(){

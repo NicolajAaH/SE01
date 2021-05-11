@@ -1,40 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.DialogPane?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.PasswordField?>
 <AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectSDU2.presentation.ParticipantsController">
    <children>
       <TextField fx:id="searchField" layoutX="228.0" layoutY="63.0" prefHeight="27.0" prefWidth="288.0" promptText="Search input" />
-      <Button fx:id="searchButton" defaultButton="true" layoutX="542.0" layoutY="63.0" mnemonicParsing="false" text="Search" onAction="#searchHandler"/>
+      <Button fx:id="searchButton" defaultButton="true" layoutX="542.0" layoutY="63.0" mnemonicParsing="false" onAction="#searchHandler" text="Search" />
       <Button fx:id="signout" layoutX="931.0" layoutY="14.0" mnemonicParsing="false" onAction="#signoutHandler" text="Sign out" />
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#backHandler" text="Back" />
       <ListView fx:id="participantsList" layoutX="42.0" layoutY="91.0" prefHeight="466.0" prefWidth="693.0" />
       <Label layoutX="42.0" layoutY="68.0" text="Participants" />
       <Button fx:id="addParticipantButton" layoutX="766.0" layoutY="91.0" mnemonicParsing="false" onAction="#addParticipantHandler" prefHeight="27.0" prefWidth="106.0" text="Add participant" />
-      <Button fx:id="deleteParticipantButton" layoutX="766.0" layoutY="145.0" mnemonicParsing="false" text="Delete participant" onAction="#deleteHandler"/>
+      <Button fx:id="deleteParticipantButton" layoutX="766.0" layoutY="145.0" mnemonicParsing="false" onAction="#deleteHandler" text="Delete participant" />
       <Button fx:id="editParticipantButton" layoutX="766.0" layoutY="200.0" mnemonicParsing="false" onAction="#editParticipantHandler" prefHeight="27.0" prefWidth="106.0" text="Edit participant" />
       <Label fx:id="participantsLabelStatus" layoutX="449.0" layoutY="248.0" prefHeight="115.0" prefWidth="136.0" />
-      <DialogPane fx:id="addParticipantpane" layoutY="-1.0" prefHeight="600.0" prefWidth="1000.0" minHeight="600" maxHeight="600" minWidth="1000" maxWidth="1000">
+      <DialogPane fx:id="addParticipantpane" layoutY="-1.0" maxHeight="600" maxWidth="1000" minHeight="600" minWidth="1000" prefHeight="600.0" prefWidth="1000.0">
          <content>
             <AnchorPane prefHeight="600.0" prefWidth="1000.0">
                <children>
                   <Label fx:id="descLabel" layoutX="467.0" layoutY="14.0" text="Add participant" />
-                  <Label layoutX="120.0" layoutY="110.0" text="Name:" />
-                  <Label layoutX="121.0" layoutY="210.0" text="Phone:" />
-                  <Label layoutX="122.0" layoutY="310.0" text="Email:" />
-                  <TextField fx:id="nameFieldParticipant" layoutX="175.0" layoutY="105.0" />
-                  <TextField fx:id="phoneFieldParticipant" layoutX="175.0" layoutY="205.0" />
-                  <TextField fx:id="emailFieldParticipant" layoutX="173.0" layoutY="305.0" />
+                  <Label layoutX="120.0" layoutY="169.0" text="Name:" />
+                  <Label layoutX="120.0" layoutY="247.0" text="Phone:" />
+                  <Label layoutX="120.0" layoutY="324.0" text="Email:" />
+                  <TextField fx:id="nameFieldParticipant" layoutX="175.0" layoutY="164.0" />
+                  <TextField fx:id="phoneFieldParticipant" layoutX="174.0" layoutY="242.0" />
+                  <TextField fx:id="emailFieldParticipant" layoutX="171.0" layoutY="319.0" />
                   <Button fx:id="finishButton" layoutX="935.0" layoutY="9.0" mnemonicParsing="false" onAction="#finishHandler" text="Finish" />
                   <Button fx:id="cancelButton" layoutX="10.0" layoutY="9.0" mnemonicParsing="false" onAction="#cancelHandler" text="Cancel" />
-                  <Label layoutX="112.0" layoutY="363.0" text="Password:" />
-                  <PasswordField fx:id="passwordFieldParticipant" layoutX="175.0" layoutY="358.0" />
+                  <Label layoutX="112.0" layoutY="403.0" text="Password:" />
+                  <PasswordField fx:id="passwordFieldParticipant" layoutX="175.0" layoutY="398.0" />
+                  <Label layoutX="120.0" layoutY="101.0" text="ID:" />
+                  <TextField fx:id="idFieldParticipant" editable="false" layoutX="175.0" layoutY="96.0" />
                </children>
             </AnchorPane>
          </content>

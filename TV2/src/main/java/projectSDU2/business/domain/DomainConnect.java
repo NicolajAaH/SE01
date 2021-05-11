@@ -2,6 +2,7 @@ package projectSDU2.business.domain;
 
 import javafx.collections.ObservableList;
 import projectSDU2.Interfaces.DomainI;
+import projectSDU2.Interfaces.PersistenceI;
 import projectSDU2.business.domain.credit.Credit;
 import projectSDU2.business.domain.credit.Production;
 import projectSDU2.business.domain.credit.Roles;
@@ -235,6 +236,22 @@ public class DomainConnect implements DomainI {
             }
         }
         return matchingPersons;
+    }
+
+    @Override
+    public ArrayList<Production> getNotValidated() {
+        ArrayList<Production> notValidated = new ArrayList<>();
+        for (Production production : creditingSystem.getProductions()){
+            if(!production.isStatus()){
+                notValidated.add(production);
+            }
+        }
+        return notValidated;
+    }
+
+    @Override
+    public PersistenceI getPersistenceI() {
+        return CreditingSystem.getPersistenceI();
     }
 
 

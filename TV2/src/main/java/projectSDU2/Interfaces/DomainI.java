@@ -72,4 +72,8 @@ public interface DomainI {
     ArrayList<Person> searchProducers(String search);
 
     ArrayList<Person> searchParticipants(String search);
+
+    ArrayList<Production> getNotValidated();
+
+    PersistenceI getPersistenceI();
 }
