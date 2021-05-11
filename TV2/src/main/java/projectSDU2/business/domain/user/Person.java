@@ -1,8 +1,8 @@
 package projectSDU2.business.domain.user;
 
 public class Person {
-    String name;
     int id;
+    String name;
     int phone;
     String email;
     transient String password;
@@ -66,7 +66,7 @@ public class Person {
     }
 
     @Override
-    public String toString(){
-        return "ID: "+id+"\t"+"Name :"+name+"\t"+"Phone: "+phone+"\t"+"Email: "+email+"\t"+"Type: "+type;
+    public String toString() {
+        return "ID: " + id + "\t" + "Name :" + name + "\t" + "Phone: " + phone + "\t" + "Email: " + email + "\t" + "Type: " + type;
     }
 }
