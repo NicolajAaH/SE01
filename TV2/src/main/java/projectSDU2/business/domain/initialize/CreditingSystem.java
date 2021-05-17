@@ -40,6 +40,7 @@ public class CreditingSystem {
         rolesdb = new ArrayList<>();
         for (Object role : persistenceI.getFacade().getAll("rolemapper")){
             rolesdb.add((Roles) role);
+
         }
 
     }
@@ -135,7 +136,7 @@ public class CreditingSystem {
             for (Credit credit : production.getCredits()){
                 if(credit.getPerson().getId() == producerID){
                     for (Roles role : credit.getRoles()){
-                        if(role == Roles.producer){
+                        if(role == Roles.Producer){
                             matchingProductions.add(production);
                         }
                     }

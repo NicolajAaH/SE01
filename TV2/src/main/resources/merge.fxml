@@ -12,26 +12,26 @@
         <Button fx:id="signout" layoutX="923.0" layoutY="14.0" mnemonicParsing="false" onAction="#signoutHandler" text="Sign out" />
         <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#backHandler" text="Back" />
       <ListView fx:id="mergePersonsList" layoutX="60.0" layoutY="100.0" prefHeight="265.0" prefWidth="600.0" />
-      <Button fx:id="mergePerson1Button" layoutX="696.0" layoutY="100.0" mnemonicParsing="false" text="Choose person 1" onAction="#chooseHandler1"/>
-      <Button fx:id="mergePerson2Button" layoutX="696.0" layoutY="155.0" mnemonicParsing="false" text="Choose person 2" onAction="#chooseHandler2"/>
+      <Button fx:id="mergePerson1Button" layoutX="696.0" layoutY="100.0" mnemonicParsing="false" onAction="#chooseHandler1" text="Choose person 1" />
+      <Button fx:id="mergePerson2Button" layoutX="696.0" layoutY="155.0" mnemonicParsing="false" onAction="#chooseHandler2" text="Choose person 2" />
         <Label layoutX="68.0" layoutY="426.0" text="Name:" />
         <Label layoutX="68.0" layoutY="473.0" text="Phone:" />
         <Label layoutX="68.0" layoutY="518.0" text="Email:" />
-        <TextField fx:id="namePerson1" layoutX="123.0" layoutY="421.0" editable="false"/>
-        <TextField fx:id="phonePerson1" layoutX="122.0" layoutY="468.0" editable="false"/>
-        <TextField fx:id="emailPerson1" layoutX="123.0" layoutY="513.0" editable="false"/>
+        <TextField fx:id="namePerson1" editable="false" layoutX="123.0" layoutY="421.0" />
+        <TextField fx:id="phonePerson1" editable="false" layoutX="122.0" layoutY="468.0" />
+        <TextField fx:id="emailPerson1" editable="false" layoutX="123.0" layoutY="513.0" />
         <Label layoutX="60.0" layoutY="564.0" text="Password:" />
-        <PasswordField fx:id="passwordPerson1" layoutX="123.0" layoutY="559.0" editable="false"/>
+        <PasswordField fx:id="passwordPerson1" editable="false" layoutX="123.0" layoutY="559.0" />
         <Label layoutX="68.0" layoutY="380.0" text="ID:" />
         <TextField fx:id="idPerson1" editable="false" layoutX="123.0" layoutY="375.0" />
       <Label layoutX="444.0" layoutY="427.0" text="Name:" />
       <Label layoutX="444.0" layoutY="474.0" text="Phone:" />
       <Label layoutX="444.0" layoutY="519.0" text="Email:" />
-      <TextField fx:id="namePerson2" layoutX="499.0" layoutY="422.0" editable="false"/>
-      <TextField fx:id="phonePerson2" layoutX="498.0" layoutY="469.0" editable="false"/>
-      <TextField fx:id="emailPerson2" layoutX="499.0" layoutY="514.0" editable="false"/>
+      <TextField fx:id="namePerson2" editable="false" layoutX="499.0" layoutY="422.0" />
+      <TextField fx:id="phonePerson2" editable="false" layoutX="498.0" layoutY="469.0" />
+      <TextField fx:id="emailPerson2" editable="false" layoutX="499.0" layoutY="514.0" />
       <Label layoutX="436.0" layoutY="565.0" text="Password:" />
-      <PasswordField fx:id="passwordPerson2" layoutX="499.0" layoutY="560.0" editable="false"/>
+      <PasswordField fx:id="passwordPerson2" editable="false" layoutX="499.0" layoutY="560.0" />
       <Label layoutX="444.0" layoutY="381.0" text="ID:" />
       <TextField fx:id="idPerson2" editable="false" layoutX="499.0" layoutY="376.0" />
       <Label layoutX="12.0" layoutY="380.0" text="Person 1:" />
@@ -47,8 +47,9 @@
       <Label layoutX="727.0" layoutY="381.0" text="ID:" />
       <TextField fx:id="idMerged" editable="false" layoutX="782.0" layoutY="376.0" />
       <Label layoutX="692.0" layoutY="348.0" text="Merged person:" />
-      <Button fx:id="mergeButton" layoutX="853.0" layoutY="300.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="111.0" text="Merge" onAction="#mergeHandler"/>
-      <Button fx:id="mergeCheckButton" layoutX="684.0" layoutY="300.0" mnemonicParsing="false" text="See merged person" onAction="#mergeCheckHandler"/>
+      <Button fx:id="mergeButton" layoutX="853.0" layoutY="300.0" mnemonicParsing="false" onAction="#mergeHandler" prefHeight="27.0" prefWidth="111.0" text="Merge" />
+      <Button fx:id="mergeCheckButton" layoutX="684.0" layoutY="300.0" mnemonicParsing="false" onAction="#mergeCheckHandler" text="See merged person" />
+      <Label fx:id="labelStatus" layoutX="696.0" layoutY="216.0" prefHeight="45.0" prefWidth="269.0" wrapText="true" />
 
     </children>
 </AnchorPane>

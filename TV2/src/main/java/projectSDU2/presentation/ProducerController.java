@@ -11,6 +11,8 @@ import java.util.Arrays;
 public class ProducerController extends Controller{
 
     @FXML
+    private Label statusLabelProducer;
+    @FXML
     private TextField idFieldProducer;
     @FXML
     private TextField searchField;
@@ -67,6 +69,8 @@ public class ProducerController extends Controller{
         emailFieldProducer.setText("");
         passwordFieldProducer.setText("");
         productionsListProducer.setItems(empty);
+        producersLabelStatus.setText("");
+        statusLabelProducer.setText("");
     }
 
     public void addProducerHandler(){
@@ -99,24 +103,27 @@ public class ProducerController extends Controller{
     }
 
     public void finishHandler(){
-        //try catch her
-        if(descLabel.getText().equals("Edit producer")){
-            int oid = getDomainI().castToPerson(producersList.getSelectionModel().getSelectedItem()).getId();
-            String name = nameFieldProducer.getText();
-            int phone = Integer.parseInt(phoneFieldProducer.getText());
-            String email = emailFieldProducer.getText();
-            String password = passwordFieldProducer.getText();
-            getDomainI().editPerson(oid, name, phone, email, password);
-        }else{
-            //add
-            String name = nameFieldProducer.getText();
-            int phone = Integer.parseInt(phoneFieldProducer.getText());
-            String email = emailFieldProducer.getText();
-            String password = passwordFieldProducer.getText();
-            getDomainI().addProducer(name, phone, email, password);
+        try{
+            if(descLabel.getText().equals("Edit producer")){
+                int oid = getDomainI().castToPerson(producersList.getSelectionModel().getSelectedItem()).getId();
+                String name = nameFieldProducer.getText();
+                int phone = Integer.parseInt(phoneFieldProducer.getText());
+                String email = emailFieldProducer.getText();
+                String password = passwordFieldProducer.getText();
+                getDomainI().editPerson(oid, name, phone, email, password);
+            }else{
+                //add
+                String name = nameFieldProducer.getText();
+                int phone = Integer.parseInt(phoneFieldProducer.getText());
+                String email = emailFieldProducer.getText();
+                String password = passwordFieldProducer.getText();
+                getDomainI().addProducer(name, phone, email, password);
+            }
+            resetFields();
+            initialize();
+        }catch (NumberFormatException e){
+            statusLabelProducer.setText("Phone must be an integer");
         }
-        resetFields();
-        initialize();
     }
 
     public void deleteHandler(){

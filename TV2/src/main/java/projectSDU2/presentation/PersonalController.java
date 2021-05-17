@@ -52,9 +52,16 @@ public class PersonalController extends Controller{
     }
 
     public void updateHandler(){
-        getDomainI().editPerson(getDomainI().findPerson(email).getId(), nameField.getText(), Integer.parseInt(phoneField.getText()),
-                emailField.getText(), password.getText(), getDomainI().findPerson(email).getType());
-        updateLabel.setText("Update finished");
+        try{
+            int phone = Integer.parseInt(phoneField.getText());
+            getDomainI().editPerson(getDomainI().findPerson(email).getId(), nameField.getText(), phone,
+                    emailField.getText(), password.getText(), getDomainI().findPerson(email).getType());
+            updateLabel.setText("Update finished");
+            getDomainI().runSetup();
+        }catch (NumberFormatException e){
+            updateLabel.setText("Phone must be an integer");
+        }
+
     }
 
 }

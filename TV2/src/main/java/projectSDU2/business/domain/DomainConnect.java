@@ -22,7 +22,7 @@ public class DomainConnect implements DomainI {
 
     @Override
     public void runSetup() {
-
+        creditingSystem.setup();
     }
 
     @Override
