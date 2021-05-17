@@ -39,6 +39,7 @@ public class CreditMapper extends RDBMapper {
 
     @Override
     protected void putObject(Object object) {
+
     }
 
     @Override
@@ -79,17 +80,19 @@ public class CreditMapper extends RDBMapper {
         Credit credit = (Credit) object;
         try {
             if(PersistenceFacade.getInstance().get(credit.getCreditID(), "creditmapper") == null){
+                System.out.println(credit.toString() + "I NULL");
                 PreparedStatement statement2 = PersistenceHandler.getInstance().getConnection().prepareStatement("INSERT INTO credit(productionID, personID) VALUES (?,?);");
                 statement2.setInt(1, oid);
                 statement2.setInt(2, credit.getPerson().getId());
                 statement2.execute();
 
-                PreparedStatement statementForIDCredit = PersistenceHandler.getInstance().getConnection().prepareStatement("SELECT * FROM credit;");
+                PreparedStatement statementForIDCredit = PersistenceHandler.getInstance().getConnection().prepareStatement("SELECT * FROM public.credit ORDER BY id ASC;");
                 ResultSet resultSetIDCredit = statementForIDCredit.executeQuery();
-                int resultId = -1;
-                while (resultSetIDCredit.next()) {
+                int resultId = 0;
+                while(resultSetIDCredit.next()){
                     resultId = resultSetIDCredit.getInt("id");
-                }//FÅ ID fra credit
+                }
+                //FÅ ID fra credit
                 for (Roles role : credit.getRoles()) {
                     PreparedStatement preparedStatement = PersistenceHandler.getInstance().getConnection().prepareStatement("SELECT id FROM Roles WHERE role = ?;");
                     preparedStatement.setString(1, role.name());
@@ -101,6 +104,7 @@ public class CreditMapper extends RDBMapper {
                     statement3.execute();
                 }
             }else {
+                System.out.println(credit.toString() + "I ELSE");
                 PreparedStatement statement = PersistenceHandler.getInstance().getConnection().prepareStatement("UPDATE credit SET productionid = ?, personid = ? WHERE id=?;");
                 statement.setInt(1, oid);
                 statement.setInt(2, credit.getPerson().getId());
@@ -130,8 +134,14 @@ public class CreditMapper extends RDBMapper {
 
     @Override
     protected int getNextSerial() {
-            ArrayList<Object> all = getAll();
-            Credit credit = (Credit) all.get(all.size()-1);
-            return credit.getCreditID()+1;
+        try {
+            PreparedStatement statement = PersistenceHandler.getInstance().getConnection().prepareStatement("SELECT nextval(pg_get_serial_sequence('credit', 'id')) as new_id;");
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            return resultSet.getInt("new_id");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return -1;
     }
 }

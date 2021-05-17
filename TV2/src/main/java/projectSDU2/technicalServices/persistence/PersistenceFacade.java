@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 public class PersistenceFacade {
     private static PersistenceFacade instance = new PersistenceFacade();
-    HashMap<String, IMapper> imapperMap = new HashMap<>();
+    private HashMap<String, IMapper> imapperMap = new HashMap<>();
 
     private PersistenceFacade(){
         imapperMap.put("creditmapper", new CreditMapper("credit"));

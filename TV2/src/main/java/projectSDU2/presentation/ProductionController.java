@@ -4,10 +4,20 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ProductionController extends Controller{
 
+    @FXML
+    private ListView personsListSearch;
+    @FXML
+    private Button searchPersonButton;
+    @FXML
+    private TextField personSearchField;
+    @FXML
+    private Button chooseButton;
     @FXML
     private TextField searchField;
     @FXML
@@ -80,16 +90,25 @@ public class ProductionController extends Controller{
     ObservableList<Object> roles = FXCollections.observableArrayList();
     ObservableList<Object> credits = FXCollections.observableArrayList();
 
+    ArrayList<Object> tempDeletedCredits = new ArrayList<>();
+
     @Override
     public void initialize(){
-        productionsList.setItems(FXCollections.observableArrayList(getDomainI().getProductions()));
+        if(type.equals("producer")){
+            productionsList.setItems(FXCollections.observableArrayList(getDomainI().findWhereProducer(id)));
+        }else {
+            productionsList.setItems(FXCollections.observableArrayList(getDomainI().getProductions()));
+        }
+        personsListSearch.setItems(FXCollections.observableArrayList(getDomainI().getPersons()));
         addProductionpane.setDisable(true);
         addProductionpane.setVisible(false);
         addCreditProduction.setDisable(true);
         addCreditProduction.setVisible(false);
 
         for (int i = 0; i < getDomainI().getRoles().size(); i++) {
-            rolesMenu.getItems().add(getDomainI().getRoles().get(i));
+            if(!rolesMenu.getItems().contains(getDomainI().getRoles().get(i))){
+                rolesMenu.getItems().add(getDomainI().getRoles().get(i));
+            }
         }
     }
 
@@ -97,6 +116,13 @@ public class ProductionController extends Controller{
         //resetFields();
         addProductionpane.setDisable(true);
         addProductionpane.setVisible(false);
+        finishButton.setDisable(false);
+        addCreditButton.setDisable(false);
+        editCreditButton.setDisable(false);
+        deleteCreditButton.setDisable(false);
+        nameFieldProduction.setEditable(true);
+        companyFieldProduction.setEditable(true);
+        credits.removeAll(credits);
     }
 
     public void finishHandler1(){
@@ -104,10 +130,15 @@ public class ProductionController extends Controller{
             getDomainI().addProduction(creditsProductionList.getItems(), nameFieldProduction.getText(), companyFieldProduction.getText());
         }else{
             //edit
-            getDomainI().editProduction(getDomainI().castToProduction(productionsList.getSelectionModel().getSelectedItem()).getProductionID(), nameFieldProduction.getText(),
+            for (Object object : tempDeletedCredits){
+                getDomainI().deleteCredit(getDomainI().castToCredit(object).getCreditID());
+            }
+            getDomainI().editProduction(Integer.parseInt(idFieldProduction.getText()), nameFieldProduction.getText(),
                     companyFieldProduction.getText(), credits, validatedProduction.isSelected(), sentProduction.isSelected());
+            tempDeletedCredits.removeAll(tempDeletedCredits);
+            System.out.println(credits.toString());
         }
-
+        credits.removeAll(credits);
         initialize();
     }
 
@@ -122,6 +153,7 @@ public class ProductionController extends Controller{
             credits.add(getDomainI().createCredit(Integer.parseInt(idFieldCreditPerson.getText()), roles));
         }else if(descLabelCredit.getText().equals("Edit credit")){
             //edit
+            credits.remove(getDomainI().castToCredit(creditsProductionList.getSelectionModel().getSelectedItem()));
             credits.add(getDomainI().createCredit(Integer.parseInt(idFieldCreditPerson.getText()), roles));
             //getDomainI().editCredit(getDomainI().castToProduction(productionsList.getSelectionModel().getSelectedItem()).getProductionID(),
               //      Integer.parseInt(idFieldCreditPerson.getText()), roles);
@@ -136,9 +168,11 @@ public class ProductionController extends Controller{
         addProductionpane.setDisable(false);
         addProductionpane.setVisible(true);
         descLabel.setText("Add production");
-        idFieldProduction.setText("");
+        idFieldProduction.setText("ID will be given auto");
         nameFieldProduction.setText("");
         companyFieldProduction.setText("");
+        validatedProduction.setSelected(false);
+        sentProduction.setSelected(false);
         ObservableList<Object> strings = FXCollections.observableArrayList();
         creditsProductionList.setItems(strings);
     }
@@ -146,7 +180,7 @@ public class ProductionController extends Controller{
     public void addCreditHandler(){
         descLabelCredit.setText("Add credit");
         roles.removeAll(roles);
-        idFieldCredit.setText("");
+        idFieldCredit.setText("ID will be given auto");
         idFieldCreditPerson.setText("");
         nameFieldPerson.setText("");
         phoneFieldPerson.setText("");
@@ -155,10 +189,19 @@ public class ProductionController extends Controller{
         addCreditProduction.setVisible(true);
     }
 
-    public void editProductionHandler(){ //TODO
+    public void editProductionHandler(){
         if(productionsList.getSelectionModel().getSelectedItem() == null){
             productionsLabelStatus.setText("Select producer");
         }else {
+            tempDeletedCredits.removeAll(tempDeletedCredits);
+            if(getDomainI().castToProduction(productionsList.getSelectionModel().getSelectedItem()).isStatus()){
+                finishButton.setDisable(true);
+                addCreditButton.setDisable(true);
+                editCreditButton.setDisable(true);
+                deleteCreditButton.setDisable(true);
+                nameFieldProduction.setEditable(false);
+                companyFieldProduction.setEditable(false);
+            }
             descLabel.setText("Edit production");
             productionsLabelStatus.setText("");
             credits.removeAll(credits);
@@ -170,10 +213,8 @@ public class ProductionController extends Controller{
             companyFieldProduction.setText(""+getDomainI().findProduction(id).getCompany());
             validatedProduction.setSelected(getDomainI().findProduction(id).isStatus());
             sentProduction.setSelected(getDomainI().findProduction(id).isSent());
-            Object[] creditsString = getDomainI().findProduction(id).getCredits().toArray();
-            ObservableList<Object> strings = FXCollections.observableArrayList(Arrays.asList(creditsString));
-            creditsProductionList.setItems(strings);
-            for (Object object : creditsString){
+            creditsProductionList.setItems(FXCollections.observableArrayList(getDomainI().castToProduction(productionsList.getSelectionModel().getSelectedItem()).getCredits()));
+            for (Object object : creditsProductionList.getItems()){
                 credits.add(getDomainI().castToCredit(object));
             }
         }
@@ -185,7 +226,11 @@ public class ProductionController extends Controller{
         }else {
             productionsLabelStatus.setText("");
             getDomainI().deleteProduction(getDomainI().castToProduction(productionsList.getSelectionModel().getSelectedItem()).getProductionID());
-            productionsList.setItems(FXCollections.observableArrayList(getDomainI().getProductions()));
+            if(type.equals("producer")){
+                productionsList.setItems(FXCollections.observableArrayList(getDomainI().findWhereProducer(id)));
+            }else {
+                productionsList.setItems(FXCollections.observableArrayList(getDomainI().getProductions()));
+            }
         }
     }
 
@@ -205,10 +250,9 @@ public class ProductionController extends Controller{
 
     public void deleteCreditHandler(){
         if(productionsList.getSelectionModel().getSelectedItem() != null){
-            getDomainI().deleteCredit(getDomainI().castToCredit(creditsProductionList.getSelectionModel().getSelectedItem()).getCreditID());
-            Object[] creditsString = getDomainI().castToProduction(productionsList.getSelectionModel().getSelectedItem()).getCredits().toArray();
-            ObservableList<Object> strings = FXCollections.observableArrayList(Arrays.asList(creditsString));
-            creditsProductionList.setItems(strings);
+            tempDeletedCredits.add(getDomainI().castToCredit(creditsProductionList.getSelectionModel().getSelectedItem()));
+            credits.remove(getDomainI().castToCredit(creditsProductionList.getSelectionModel().getSelectedItem()));
+            creditsProductionList.setItems(FXCollections.observableArrayList(credits));
         }
     }
 
@@ -232,6 +276,17 @@ public class ProductionController extends Controller{
 
     public void searchHandler(){
         productionsList.setItems(FXCollections.observableArrayList(getDomainI().searchProductions(searchField.getText())));
+    }
+
+    public void searchPersonHandler(){
+        personsListSearch.setItems(FXCollections.observableArrayList(getDomainI().searchPersons(personSearchField.getText())));
+    }
+
+    public void chooseButtonHandler(){
+        idFieldCreditPerson.setText(getDomainI().castToPerson(personsListSearch.getSelectionModel().getSelectedItem()).getId() + "");
+        nameFieldPerson.setText(getDomainI().castToPerson(personsListSearch.getSelectionModel().getSelectedItem()).getName());
+        phoneFieldPerson.setText(getDomainI().castToPerson(personsListSearch.getSelectionModel().getSelectedItem()).getPhone() + "");
+        emailFieldPerson.setText(getDomainI().castToPerson(personsListSearch.getSelectionModel().getSelectedItem()).getEmail());
     }
 
 }

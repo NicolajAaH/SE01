@@ -21,11 +21,6 @@ public class DomainConnect implements DomainI {
     }
 
     @Override
-    public String findType(String email) {
-        return creditingSystem.findType(email);
-    }
-
-    @Override
     public void runSetup() {
 
     }
@@ -54,7 +49,7 @@ public class DomainConnect implements DomainI {
 
     @Override
     public Credit createCredit(int id, ObservableList observableList) {
-        int nextInt = CreditingSystem.getPersistenceI().getFacade().getNextInt("creditmapper");
+        //int nextInt = CreditingSystem.getPersistenceI().getFacade().getNextInt("creditmapper")+1;
         ArrayList<Roles> roles = new ArrayList<>();
         for (int i = 0; i < observableList.size(); i++) {
             roles.add((Roles) observableList.get(i));
@@ -62,7 +57,8 @@ public class DomainConnect implements DomainI {
 
         Person person = findPerson(id);
 
-        return new Credit(nextInt, person, roles);
+        //return new Credit(nextInt, person, roles);
+        return new Credit(0, person, roles);
     }
 
     @Override
@@ -252,6 +248,53 @@ public class DomainConnect implements DomainI {
     @Override
     public PersistenceI getPersistenceI() {
         return CreditingSystem.getPersistenceI();
+    }
+
+    @Override
+    public ArrayList<Person> getPersons() {
+        ArrayList<Person> matchingPersons = new ArrayList<>();
+        for (Person person : creditingSystem.getPersons()){
+            if(!person.getType().equals("systemadministrator")){
+                matchingPersons.add(person); //credit kan ikke gives til systemadmin
+            }
+        }
+        return matchingPersons;
+    }
+
+    @Override
+    public ArrayList<Person> searchPersons(String search) {
+        String searchInput = search.toLowerCase();
+        ArrayList<Person> matchingPersons = getPersons();
+        ArrayList<Person> matchingSearchPersons = new ArrayList<>();
+        for(Person person : matchingPersons){
+                String id = person.getId() + "";
+                String searchID = id.toLowerCase();
+                String name = person.getName();
+                String searchName = name.toLowerCase();
+                if(searchID.contains(searchInput) || searchName.contains(searchInput)){
+                    matchingSearchPersons.add(person);
+                }
+        }
+        return matchingSearchPersons;
+    }
+
+    @Override
+    public void merge(int person1ID, int person2ID, String name, int phone, String email, String password, String type) {
+        Person person = new Person(name, phone, email, password, type);
+        CreditingSystem.getPersistenceI().getFacade().put(person, "personmapper");
+        Person finalPerson = (Person) CreditingSystem.getPersistenceI().getFacade().getAll("personmapper").get(CreditingSystem.getPersistenceI().getFacade().getAll("personmapper").size()-1);
+
+        for(Production production : creditingSystem.getProductions()){
+            for (Credit credit : production.getCredits()){
+                if(credit.getPerson().getId() == person1ID || credit.getPerson().getId() == person2ID){
+                    credit.setPerson(finalPerson);
+                    CreditingSystem.getPersistenceI().getFacade().edit(production.getProductionID(), credit, "creditmapper");
+                }
+            }
+        }
+
+        CreditingSystem.getPersistenceI().getFacade().delete(person1ID, "personmapper");
+        CreditingSystem.getPersistenceI().getFacade().delete(person2ID, "personmapper"); //TEST NU
     }
 
 

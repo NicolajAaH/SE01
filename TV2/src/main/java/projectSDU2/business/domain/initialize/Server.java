@@ -1,13 +1,31 @@
 package projectSDU2.business.domain.initialize;
 
-public class Server {
-    private static CreditingSystem creditingSystem = CreditingSystem.getInstance();
+import java.io.IOException;
+import java.net.ServerSocket;
 
-    void start(){
-        throw new UnsupportedOperationException("Not yet supported.");
+public class Server{
+    private ServerSocket serverSocket;
+    private Transaction transaction;
+    private int port = 6789;
+
+    public Server(){
+        runServer();
     }
 
-    public static CreditingSystem getCreditingSystem() {
-        return creditingSystem;
+    public static void main(String[] args) {
+        new Server();
+    }
+
+    public void runServer() {
+        try{
+            serverSocket = new ServerSocket(port);
+
+            while(true){
+                transaction = new Transaction(serverSocket.accept());
+                transaction.start();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

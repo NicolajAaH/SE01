@@ -31,6 +31,8 @@ public class Controller {
 
     static String accountPassword;
 
+    static int id = -1;
+
     public static DomainI getDomainI() {
         return domainI;
     }
@@ -45,6 +47,7 @@ public class Controller {
             type = domainI.findPerson(emailField.getText()).getType();
             email = emailField.getText();
             accountPassword = passwordField.getText();
+            id = domainI.findPerson(emailField.getText()).getId();
             newFxml("core.fxml");
         }
         else{

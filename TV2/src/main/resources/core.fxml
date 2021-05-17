@@ -11,6 +11,7 @@
       <Button fx:id="producers" layoutX="424.0" layoutY="250.0" mnemonicParsing="false" onAction="#producersHandler" prefHeight="50.0" prefWidth="153.0" text="Producers" />
       <Button fx:id="signout" layoutX="923.0" layoutY="14.0" mnemonicParsing="false" onAction="#signoutHandler" text="Sign out" />
       <Button fx:id="creditingReportButton" layoutX="423.0" layoutY="54.0" mnemonicParsing="false" onAction="#generateCreditingReportHandler" prefHeight="50.0" prefWidth="155.0" text="Generate crediting report" />
-      <Button fx:id="verifyButton" layoutX="424.0" layoutY="536.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="153.0" text="Verify new changes" onAction="#verifyHandler"/>
+      <Button fx:id="verifyButton" layoutX="424.0" layoutY="536.0" mnemonicParsing="false" onAction="#verifyHandler" prefHeight="50.0" prefWidth="153.0" text="Verify new changes" />
+      <Button fx:id="mergePersonsButton" layoutX="122.0" layoutY="150.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="153.0" text="Merge persons" onAction="#mergePersonsHandler"/>
    </children>
 </AnchorPane>
