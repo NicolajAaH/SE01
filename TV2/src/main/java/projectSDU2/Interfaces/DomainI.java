@@ -14,9 +14,6 @@ public interface DomainI {
     //tilføj hvad GUI skal kunne tilgå
     boolean authorize(String email, String password);
 
-    String findType(String email);
-
-
     void runSetup();
 
     void addProducer(String name, int phone, String email, String password);
@@ -72,4 +69,14 @@ public interface DomainI {
     ArrayList<Person> searchProducers(String search);
 
     ArrayList<Person> searchParticipants(String search);
+
+    ArrayList<Production> getNotValidated();
+
+    PersistenceI getPersistenceI();
+
+    ArrayList<Person> getPersons();
+
+    ArrayList<Person> searchPersons(String search);
+
+    void merge(int person1ID, int person2ID, String name, int phone, String email, String password, String type);
 }

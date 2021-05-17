@@ -21,6 +21,7 @@
                 <version>0.0.6</version>
                 <configuration>
                     <mainClass>projectSDU2.presentation.runGUI</mainClass>
+                    <mainClass>usersystem.presentation.App</mainClass>
                 </configuration>
             </plugin>
             <plugin>

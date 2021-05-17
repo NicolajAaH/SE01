@@ -7,6 +7,8 @@ import javafx.scene.control.*;
 public class ParticipantsController extends Controller{
 
     @FXML
+    private TextField idFieldParticipant;
+    @FXML
     private TextField searchField;
     @FXML
     private Button searchButton;
@@ -48,12 +50,17 @@ public class ParticipantsController extends Controller{
 
     public void editParticipantHandler() {
         if(participantsList.getSelectionModel().getSelectedItem() == null){
-            participantsLabelStatus.setText("Select producer");
+            participantsLabelStatus.setText("Select participant");
         }else {
             participantsLabelStatus.setText("");
             addParticipantpane.setVisible(true);
             addParticipantpane.setDisable(false);
             descLabel.setText("Edit participant");
+            idFieldParticipant.setText(getDomainI().castToPerson(participantsList.getSelectionModel().getSelectedItem()).getId() + "");
+            nameFieldParticipant.setText(getDomainI().castToPerson(participantsList.getSelectionModel().getSelectedItem()).getName());
+            phoneFieldParticipant.setText(getDomainI().castToPerson(participantsList.getSelectionModel().getSelectedItem()).getPhone() + "");
+            emailFieldParticipant.setText(getDomainI().castToPerson(participantsList.getSelectionModel().getSelectedItem()).getEmail());
+            passwordFieldParticipant.setText(getDomainI().castToPerson(participantsList.getSelectionModel().getSelectedItem()).getPassword());
         }
     }
 

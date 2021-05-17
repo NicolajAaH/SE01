@@ -11,6 +11,8 @@ import java.util.Arrays;
 public class ProducerController extends Controller{
 
     @FXML
+    private TextField idFieldProducer;
+    @FXML
     private TextField searchField;
     @FXML
     private Button searchButton;
@@ -81,6 +83,7 @@ public class ProducerController extends Controller{
             addProducerpane.setVisible(true);
             addProducerpane.setDisable(false);
             descLabel.setText("Edit producer");
+            idFieldProducer.setText(getDomainI().castToPerson(producersList.getSelectionModel().getSelectedItem()).getId() +"");
             nameFieldProducer.setText(getDomainI().castToPerson(producersList.getSelectionModel().getSelectedItem()).getName());
             phoneFieldProducer.setText(""+getDomainI().castToPerson(producersList.getSelectionModel().getSelectedItem()).getPhone());
             emailFieldProducer.setText(getDomainI().castToPerson(producersList.getSelectionModel().getSelectedItem()).getEmail());

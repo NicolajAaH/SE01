@@ -15,7 +15,7 @@ public abstract class RDBMapper extends PersistenceMapper{
     }
 
     @Override
-    protected final Object getObjectFromStorage(int oid) {
+    protected Object getObjectFromStorage(int oid) {
         try {
             ResultSet resultSet = getResultSet(oid);
             return getObjectFromRecord(oid, resultSet);
@@ -42,18 +42,19 @@ public abstract class RDBMapper extends PersistenceMapper{
 
     @Override
     protected ArrayList<Object> getAllFromStorage() {
+        ResultSet resultSet = getResultSetAll();
+        return getObjectsFromRecord(resultSet);
+    }
+
+    private ResultSet getResultSetAll() {
         try {
-            ResultSet resultSet = getResultSetAll();
-            return getObjectsFromRecord(resultSet);
+            PreparedStatement statement = PersistenceHandler.getInstance().getConnection().prepareStatement("SELECT * FROM " +tableName+ ";");
+            return statement.executeQuery();
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         return null;
-    }
-
-    private ResultSet getResultSetAll() throws SQLException {
-        PreparedStatement statement = PersistenceHandler.getInstance().getConnection().prepareStatement("SELECT * FROM " +tableName+ ";");
-        return statement.executeQuery();
     }
 
     protected abstract ArrayList<Object> getObjectsFromRecord(ResultSet resultSet);

@@ -8,6 +8,7 @@ import projectSDU2.business.domain.credit.Production;
 import projectSDU2.business.domain.credit.Roles;
 import projectSDU2.business.domain.user.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class CreditingSystem {
@@ -83,10 +84,6 @@ public class CreditingSystem {
         return false;
     }
 
-    public String findType(String email){
-        return persistenceI.findType(email);
-    }
-
     public Person findPerson(String email){
         for (Person person : persons){
             if(person.getEmail().equals(email)){
@@ -146,5 +143,29 @@ public class CreditingSystem {
             }
         }
         return matchingProductions;
+    }
+
+    public ArrayList<Credit> findCreditsForPerson(int personID){
+        ArrayList<Credit> creditArrayList = new ArrayList<>();
+        for (Production production : productions){
+            for (Credit credit : production.getCredits()){
+                if(credit.getPerson().getId() == personID){
+                    creditArrayList.add(credit);
+                }
+            }
+        }
+        return creditArrayList;
+    }
+
+    public ArrayList<Production> findProductionsForPerson(int personID){
+        ArrayList<Production> productionArrayList = new ArrayList<>();
+        for (Production production : productions){
+            for (Credit credit : production.getCredits()){
+                if(credit.getPerson().getId() == personID){
+                    productionArrayList.add(production);
+                }
+            }
+        }
+        return productionArrayList;
     }
 }
