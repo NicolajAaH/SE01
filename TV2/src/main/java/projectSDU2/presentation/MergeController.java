@@ -2,13 +2,12 @@ package projectSDU2.presentation;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 public class MergeController extends Controller{
 
+    @FXML
+    private Label labelStatus;
     @FXML
     private ListView mergePersonsList;
     @FXML
@@ -56,20 +55,52 @@ public class MergeController extends Controller{
     }
 
     public void chooseHandler1(){
-        idPerson1.setText(getDomainI().castToPerson(mergePersonsList.getSelectionModel().getSelectedItem()).getId() + "");
-        namePerson1.setText(getDomainI().castToPerson(mergePersonsList.getSelectionModel().getSelectedItem()).getName());
-        phonePerson1.setText(getDomainI().castToPerson(mergePersonsList.getSelectionModel().getSelectedItem()).getPhone() + "");
-        emailPerson1.setText(getDomainI().castToPerson(mergePersonsList.getSelectionModel().getSelectedItem()).getEmail());
-        passwordPerson1.setText(getDomainI().castToPerson(mergePersonsList.getSelectionModel().getSelectedItem()).getPassword());
-        type = getDomainI().castToPerson(mergePersonsList.getSelectionModel().getSelectedItem()).getType();
+        try {
+            if(mergePersonsList.getSelectionModel().getSelectedItem() == null){
+                labelStatus.setText("Choose person 1");
+            }else{
+            if (!idPerson2.getText().equals("") && (mergePersonsList.getSelectionModel().getSelectedItem() == null || getDomainI().castToPerson(mergePersonsList.getSelectionModel().getSelectedItem()).getId() == Integer.parseInt(idPerson2.getText()))) {
+                if (getDomainI().castToPerson(mergePersonsList.getSelectionModel().getSelectedItem()).getId() == Integer.parseInt(idPerson2.getText())) {
+                    labelStatus.setText("Cannot merge same person");
+                } else {
+                    labelStatus.setText("Select person 2");
+                }
+            } else {
+                idPerson1.setText(getDomainI().castToPerson(mergePersonsList.getSelectionModel().getSelectedItem()).getId() + "");
+                namePerson1.setText(getDomainI().castToPerson(mergePersonsList.getSelectionModel().getSelectedItem()).getName());
+                phonePerson1.setText(getDomainI().castToPerson(mergePersonsList.getSelectionModel().getSelectedItem()).getPhone() + "");
+                emailPerson1.setText(getDomainI().castToPerson(mergePersonsList.getSelectionModel().getSelectedItem()).getEmail());
+                passwordPerson1.setText(getDomainI().castToPerson(mergePersonsList.getSelectionModel().getSelectedItem()).getPassword());
+                type = getDomainI().castToPerson(mergePersonsList.getSelectionModel().getSelectedItem()).getType();
+                labelStatus.setText("");
+            }}
+        }catch (NumberFormatException e){
+            labelStatus.setText("Choose person 2");
+        }
     }
 
-    public void chooseHandler2(){
-        idPerson2.setText(getDomainI().castToPerson(mergePersonsList.getSelectionModel().getSelectedItem()).getId() + "");
-        namePerson2.setText(getDomainI().castToPerson(mergePersonsList.getSelectionModel().getSelectedItem()).getName());
-        phonePerson2.setText(getDomainI().castToPerson(mergePersonsList.getSelectionModel().getSelectedItem()).getPhone() + "");
-        emailPerson2.setText(getDomainI().castToPerson(mergePersonsList.getSelectionModel().getSelectedItem()).getEmail());
-        passwordPerson2.setText(getDomainI().castToPerson(mergePersonsList.getSelectionModel().getSelectedItem()).getPassword());
+    public void chooseHandler2() {
+        try {
+            if(mergePersonsList.getSelectionModel().getSelectedItem() == null){
+                labelStatus.setText("Choose person 2");
+            }else{
+            if (!idPerson1.getText().equals("") && (mergePersonsList.getSelectionModel().getSelectedItem() == null || getDomainI().castToPerson(mergePersonsList.getSelectionModel().getSelectedItem()).getId() == Integer.parseInt(idPerson1.getText()))) {
+                if (getDomainI().castToPerson(mergePersonsList.getSelectionModel().getSelectedItem()).getId() == Integer.parseInt(idPerson1.getText())) {
+                    labelStatus.setText("Cannot merge same person");
+                } else {
+                    labelStatus.setText("Select person 2");
+                }
+            } else {
+                idPerson2.setText(getDomainI().castToPerson(mergePersonsList.getSelectionModel().getSelectedItem()).getId() + "");
+                namePerson2.setText(getDomainI().castToPerson(mergePersonsList.getSelectionModel().getSelectedItem()).getName());
+                phonePerson2.setText(getDomainI().castToPerson(mergePersonsList.getSelectionModel().getSelectedItem()).getPhone() + "");
+                emailPerson2.setText(getDomainI().castToPerson(mergePersonsList.getSelectionModel().getSelectedItem()).getEmail());
+                passwordPerson2.setText(getDomainI().castToPerson(mergePersonsList.getSelectionModel().getSelectedItem()).getPassword());
+                labelStatus.setText("");
+            }}
+        }catch (NumberFormatException e){
+            labelStatus.setText("Choose person 1");
+        }
     }
 
     public void mergeCheckHandler(){

@@ -19,10 +19,10 @@
       <Button fx:id="addProducerButton" layoutX="766.0" layoutY="91.0" mnemonicParsing="false" onAction="#addProducerHandler" prefHeight="27.0" prefWidth="106.0" text="Add producer" />
       <Button fx:id="deleteProducerButton" layoutX="766.0" layoutY="145.0" mnemonicParsing="false" onAction="#deleteHandler" text="Delete producer" />
       <Button fx:id="editProducerButton" layoutX="766.0" layoutY="200.0" mnemonicParsing="false" onAction="#editProducerHandler" prefHeight="27.0" prefWidth="106.0" text="Edit producer" />
-      <Label fx:id="producersLabelStatus" layoutX="449.0" layoutY="248.0" prefHeight="115.0" prefWidth="136.0" />
-      <DialogPane fx:id="addProducerpane" layoutY="-1.0" prefHeight="600.0" prefWidth="1000.0">
+      <Label fx:id="producersLabelStatus" layoutX="751.0" layoutY="247.0" prefHeight="115.0" prefWidth="213.0" />
+      <DialogPane fx:id="addProducerpane" layoutY="-1.0" prefHeight="600.0" prefWidth="1000.0" minHeight="600.0" minWidth="1000.0" maxHeight="600.0" maxWidth="1000.0">
          <content>
-            <AnchorPane prefHeight="600.0" prefWidth="1000.0">
+            <AnchorPane prefHeight="600.0" prefWidth="1000.0" minHeight="600.0" minWidth="1000.0" maxHeight="600.0" maxWidth="1000.0">
                <children>
                   <Label fx:id="descLabel" layoutX="467.0" layoutY="14.0" text="Add producer" />
                   <Label layoutX="120.0" layoutY="163.0" text="Name:" />
@@ -38,7 +38,8 @@
                   <Label layoutX="110.0" layoutY="409.0" text="Password:" />
                   <PasswordField fx:id="passwordFieldProducer" layoutX="173.0" layoutY="404.0" />
                   <Label layoutX="121.0" layoutY="87.0" text="ID:" />
-                  <TextField fx:id="idFieldProducer" layoutX="176.0" layoutY="82.0" editable="false"/>
+                  <TextField fx:id="idFieldProducer" editable="false" layoutX="176.0" layoutY="82.0" />
+                  <Label fx:id="statusLabelProducer" layoutX="52.0" layoutY="459.0" prefHeight="79.0" prefWidth="353.0" wrapText="true" />
                </children>
             </AnchorPane>
          </content>

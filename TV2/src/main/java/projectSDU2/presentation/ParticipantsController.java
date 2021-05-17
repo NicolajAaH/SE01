@@ -7,6 +7,8 @@ import javafx.scene.control.*;
 public class ParticipantsController extends Controller{
 
     @FXML
+    private Label labelStatusAddEdit;
+    @FXML
     private TextField idFieldParticipant;
     @FXML
     private TextField searchField;
@@ -65,24 +67,28 @@ public class ParticipantsController extends Controller{
     }
 
     public void finishHandler() {
-        if(descLabel.getText().equals("Edit participant")){
-            //edit
-            int oid = getDomainI().castToPerson(participantsList.getSelectionModel().getSelectedItem()).getId();
-            String name = nameFieldParticipant.getText();
-            int phone = Integer.parseInt(phoneFieldParticipant.getText());
-            String email = emailFieldParticipant.getText();
-            String password = passwordFieldParticipant.getText();
-            getDomainI().editPerson(oid, name, phone, email, password);
-        }else{
-            //add
-            String name = nameFieldParticipant.getText();
-            int phone = Integer.parseInt(phoneFieldParticipant.getText());
-            String email = emailFieldParticipant.getText();
-            String password = passwordFieldParticipant.getText();
-            getDomainI().addParticipant(name, phone, email, password);
+        try{
+            if(descLabel.getText().equals("Edit participant")){
+                //edit
+                int oid = getDomainI().castToPerson(participantsList.getSelectionModel().getSelectedItem()).getId();
+                String name = nameFieldParticipant.getText();
+                int phone = Integer.parseInt(phoneFieldParticipant.getText());
+                String email = emailFieldParticipant.getText();
+                String password = passwordFieldParticipant.getText();
+                getDomainI().editPerson(oid, name, phone, email, password);
+            }else{
+                //add
+                String name = nameFieldParticipant.getText();
+                int phone = Integer.parseInt(phoneFieldParticipant.getText());
+                String email = emailFieldParticipant.getText();
+                String password = passwordFieldParticipant.getText();
+                getDomainI().addParticipant(name, phone, email, password);
+            }
+            resetFields();
+            initialize();
+        }catch (NumberFormatException e){
+            labelStatusAddEdit.setText("Error: Phone needs to be an integer");
         }
-        resetFields();
-        initialize();
     }
 
     private void resetFields() {
@@ -90,6 +96,9 @@ public class ParticipantsController extends Controller{
         phoneFieldParticipant.setText("");
         emailFieldParticipant.setText("");
         passwordFieldParticipant.setText("");
+        participantsLabelStatus.setText("");
+        labelStatusAddEdit.setText("");
+
     }
 
     public void cancelHandler() {

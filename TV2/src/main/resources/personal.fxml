@@ -18,7 +18,7 @@
       <TextField fx:id="phoneField" layoutX="188.0" layoutY="321.0" />
       <TextField fx:id="emailField" layoutX="187.0" layoutY="154.0" />
       <Button fx:id="updateButton" layoutX="111.0" layoutY="377.0" mnemonicParsing="false" onAction="#updateHandler" text="Update information" />
-      <Label fx:id="updateLabel" layoutX="275.0" layoutY="321.0" prefHeight="27.0" prefWidth="279.0" wrapText="true" />
+      <Label fx:id="updateLabel" layoutX="49.0" layoutY="464.0" prefHeight="61.0" prefWidth="391.0" wrapText="true" />
       <Label layoutX="119.0" layoutY="218.0" text="Password:" />
       <PasswordField fx:id="password" layoutX="188.0" layoutY="213.0" />
       <Label fx:id="productionLabel" layoutX="500.0" layoutY="61.0" text="Productions:" />
