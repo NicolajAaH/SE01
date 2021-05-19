@@ -4,6 +4,8 @@ import projectSDU2.business.domain.credit.Credit;
 import projectSDU2.business.domain.credit.Production;
 import projectSDU2.business.domain.credit.Roles;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -13,18 +15,29 @@ public class FinanceReport extends Report {
     private static HashMap<Roles, Integer> creditTypes;
     private static HashMap<String, HashMap<Roles, Integer>> producers;
     private static int index = 1;
-    private static String filename = nameOfFile + index + ".txt";
+    private static String filename = "Finansrapport " + nameOfFile + index + ".txt";
     private static HashMap<Roles, Integer> frequencyMap;
     private static ArrayList<Credit> credits;
     private static ArrayList<Roles> roles;
 
     public static void generateFinanceReport() {
-        generateFilmProducersReport();
+        generateFilmProducers();
         generateRolesOverview();
         generateTop10MostCredited();
+        try (FileWriter file = new FileWriter(filename)) {
+            file.write("Oversigt over producenter \n");
+            file.append(gson.toJson(producers));
+            file.append("\nOversigt over roller \n");
+            file.append(gson.toJson(creditTypes));
+            file.append("\nTop 10 mest krediterede \n");
+            file.append(gson.toJson(top10credits));
+            index++;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public static void generateFilmProducersReport() {
+    public static void generateFilmProducers() {
         producers = new HashMap<>();
         ArrayList<String> producingCompanies = new ArrayList<>();
 
@@ -46,8 +59,6 @@ public class FinanceReport extends Report {
             }
             producers.put(companyName, frequencyMap);
         }
-        writeToFile("Oversigt over producenter " + filename, producers);
-        index++;
     }
 
     public static void generateRolesOverview() {
@@ -58,8 +69,6 @@ public class FinanceReport extends Report {
             getCreditsAndRolesFromProduction(production);
         }
         countFrequencyRoles(roles, creditTypes);
-        writeToFile2("Oversigt over roller " + filename, creditTypes);
-        index++;
     }
 
     public static void generateTop10MostCredited() {
@@ -80,9 +89,6 @@ public class FinanceReport extends Report {
         top10credits = map.entrySet().stream()
                 .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).limit(10)
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
-
-        writeToFile3("Top 10 mest krediterede " + filename, top10credits);
-        index++;
     }
 
     //tæller hvor mange instanser der er af roller i en liste
@@ -104,4 +110,7 @@ public class FinanceReport extends Report {
         }
     }
 
+    public static void main(String[] args) {
+    generateFinanceReport();
+    }
 }

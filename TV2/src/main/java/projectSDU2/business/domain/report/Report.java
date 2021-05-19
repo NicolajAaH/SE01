@@ -24,7 +24,7 @@ public abstract class Report {
     protected static String nameOfFile = todayNoTime + " ID ";
 
 
-    protected void writeToFile(String fileName, ArrayList<Production> list) {
+    protected static void writeToFile(String fileName, ArrayList<Production> list) {
         try (FileWriter file = new FileWriter(fileName)) {
             file.write(gson.toJson(list));
         } catch (IOException e) {
