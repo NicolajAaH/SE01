@@ -53,6 +53,7 @@ public class PersonalController extends Controller{
 
     public void updateHandler(){
         try{
+            email = emailField.getText();
             int phone = Integer.parseInt(phoneField.getText());
             getDomainI().editPerson(getDomainI().findPerson(email).getId(), nameField.getText(), phone,
                     emailField.getText(), password.getText(), getDomainI().findPerson(email).getType());
