@@ -42,7 +42,15 @@ public abstract class Report {
 
     }
 
-   protected static void writeToFile2(String fileName, HashMap<Roles, Integer> map) {
+    protected static void writeToFile2(String fileName, HashMap<Roles, Integer> map) {
+        try (FileWriter file = new FileWriter(fileName)) {
+            file.write(gson.toJson(map));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected static void writeToFile3(String fileName, HashMap<String, Integer> map) {
         try (FileWriter file = new FileWriter(fileName)) {
             file.write(gson.toJson(map));
         } catch (IOException e) {
@@ -50,7 +58,5 @@ public abstract class Report {
         }
 
     }
-
-
 
 }
