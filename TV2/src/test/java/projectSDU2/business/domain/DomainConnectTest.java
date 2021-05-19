@@ -105,7 +105,7 @@ public class DomainConnectTest {
         domainI.deletePerson(leoMerge.getId());
     }
 
-    @Test //genere krediteringsrapport + validering
+    @Test //generere krediteringsrapport + validering
     public void generateCreditingReport(){
         ArrayList<Credit> credits = new ArrayList<>();
         ArrayList<Roles> roles = new ArrayList<>();
@@ -115,7 +115,8 @@ public class DomainConnectTest {
         ObservableList observableList = FXCollections.observableArrayList(credits);
         domainI.addProduction(observableList, "Titanic", "Paramount Pictures"); //tilføjer produktionen
         Production titanic = domainI.searchProductions("Titanic").get(0); //henter den nye oprettede
-        domainI.editProduction(titanic.getProductionID(), "Titanic", "AndetFirma", observableList, true, false); //validerer den (status)
+        domainI.editProduction(titanic.getProductionID(), "Titanic", "AndetFirma",
+                observableList, true, false); //validerer den (status)
         Production titanicNew = domainI.searchProductions("Titanic").get(0); //henter den nye ændrede
         domainI.generateCreditingReport();
         DateFormat format = new SimpleDateFormat("dd-MM-yyyy");

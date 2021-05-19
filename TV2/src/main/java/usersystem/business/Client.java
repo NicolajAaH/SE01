@@ -2,6 +2,7 @@ package usersystem.business;
 
 import projectSDU2.business.domain.initialize.Command;
 import projectSDU2.business.domain.initialize.Commands;
+import projectSDU2.business.domain.initialize.Server;
 import projectSDU2.business.domain.initialize.SimpleObject;
 
 import java.io.*;
@@ -19,6 +20,12 @@ public class Client{
     }
 
     private Client(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Server.main(null);
+            }
+        }).start();
         try {
             clientSocket = new Socket("localhost", 6789);
             objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
