@@ -9,7 +9,7 @@ public class PersistenceHandler {
     private static PersistenceHandler instance;
     private String url = "localhost";
     private int port = 5432;
-    private String databaseName = "tv2";
+    private static String databaseName = "tv2";
     private String username = "postgres";
     private String password = "pgadmin123"; //ændrer password til eget password
     private Connection connection = null;
@@ -40,5 +40,7 @@ public class PersistenceHandler {
         return connection;
     }
 
-
+    public static void setDatabaseName(String database) {
+        databaseName = database;
+    }
 }

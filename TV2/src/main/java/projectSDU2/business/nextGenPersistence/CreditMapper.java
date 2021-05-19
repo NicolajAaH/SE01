@@ -80,7 +80,6 @@ public class CreditMapper extends RDBMapper {
         Credit credit = (Credit) object;
         try {
             if(PersistenceFacade.getInstance().get(credit.getCreditID(), "creditmapper") == null){
-                System.out.println(credit.toString() + "I NULL");
                 PreparedStatement statement2 = PersistenceHandler.getInstance().getConnection().prepareStatement("INSERT INTO credit(productionID, personID) VALUES (?,?);");
                 statement2.setInt(1, oid);
                 statement2.setInt(2, credit.getPerson().getId());
@@ -104,7 +103,6 @@ public class CreditMapper extends RDBMapper {
                     statement3.execute();
                 }
             }else {
-                System.out.println(credit.toString() + "I ELSE");
                 PreparedStatement statement = PersistenceHandler.getInstance().getConnection().prepareStatement("UPDATE credit SET productionid = ?, personid = ? WHERE id=?;");
                 statement.setInt(1, oid);
                 statement.setInt(2, credit.getPerson().getId());

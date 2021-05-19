@@ -1,6 +1,7 @@
 package projectSDU2.business.domain.user;
 
 public class Person {
+    //Attributter
     int id;
     String name;
     int phone;
@@ -8,6 +9,7 @@ public class Person {
     transient String password;
     transient String type;
 
+    //Constructors
     public Person(String name, int id, int phone, String email, String password, String type) {
         this.name = name;
         this.id = id;
@@ -25,6 +27,7 @@ public class Person {
         this.type = type;
     }
 
+    //Getters og setters
     public String getName() {
         return name;
     }
@@ -65,6 +68,7 @@ public class Person {
         return type;
     }
 
+    //Overrided toString metode, så den printes pænt
     @Override
     public String toString() {
         return "ID: " + id + "\t" + "Name :" + name + "\t" + "Phone: " + phone + "\t" + "Email: " + email + "\t" + "Type: " + type;

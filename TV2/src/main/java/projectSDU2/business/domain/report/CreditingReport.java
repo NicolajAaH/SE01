@@ -20,7 +20,7 @@ public class CreditingReport extends Report {
     private Date today = new Date();
     private String todayNoTime = format.format(today);
     private static int index = 0;
-    private String nameOfFile = "Krediteringsrapport " + todayNoTime + " ID " + index;
+    private String nameOfFile = "Krediteringsrapport " + todayNoTime + " ID " + index + ".txt";
 
     public void generateCreditingReport() {
         productionsToSend = new ArrayList<>();
