@@ -48,6 +48,7 @@ public class ParticipantsController extends Controller{
         addParticipantpane.setVisible(true);
         addParticipantpane.setDisable(false);
         descLabel.setText("Add participant");
+        idFieldParticipant.setText("ID will be given after");
     }
 
     public void editParticipantHandler() {

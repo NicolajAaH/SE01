@@ -77,6 +77,7 @@ public class ProducerController extends Controller{
         addProducerpane.setVisible(true);
         addProducerpane.setDisable(false);
         descLabel.setText("Add producer");
+        idFieldProducer.setText("ID will be given after");
     }
 
     public void editProducerHandler(){
