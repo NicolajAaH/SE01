@@ -52,6 +52,7 @@ public class MergeController extends Controller{
     @Override
     public void initialize() {
         mergePersonsList.setItems(FXCollections.observableArrayList(getDomainI().getPersons()));
+        mergeButton.setDisable(true);
     }
 
     public void chooseHandler1(){
@@ -104,17 +105,37 @@ public class MergeController extends Controller{
     }
 
     public void mergeCheckHandler(){
-        idMerged.setText("Will be given after");
-        nameMerged.setText(namePerson1.getText());
-        phoneMerged.setText(phonePerson1.getText());
-        emailMerged.setText(emailPerson1.getText());
-        passwordMerged.setText(passwordPerson1.getText());
+        if(idPerson1.getText().isBlank() || idPerson2.getText().isBlank()){
+            labelStatus.setText("Both persons must be selected!");
+        }else {
+            if(getDomainI().findPerson(Integer.parseInt(idPerson1.getText())).getType().equals(getDomainI().findPerson(Integer.parseInt(idPerson2.getText())).getType())){
+                idMerged.setText("Will be given after");
+                nameMerged.setText(namePerson1.getText());
+                phoneMerged.setText(phonePerson1.getText());
+                emailMerged.setText(emailPerson1.getText());
+                passwordMerged.setText(passwordPerson1.getText());
+                mergeButton.setDisable(false);
+                labelStatus.setText("");
+            }else{
+                labelStatus.setText("Persons must be of same type");
+            }
+        }
     }
 
     public void mergeHandler(){
-        getDomainI().merge(Integer.parseInt(idPerson1.getText()), Integer.parseInt(idPerson2.getText()), nameMerged.getText(), Integer.parseInt(phoneMerged.getText()),
-                emailMerged.getText(), passwordMerged.getText(), type);
-        resetFields();
+        if(nameMerged.getText().isBlank() || phoneMerged.getText().isBlank() || emailMerged.getText().isBlank() || passwordMerged.getText().isBlank()){
+            labelStatus.setText("One or more fields are blank");
+        }else {
+            try{
+                int phone = Integer.parseInt(phoneMerged.getText());
+                getDomainI().merge(Integer.parseInt(idPerson1.getText()), Integer.parseInt(idPerson2.getText()), nameMerged.getText(), phone,
+                        emailMerged.getText(), passwordMerged.getText(), type);
+                resetFields();
+                labelStatus.setText("Merge complete");
+            }catch (NumberFormatException e){
+                labelStatus.setText("Phone must be an integer");
+            }
+        }
     }
 
     private void resetFields(){

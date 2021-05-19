@@ -52,17 +52,24 @@ public class PersonalController extends Controller{
     }
 
     public void updateHandler(){
-        try{
-            int phone = Integer.parseInt(phoneField.getText());
-            getDomainI().editPerson(getDomainI().findPerson(email).getId(), nameField.getText(), phone,
-                    emailField.getText(), password.getText(), getDomainI().findPerson(email).getType());
-            updateLabel.setText("Update finished");
-            email = emailField.getText();
-            getDomainI().runSetup();
-        }catch (NumberFormatException e){
-            updateLabel.setText("Phone must be an integer");
+        if(emailField.getText().isBlank() || password.getText().isBlank() || nameField.getText().isBlank() || phoneField.getText().isBlank()){
+            updateLabel.setText("One or more fields are blank");
+        }else {
+            try {
+                if (getDomainI().findPerson(emailField.getText()) == null || email.equals(emailField.getText())) {
+                    int phone = Integer.parseInt(phoneField.getText());
+                    getDomainI().editPerson(getDomainI().findPerson(email).getId(), nameField.getText(), phone,
+                            emailField.getText(), password.getText(), getDomainI().findPerson(email).getType());
+                    updateLabel.setText("Update finished");
+                    email = emailField.getText();
+                    getDomainI().runSetup();
+                } else {
+                    updateLabel.setText("Email already in use!");
+                }
+            } catch (NumberFormatException e) {
+                updateLabel.setText("Phone must be an integer");
+            }
         }
-
     }
 
 }

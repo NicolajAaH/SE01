@@ -79,4 +79,6 @@ public interface DomainI {
     ArrayList<Person> searchPersons(String search);
 
     void merge(int person1ID, int person2ID, String name, int phone, String email, String password, String type);
+
+    void generateFinanceReport();
 }

@@ -2,9 +2,14 @@ package projectSDU2.presentation;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 
 public class CoreController extends Controller{
 
+    @FXML
+    private Label statusLabelCore;
+    @FXML
+    private Button financeReportButton;
     @FXML
     private Button mergePersonsButton;
     @FXML
@@ -24,6 +29,7 @@ public class CoreController extends Controller{
 
     @Override
     public void initialize(){
+        statusLabelCore.setText("");
         if(type.equals("systemadministrator")){
 
         }
@@ -36,6 +42,8 @@ public class CoreController extends Controller{
             verifyButton.setVisible(false);
             mergePersonsButton.setDisable(true);
             mergePersonsButton.setVisible(false);
+            financeReportButton.setDisable(true);
+            financeReportButton.setVisible(false);
         }
         else if(type.equals("participant")){
             producers.setDisable(true);
@@ -53,6 +61,8 @@ public class CoreController extends Controller{
             verifyButton.setVisible(false);
             mergePersonsButton.setDisable(true);
             mergePersonsButton.setVisible(false);
+            financeReportButton.setDisable(true);
+            financeReportButton.setVisible(false);
         }
     }
 
@@ -86,8 +96,16 @@ public class CoreController extends Controller{
         newFxml("merge.fxml");
     }
 
-    public void generateCreditingReportHandler(){
+    @FXML
+    private void generateCreditingReportHandler(){
         getDomainI().generateCreditingReport();
+        statusLabelCore.setText("Crediting report generated");
+    }
+
+    @FXML
+    private void generateFinanceReportHandler(){
+        getDomainI().generateFinanceReport();
+        statusLabelCore.setText("Finance report generated");
     }
 
 

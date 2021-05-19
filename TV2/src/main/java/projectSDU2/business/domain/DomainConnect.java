@@ -319,5 +319,10 @@ public class DomainConnect implements DomainI {
         CreditingSystem.getPersistenceI().getFacade().delete(person2ID, "personmapper"); //TEST NU
     }
 
+    @Override
+    public void generateFinanceReport() {
+        //TODO
+    }
+
 
 }

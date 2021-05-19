@@ -67,27 +67,31 @@ public class ParticipantsController extends Controller{
     }
 
     public void finishHandler() {
-        try{
-            if(descLabel.getText().equals("Edit participant")){
-                //edit
-                int oid = getDomainI().castToPerson(participantsList.getSelectionModel().getSelectedItem()).getId();
-                String name = nameFieldParticipant.getText();
-                int phone = Integer.parseInt(phoneFieldParticipant.getText());
-                String email = emailFieldParticipant.getText();
-                String password = passwordFieldParticipant.getText();
-                getDomainI().editPerson(oid, name, phone, email, password);
-            }else{
-                //add
-                String name = nameFieldParticipant.getText();
-                int phone = Integer.parseInt(phoneFieldParticipant.getText());
-                String email = emailFieldParticipant.getText();
-                String password = passwordFieldParticipant.getText();
-                getDomainI().addParticipant(name, phone, email, password);
+        if(emailFieldParticipant.getText().isBlank() || passwordFieldParticipant.getText().isBlank() || nameFieldParticipant.getText().isBlank() || phoneFieldParticipant.getText().isBlank()){
+            labelStatusAddEdit.setText("One or more fields are blank");
+        }else {
+            try {
+                if (descLabel.getText().equals("Edit participant")) {
+                    //edit
+                    int oid = getDomainI().castToPerson(participantsList.getSelectionModel().getSelectedItem()).getId();
+                    String name = nameFieldParticipant.getText();
+                    int phone = Integer.parseInt(phoneFieldParticipant.getText());
+                    String email = emailFieldParticipant.getText();
+                    String password = passwordFieldParticipant.getText();
+                    getDomainI().editPerson(oid, name, phone, email, password);
+                } else {
+                    //add
+                    String name = nameFieldParticipant.getText();
+                    int phone = Integer.parseInt(phoneFieldParticipant.getText());
+                    String email = emailFieldParticipant.getText();
+                    String password = passwordFieldParticipant.getText();
+                    getDomainI().addParticipant(name, phone, email, password);
+                }
+                resetFields();
+                initialize();
+            } catch (NumberFormatException e) {
+                labelStatusAddEdit.setText("Error: Phone needs to be an integer");
             }
-            resetFields();
-            initialize();
-        }catch (NumberFormatException e){
-            labelStatusAddEdit.setText("Error: Phone needs to be an integer");
         }
     }
 
@@ -108,8 +112,12 @@ public class ParticipantsController extends Controller{
     }
 
     public void deleteHandler(){
-        getDomainI().deletePerson(getDomainI().castToPerson(participantsList.getSelectionModel().getSelectedItem()).getId());
-        participantsList.setItems(FXCollections.observableArrayList(getDomainI().getParticipants()));
+        if(participantsList.getSelectionModel().getSelectedItem() == null){
+            participantsLabelStatus.setText("Select participant");
+        }else {
+            getDomainI().deletePerson(getDomainI().castToPerson(participantsList.getSelectionModel().getSelectedItem()).getId());
+            participantsList.setItems(FXCollections.observableArrayList(getDomainI().getParticipants()));
+        }
     }
 
     public void searchHandler(){

@@ -103,32 +103,40 @@ public class ProducerController extends Controller{
     }
 
     public void finishHandler(){
-        try{
-            if(descLabel.getText().equals("Edit producer")){
-                int oid = getDomainI().castToPerson(producersList.getSelectionModel().getSelectedItem()).getId();
-                String name = nameFieldProducer.getText();
-                int phone = Integer.parseInt(phoneFieldProducer.getText());
-                String email = emailFieldProducer.getText();
-                String password = passwordFieldProducer.getText();
-                getDomainI().editPerson(oid, name, phone, email, password);
-            }else{
-                //add
-                String name = nameFieldProducer.getText();
-                int phone = Integer.parseInt(phoneFieldProducer.getText());
-                String email = emailFieldProducer.getText();
-                String password = passwordFieldProducer.getText();
-                getDomainI().addProducer(name, phone, email, password);
+        if(nameFieldProducer.getText().isBlank() || phoneFieldProducer.getText().isBlank() || emailFieldProducer.getText().isBlank() || passwordFieldProducer.getText().isBlank()){
+            statusLabelProducer.setText("One or more fields are blank");
+        }else {
+            try {
+                if (descLabel.getText().equals("Edit producer")) {
+                    int oid = getDomainI().castToPerson(producersList.getSelectionModel().getSelectedItem()).getId();
+                    String name = nameFieldProducer.getText();
+                    int phone = Integer.parseInt(phoneFieldProducer.getText());
+                    String email = emailFieldProducer.getText();
+                    String password = passwordFieldProducer.getText();
+                    getDomainI().editPerson(oid, name, phone, email, password);
+                } else {
+                    //add
+                    String name = nameFieldProducer.getText();
+                    int phone = Integer.parseInt(phoneFieldProducer.getText());
+                    String email = emailFieldProducer.getText();
+                    String password = passwordFieldProducer.getText();
+                    getDomainI().addProducer(name, phone, email, password);
+                }
+                resetFields();
+                initialize();
+            } catch (NumberFormatException e) {
+                statusLabelProducer.setText("Phone must be an integer");
             }
-            resetFields();
-            initialize();
-        }catch (NumberFormatException e){
-            statusLabelProducer.setText("Phone must be an integer");
         }
     }
 
     public void deleteHandler(){
-        getDomainI().deletePerson(getDomainI().castToPerson(producersList.getSelectionModel().getSelectedItem()).getId());
-        producersList.setItems(FXCollections.observableArrayList(getDomainI().getProducers()));
+        if(producersList.getSelectionModel().getSelectedItem() == null){
+            producersLabelStatus.setText("Select producer");
+        }else {
+            getDomainI().deletePerson(getDomainI().castToPerson(producersList.getSelectionModel().getSelectedItem()).getId());
+            producersList.setItems(FXCollections.observableArrayList(getDomainI().getProducers()));
+        }
     }
 
     public void searchHandler(){

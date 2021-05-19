@@ -131,19 +131,23 @@ public class ProductionController extends Controller {
     }
 
     public void finishHandler1() {
-        if (descLabel.getText().equals("Add production")) {
-            getDomainI().addProduction(creditsProductionList.getItems(), nameFieldProduction.getText(), companyFieldProduction.getText());
-        } else {
-            //edit
-            for (Object object : tempDeletedCredits) {
-                getDomainI().deleteCredit(getDomainI().castToCredit(object).getCreditID());
+        if(nameFieldProduction.getText().isBlank() || companyFieldProduction.getText().isBlank()){
+            statusLabelProduction.setText("One or more fields are blank");
+        }else {
+            if (descLabel.getText().equals("Add production")) {
+                getDomainI().addProduction(creditsProductionList.getItems(), nameFieldProduction.getText(), companyFieldProduction.getText());
+            } else {
+                //edit
+                for (Object object : tempDeletedCredits) {
+                    getDomainI().deleteCredit(getDomainI().castToCredit(object).getCreditID());
+                }
+                getDomainI().editProduction(Integer.parseInt(idFieldProduction.getText()), nameFieldProduction.getText(),
+                        companyFieldProduction.getText(), credits, validatedProduction.isSelected(), sentProduction.isSelected());
+                tempDeletedCredits.removeAll(tempDeletedCredits);
             }
-            getDomainI().editProduction(Integer.parseInt(idFieldProduction.getText()), nameFieldProduction.getText(),
-                    companyFieldProduction.getText(), credits, validatedProduction.isSelected(), sentProduction.isSelected());
-            tempDeletedCredits.removeAll(tempDeletedCredits);
+            credits.removeAll(credits);
+            initialize();
         }
-        credits.removeAll(credits);
-        initialize();
     }
 
     public void cancelHandler2() {
@@ -167,25 +171,30 @@ public class ProductionController extends Controller {
         if(rolesList.getItems().isEmpty()){
             statusLabelCredit.setText("Error: Credit needs role.");
         }else {
-            if (descLabelCredit.getText().equals("Add credit")) {
-                if (alreadyHasCredit(Integer.parseInt(idFieldCreditPerson.getText()))) {
-                    statusLabelCredit.setText("Error: Credit for person already exists. Edit existing one.");
-                } else {
+            if(idFieldCreditPerson.getText().isBlank()){
+                statusLabelCredit.setText("Person must be selected");
+            }else {
+                statusLabelCredit.setText("");
+                if (descLabelCredit.getText().equals("Add credit")) {
+                    if (alreadyHasCredit(Integer.parseInt(idFieldCreditPerson.getText()))) {
+                        statusLabelCredit.setText("Error: Credit for person already exists. Edit existing one.");
+                    } else {
+                        credits.add(getDomainI().createCredit(Integer.parseInt(idFieldCreditPerson.getText()), roles));
+                        creditsProductionList.setItems(credits);
+                        addCreditProduction.setDisable(true);
+                        addCreditProduction.setVisible(false);
+                        statusLabelCredit.setText("");
+                    }
+
+                } else if (descLabelCredit.getText().equals("Edit credit")) {
+                    //edit
+                    credits.remove(getDomainI().castToCredit(creditsProductionList.getSelectionModel().getSelectedItem()));
                     credits.add(getDomainI().createCredit(Integer.parseInt(idFieldCreditPerson.getText()), roles));
                     creditsProductionList.setItems(credits);
                     addCreditProduction.setDisable(true);
                     addCreditProduction.setVisible(false);
                     statusLabelCredit.setText("");
                 }
-
-            } else if (descLabelCredit.getText().equals("Edit credit")) {
-                //edit
-                credits.remove(getDomainI().castToCredit(creditsProductionList.getSelectionModel().getSelectedItem()));
-                credits.add(getDomainI().createCredit(Integer.parseInt(idFieldCreditPerson.getText()), roles));
-                creditsProductionList.setItems(credits);
-                addCreditProduction.setDisable(true);
-                addCreditProduction.setVisible(false);
-                statusLabelCredit.setText("");
             }
         }
     }
