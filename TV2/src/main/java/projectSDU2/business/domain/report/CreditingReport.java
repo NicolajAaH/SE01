@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class CreditingReport extends Report {
     private ArrayList<Production> productionsToSend;
     private static int index = 1;
-    private String filename = "Krediteringsrapport " + super.nameOfFile + index;
+    private String filename = "Krediteringsrapport " + super.nameOfFile + index + ".txt";
 
 
     public void generateCreditingReport() {

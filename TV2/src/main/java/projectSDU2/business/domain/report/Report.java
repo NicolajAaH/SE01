@@ -12,7 +12,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 
 public abstract class Report {
     private int reportID;
@@ -22,7 +21,7 @@ public abstract class Report {
     protected static DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
     protected static Date today = new Date();
     protected static String todayNoTime = format.format(today);
-    protected static String nameOfFile = "Krediteringsrapport " + todayNoTime + " ID ";
+    protected static String nameOfFile = todayNoTime + " ID ";
 
 
     protected void writeToFile(String fileName, ArrayList<Production> list) {
@@ -35,6 +34,15 @@ public abstract class Report {
     }
 
     protected static void writeToFile(String fileName, HashMap<String, HashMap<Roles, Integer>> map) {
+        try (FileWriter file = new FileWriter(fileName)) {
+            file.write(gson.toJson(map));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+   protected static void writeToFile2(String fileName, HashMap<Roles, Integer> map) {
         try (FileWriter file = new FileWriter(fileName)) {
             file.write(gson.toJson(map));
         } catch (IOException e) {
