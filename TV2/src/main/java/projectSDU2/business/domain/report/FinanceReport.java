@@ -10,12 +10,14 @@ import java.util.HashMap;
 
 
 public class FinanceReport extends Report {
-    private HashMap<Person, Integer> top10credits;
-    private HashMap<Roles, Integer> creditTypes;
-    private static HashMap<String, HashMap<Roles, Integer>> producers = new HashMap<>();
+    private static HashMap<Person, Integer> top10credits;
+    private static HashMap<Roles, Integer> creditTypes;
+    private static HashMap<String, HashMap<Roles, Integer>> producers;
     private static int index = 1;
     private static String filename = nameOfFile + index + ".txt";
-    static HashMap<Roles, Integer> frequencyMap;
+    private static HashMap<Roles, Integer> frequencyMap;
+    private static ArrayList<Credit> credits;
+    private static ArrayList<Roles> roles;
 
     public void generateFinanceReport() {
         top10credits = new HashMap<>();
@@ -24,9 +26,8 @@ public class FinanceReport extends Report {
     }
 
     public static void generateFilmProducersReport() {
+        producers = new HashMap<>();
         ArrayList<String> producingCompanies = new ArrayList<>();
-        ArrayList<Credit> credits;
-        ArrayList<Roles> roles;
 
         //finder navnene på alle producenterne
         for (Production production : cs.getProductions()) {
@@ -40,31 +41,54 @@ public class FinanceReport extends Report {
                 credits = new ArrayList<>();
                 roles = new ArrayList<>();
                 if (companyName.equalsIgnoreCase(production.getCompany())) {
-                    credits.addAll(production.getCredits());
-                    for (Credit credit : credits) {
-                        roles.addAll(credit.getRoles());
-                    }
+                    getCreditsAndRolesFromProduction(production);
                 }
-                countFrequency(roles);
+                countFrequencyRoles(roles, frequencyMap);
             }
             producers.put(companyName, frequencyMap);
         }
+        System.out.println(producers);
         writeToFile("Oversigt over producenter " + filename, producers);
     }
 
+    public static void generateRolesOverview() {
+        creditTypes = new HashMap<>();
+        roles = new ArrayList<>();
+        for (Production production : cs.getProductions()) {
+            credits = new ArrayList<>();
+            getCreditsAndRolesFromProduction(production);
+        }
+        countFrequencyRoles(roles, creditTypes);
+        writeToFile2("Oversigt over roller " + filename, creditTypes);
+    }
+
+    public static void generateTop10MostCredited(){
+        
+    }
+
     //tæller hvor mange instanser der er af roller i en liste
-    private static void countFrequency(ArrayList<Roles> list) {
+    private static void countFrequencyRoles(ArrayList<Roles> list, HashMap<Roles, Integer> map) {
         for (Roles r : list) {
-            Integer count = frequencyMap.get(r);
+            Integer count = map.get(r);
             if (count == null) {
                 count = 0;
             }
-            frequencyMap.put(r, count + 1);
+            map.put(r, count + 1);
+        }
+    }
+
+
+    //udtrækker alle krediteringer og roller for en given production
+    private static void getCreditsAndRolesFromProduction(Production production) {
+        credits.addAll(production.getCredits());
+        for (Credit credit : credits) {
+            roles.addAll(credit.getRoles());
         }
     }
 
     public static void main(String[] args) {
         generateFilmProducersReport();
+        generateRolesOverview();
     }
 
 }
