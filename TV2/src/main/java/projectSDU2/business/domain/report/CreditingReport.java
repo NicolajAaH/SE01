@@ -21,6 +21,6 @@ public class CreditingReport extends Report {
             }
         }
         writeToFile(filename, productionsToSend);
-        index++;
+        index++; //Inkrementerer index
     }
 }

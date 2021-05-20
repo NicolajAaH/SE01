@@ -130,6 +130,19 @@ public class DomainConnectTest {
         assertEquals(true, file.delete()); //sletter filen igen
     }
 
+    @Test //generere finansrapport
+    public void generateFinanceReport(){
+        domainI.generateFinanceReport(); //Genererer finansrapport
+        DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        Date today = new Date();
+        String todayNoTime = format.format(today);
+        int index = 1;
+        String nameOfFile = "Finansrapport " + todayNoTime + " ID " + index + ".txt";
+        File file = new File(nameOfFile); //Laver et fil objekt
+        assertEquals(true, file.exists()); //Tjekker om filen eksisterer
+        assertEquals(true, file.delete()); //Sletter filen igen
+    }
+
     @AfterClass
     public static void tearDown() throws Exception {
         PersistenceHandler.setDatabaseName("tv2");
