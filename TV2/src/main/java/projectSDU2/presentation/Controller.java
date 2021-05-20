@@ -14,8 +14,14 @@ import java.io.IOException;
 
 public class Controller {
 
+    //Attributter
     private static DomainI domainI = new DomainConnect();
+    static String type = "";
+    static String email;
+    static String accountPassword;
+    static int id = -1;
 
+    //FXML Attributter
     @FXML
     private Button login;
     @FXML
@@ -25,37 +31,32 @@ public class Controller {
     @FXML
     private TextField emailField;
 
-    static String type = "";
-
-    static String email;
-
-    static String accountPassword;
-
-    static int id = -1;
-
+    //Getter
     public static DomainI getDomainI() {
         return domainI;
     }
 
-    public void initialize(){
+    //Initialize som køres når programmet startes
+    public void initialize() {
         domainI.runSetup();
     }
 
+    //Håndterer når der klikkes login
     @FXML
-    private void loginHandler(){
-        if(domainI.authorize(emailField.getText(), passwordField.getText())){ //tjek om det er producer, admin osv. og giv næste scene afhængig af det
+    private void loginHandler() {
+        if (domainI.authorize(emailField.getText(), passwordField.getText())) { //Autoriserer brugeren, og sætter attributterne
             type = domainI.findPerson(emailField.getText()).getType();
             email = emailField.getText();
             accountPassword = passwordField.getText();
             id = domainI.findPerson(emailField.getText()).getId();
-            newFxml("core.fxml");
-        }
-        else{
+            newFxml("core.fxml"); //Skift fxml fil
+        } else {
             status.setText("Incorrect login information.");
         }
     }
 
-    public void newFxml(String fileName){
+    //Metode til at skifte fxml fil
+    public void newFxml(String fileName) {
         Parent newRoot = null;
         try {
             newRoot = runGUI.getFxmlLoader().load(getClass().getClassLoader().getResource(fileName));
@@ -66,13 +67,13 @@ public class Controller {
         runGUI.getStage().show();
     }
 
-    public void signoutHandler(){
+    //Metode til at håndtere når der trykkes logud
+    public void signoutHandler() {
         newFxml("login.fxml");
     }
 
-    public void backHandler(){
+    //Metode til at håndtere når der trykkes back
+    public void backHandler() {
         newFxml("core.fxml");
     }
-
-
 }

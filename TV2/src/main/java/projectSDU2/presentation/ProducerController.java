@@ -4,12 +4,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 
-import java.util.Arrays;
+public class ProducerController extends Controller {
 
-public class ProducerController extends Controller{
-
+    //FXML Attributter
     @FXML
     private Label statusLabelProducer;
     @FXML
@@ -55,14 +53,16 @@ public class ProducerController extends Controller{
     @FXML
     private Button deleteProd;
 
+    //Overrided initialize der køres hver gang fxml filen producer loades
     @Override
-    public void initialize(){
-        producersList.setItems(FXCollections.observableArrayList(getDomainI().getProducers()));
+    public void initialize() {
+        producersList.setItems(FXCollections.observableArrayList(getDomainI().getProducers())); //Henter alle producers til listen
         addProducerpane.setDisable(true);
         addProducerpane.setVisible(false);
     }
 
-    private void resetFields(){
+    //Nulstiller felterne så de er tomme alle sammen
+    private void resetFields() {
         ObservableList<Object> empty = FXCollections.observableArrayList();
         nameFieldProducer.setText("");
         phoneFieldProducer.setText("");
@@ -73,65 +73,82 @@ public class ProducerController extends Controller{
         statusLabelProducer.setText("");
     }
 
-    public void addProducerHandler(){
+    //Håndterer klik på add producer
+    public void addProducerHandler() {
         addProducerpane.setVisible(true);
         addProducerpane.setDisable(false);
         descLabel.setText("Add producer");
+        idFieldProducer.setText("ID will be given after");
     }
 
-    public void editProducerHandler(){
-        if(producersList.getSelectionModel().getSelectedItem() == null){
+    //Håndterer klik på edit producer
+    public void editProducerHandler() {
+        if (producersList.getSelectionModel().getSelectedItem() == null) { //Producer ikke valgt
             producersLabelStatus.setText("Select producer");
-        }else {
+        } else {
             producersLabelStatus.setText("");
             addProducerpane.setVisible(true);
             addProducerpane.setDisable(false);
             descLabel.setText("Edit producer");
-            idFieldProducer.setText(getDomainI().castToPerson(producersList.getSelectionModel().getSelectedItem()).getId() +"");
+            idFieldProducer.setText(getDomainI().castToPerson(producersList.getSelectionModel().getSelectedItem()).getId() + "");
             nameFieldProducer.setText(getDomainI().castToPerson(producersList.getSelectionModel().getSelectedItem()).getName());
-            phoneFieldProducer.setText(""+getDomainI().castToPerson(producersList.getSelectionModel().getSelectedItem()).getPhone());
+            phoneFieldProducer.setText("" + getDomainI().castToPerson(producersList.getSelectionModel().getSelectedItem()).getPhone());
             emailFieldProducer.setText(getDomainI().castToPerson(producersList.getSelectionModel().getSelectedItem()).getEmail());
             passwordFieldProducer.setText(getDomainI().castToPerson(producersList.getSelectionModel().getSelectedItem()).getPassword());
-            productionsListProducer.setItems(FXCollections.observableArrayList(getDomainI().findWhereProducer(getDomainI().castToPerson(producersList.getSelectionModel().getSelectedItem()).getId())));
+            productionsListProducer.setItems(FXCollections.observableArrayList(getDomainI().
+                    findWhereProducer(getDomainI().castToPerson(producersList.getSelectionModel().getSelectedItem()).getId()))); //Productions for en producer sættes
         }
     }
 
-    public void cancelHandler(){
-        resetFields();
+    //Håndterer når der trykkes cancel
+    public void cancelHandler() {
+        resetFields(); //Nulstiller felterne
         addProducerpane.setDisable(true);
         addProducerpane.setVisible(false);
     }
 
-    public void finishHandler(){
-        try{
-            if(descLabel.getText().equals("Edit producer")){
-                int oid = getDomainI().castToPerson(producersList.getSelectionModel().getSelectedItem()).getId();
-                String name = nameFieldProducer.getText();
-                int phone = Integer.parseInt(phoneFieldProducer.getText());
-                String email = emailFieldProducer.getText();
-                String password = passwordFieldProducer.getText();
-                getDomainI().editPerson(oid, name, phone, email, password);
-            }else{
-                //add
-                String name = nameFieldProducer.getText();
-                int phone = Integer.parseInt(phoneFieldProducer.getText());
-                String email = emailFieldProducer.getText();
-                String password = passwordFieldProducer.getText();
-                getDomainI().addProducer(name, phone, email, password);
+    //Håndterer når der trykkes finish
+    public void finishHandler() {
+        if (nameFieldProducer.getText().isBlank() || phoneFieldProducer.getText().isBlank()
+                || emailFieldProducer.getText().isBlank() || passwordFieldProducer.getText().isBlank()) { //et eller flere felter er tomme
+            statusLabelProducer.setText("One or more fields are blank");
+        } else {
+            try {
+                if (descLabel.getText().equals("Edit producer")) { //Edit producer
+                    int oid = getDomainI().castToPerson(producersList.getSelectionModel().getSelectedItem()).getId();
+                    String name = nameFieldProducer.getText();
+                    int phone = Integer.parseInt(phoneFieldProducer.getText());
+                    String email = emailFieldProducer.getText();
+                    String password = passwordFieldProducer.getText();
+                    getDomainI().editPerson(oid, name, phone, email, password);
+                } else {
+                    //Add producer
+                    String name = nameFieldProducer.getText();
+                    int phone = Integer.parseInt(phoneFieldProducer.getText());
+                    String email = emailFieldProducer.getText();
+                    String password = passwordFieldProducer.getText();
+                    getDomainI().addProducer(name, phone, email, password);
+                }
+                resetFields();
+                initialize();
+            } catch (NumberFormatException e) {
+                statusLabelProducer.setText("Phone must be an integer"); //telefonnummer er ikke en integer
             }
-            resetFields();
-            initialize();
-        }catch (NumberFormatException e){
-            statusLabelProducer.setText("Phone must be an integer");
         }
     }
 
-    public void deleteHandler(){
-        getDomainI().deletePerson(getDomainI().castToPerson(producersList.getSelectionModel().getSelectedItem()).getId());
-        producersList.setItems(FXCollections.observableArrayList(getDomainI().getProducers()));
+    //Håndterer når der trykkes delete producer
+    public void deleteHandler() {
+        if (producersList.getSelectionModel().getSelectedItem() == null) { //Producer ikke valgt
+            producersLabelStatus.setText("Select producer");
+        } else {
+            getDomainI().deletePerson(getDomainI().castToPerson(producersList.getSelectionModel().getSelectedItem()).getId()); //sletter
+            producersList.setItems(FXCollections.observableArrayList(getDomainI().getProducers())); //Opdaterer listen
+        }
     }
 
-    public void searchHandler(){
+    //Håndterer når der trykkes søg
+    public void searchHandler() {
         producersList.setItems(FXCollections.observableArrayList(getDomainI().searchProducers(searchField.getText())));
     }
 }

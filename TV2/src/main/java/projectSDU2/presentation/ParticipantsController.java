@@ -4,8 +4,9 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-public class ParticipantsController extends Controller{
+public class ParticipantsController extends Controller {
 
+    //FXML Attributter
     @FXML
     private Label labelStatusAddEdit;
     @FXML
@@ -37,23 +38,27 @@ public class ParticipantsController extends Controller{
     @FXML
     private PasswordField passwordFieldParticipant;
 
+    //Overrided initialize der køres hver gang fxml filen loades
     @Override
-    public void initialize(){
-        participantsList.setItems(FXCollections.observableArrayList(getDomainI().getParticipants()));
+    public void initialize() {
+        participantsList.setItems(FXCollections.observableArrayList(getDomainI().getParticipants())); //Sætter listen til alle participants
         addParticipantpane.setDisable(true);
         addParticipantpane.setVisible(false);
     }
 
+    //Håndterer når der klikkes add participant
     public void addParticipantHandler() {
         addParticipantpane.setVisible(true);
         addParticipantpane.setDisable(false);
         descLabel.setText("Add participant");
+        idFieldParticipant.setText("ID will be given after");
     }
 
+    //Håndterer når der klikkes edit participant
     public void editParticipantHandler() {
-        if(participantsList.getSelectionModel().getSelectedItem() == null){
+        if (participantsList.getSelectionModel().getSelectedItem() == null) { //Der er ikke valgt en participant
             participantsLabelStatus.setText("Select participant");
-        }else {
+        } else {
             participantsLabelStatus.setText("");
             addParticipantpane.setVisible(true);
             addParticipantpane.setDisable(false);
@@ -63,34 +68,41 @@ public class ParticipantsController extends Controller{
             phoneFieldParticipant.setText(getDomainI().castToPerson(participantsList.getSelectionModel().getSelectedItem()).getPhone() + "");
             emailFieldParticipant.setText(getDomainI().castToPerson(participantsList.getSelectionModel().getSelectedItem()).getEmail());
             passwordFieldParticipant.setText(getDomainI().castToPerson(participantsList.getSelectionModel().getSelectedItem()).getPassword());
-        }
+        }//Henter alle felter for den valgte participant
     }
 
+    //Håndterer når der trykkes finish
     public void finishHandler() {
-        try{
-            if(descLabel.getText().equals("Edit participant")){
-                //edit
-                int oid = getDomainI().castToPerson(participantsList.getSelectionModel().getSelectedItem()).getId();
-                String name = nameFieldParticipant.getText();
-                int phone = Integer.parseInt(phoneFieldParticipant.getText());
-                String email = emailFieldParticipant.getText();
-                String password = passwordFieldParticipant.getText();
-                getDomainI().editPerson(oid, name, phone, email, password);
-            }else{
-                //add
-                String name = nameFieldParticipant.getText();
-                int phone = Integer.parseInt(phoneFieldParticipant.getText());
-                String email = emailFieldParticipant.getText();
-                String password = passwordFieldParticipant.getText();
-                getDomainI().addParticipant(name, phone, email, password);
+        if (emailFieldParticipant.getText().isBlank() || passwordFieldParticipant.getText().isBlank()
+                || nameFieldParticipant.getText().isBlank() || phoneFieldParticipant.getText().isBlank()) { //En eller flere af felterne er blanke
+            labelStatusAddEdit.setText("One or more fields are blank");
+        } else {
+            try {
+                if (descLabel.getText().equals("Edit participant")) {
+                    //edit participant
+                    int oid = getDomainI().castToPerson(participantsList.getSelectionModel().getSelectedItem()).getId();
+                    String name = nameFieldParticipant.getText();
+                    int phone = Integer.parseInt(phoneFieldParticipant.getText());
+                    String email = emailFieldParticipant.getText();
+                    String password = passwordFieldParticipant.getText();
+                    getDomainI().editPerson(oid, name, phone, email, password); //Ændrer
+                } else {
+                    //add participant
+                    String name = nameFieldParticipant.getText();
+                    int phone = Integer.parseInt(phoneFieldParticipant.getText());
+                    String email = emailFieldParticipant.getText();
+                    String password = passwordFieldParticipant.getText();
+                    getDomainI().addParticipant(name, phone, email, password); //Tilføjer
+                }
+                resetFields(); //Nulstiller felter
+                initialize(); //Kalder initialize
+            } catch (NumberFormatException e) {
+                labelStatusAddEdit.setText("Error: Phone needs to be an integer"); //Telefon er ikke en integer
             }
-            resetFields();
-            initialize();
-        }catch (NumberFormatException e){
-            labelStatusAddEdit.setText("Error: Phone needs to be an integer");
         }
     }
 
+    //Nulstiller alle felter
     private void resetFields() {
         nameFieldParticipant.setText("");
         phoneFieldParticipant.setText("");
@@ -98,21 +110,27 @@ public class ParticipantsController extends Controller{
         passwordFieldParticipant.setText("");
         participantsLabelStatus.setText("");
         labelStatusAddEdit.setText("");
-
     }
 
+    //Håndterer når der trykkes cancel
     public void cancelHandler() {
         resetFields();
         addParticipantpane.setDisable(true);
         addParticipantpane.setVisible(false);
     }
 
-    public void deleteHandler(){
-        getDomainI().deletePerson(getDomainI().castToPerson(participantsList.getSelectionModel().getSelectedItem()).getId());
-        participantsList.setItems(FXCollections.observableArrayList(getDomainI().getParticipants()));
+    //Håndterer når der trykkes delete
+    public void deleteHandler() {
+        if (participantsList.getSelectionModel().getSelectedItem() == null) { //Participant ikke valgt
+            participantsLabelStatus.setText("Select participant");
+        } else {
+            getDomainI().deletePerson(getDomainI().castToPerson(participantsList.getSelectionModel().getSelectedItem()).getId()); //Sletter participant
+            participantsList.setItems(FXCollections.observableArrayList(getDomainI().getParticipants())); //Opdaterer listen med participants
+        }
     }
 
-    public void searchHandler(){
-        participantsList.setItems(FXCollections.observableArrayList(getDomainI().searchParticipants(searchField.getText())));
+    //Håndterer når der klikkes søg
+    public void searchHandler() {
+        participantsList.setItems(FXCollections.observableArrayList(getDomainI().searchParticipants(searchField.getText()))); //Søger
     }
 }

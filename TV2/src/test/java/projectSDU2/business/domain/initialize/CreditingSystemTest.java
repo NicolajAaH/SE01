@@ -9,36 +9,33 @@ import projectSDU2.business.domain.user.Person;
 import static org.junit.Assert.*;
 
 public class CreditingSystemTest {
-    CreditingSystem creditingSystem = CreditingSystem.getInstance();
+    static CreditingSystem creditingSystem;
 
-    @org.junit.Before
-    public void setUp() throws Exception {
+    @org.junit.BeforeClass
+    public static void setUp() throws Exception {
+        creditingSystem = CreditingSystem.getInstance();
     }
 
     @Test
     public void testFindPerson(){
-        int id = creditingSystem.findPerson("producer@test.dk").getId();
+        int id = creditingSystem.findPerson("mort@admin-tv2.dk").getId();
         assertEquals(1, id);
     }
 
     @Test
     public void testFindProduction(){
-        int id = creditingSystem.findProduction(25).getProductionID();
-        assertEquals(25, id);
+        int id = creditingSystem.findProduction(1).getProductionID();
+        assertEquals(1, id);
     }
 
+    //logge ind/ud
     @Test
     public void testAuthorizeAccount(){
-        boolean result = creditingSystem.authorizeAccount("producer@test.dk", "producer123");
+        boolean result = creditingSystem.authorizeAccount("mort@admin-tv2.dk", "adminpass");
         assertEquals(true, result);
-        boolean result2 = creditingSystem.authorizeAccount("producer@test.dk", "producer12");
+        boolean result2 = creditingSystem.authorizeAccount("mort@admin-tv2.dk", "adminpass12");
         assertNotEquals(true, result2);
     }
 
-
-
-    @org.junit.After
-    public void tearDown() throws Exception {
-    }
 
 }

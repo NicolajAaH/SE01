@@ -6,11 +6,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
 public class runGUI extends Application {
 
-    //FXMLLoader og stage gemmes i variable
+    //FXMLLoader og stage gemmes i variable, statisk så de tilhører klassen
     private static FXMLLoader fxmlLoader = new FXMLLoader();
     private static Stage stage;
 
@@ -18,6 +16,7 @@ public class runGUI extends Application {
     public static FXMLLoader getFxmlLoader() {
         return fxmlLoader;
     }
+
     public static Stage getStage() {
         return stage;
     }
@@ -27,7 +26,7 @@ public class runGUI extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
-        Parent root = fxmlLoader.load(getClass().getClassLoader().getResource("login.fxml"));
+        Parent root = fxmlLoader.load(getClass().getClassLoader().getResource("login.fxml")); //Login skærm
         stage.setTitle("Krediteringssystem");
         stage.setScene(new Scene(root));
         stage.setResizable(false);
