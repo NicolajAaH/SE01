@@ -30,7 +30,7 @@ public class Server{
                 transaction.start();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+
         }
     }
 

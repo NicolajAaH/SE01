@@ -7,11 +7,11 @@ import projectSDU2.business.domain.credit.Roles;
 import projectSDU2.business.domain.user.Person;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 public interface DomainI {
+    //Interfacet beskriver hvilke metoder den grafiske brugergrænseflade (presentation) skal kunne tilgå i domænelaget
+    //Alle metoderne er beskrevet i DomainConnect, se der. Ligger i business.domain
 
-    //tilføj hvad GUI skal kunne tilgå
     boolean authorize(String email, String password);
 
     void runSetup();

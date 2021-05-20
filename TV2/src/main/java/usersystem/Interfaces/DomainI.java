@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public interface DomainI {
+    //Interface som er kommunikation mellem domæne og presentation.
+    //Forklaring af metoder er skrevet som kommentarer i DomainConnect
 
     List<SimpleObject> getAll();
 
