@@ -9,18 +9,18 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-
 public class FinanceReport extends Report {
-    private static HashMap<String, Integer> top10credits;
-    private static HashMap<Roles, Integer> creditTypes;
-    private static HashMap<String, HashMap<Roles, Integer>> producers;
+    private HashMap<String, Integer> top10credits;
+    private HashMap<Roles, Integer> creditTypes;
+    private HashMap<String, HashMap<Roles, Integer>> producers;
     private static int index = 1;
-    private static String filename = "Finansrapport " + nameOfFile + index + ".txt";
-    private static HashMap<Roles, Integer> frequencyMap;
-    private static ArrayList<Credit> credits;
-    private static ArrayList<Roles> roles;
+    private String filename = "Finansrapport " + nameOfFile + index + ".txt";
+    private HashMap<Roles, Integer> frequencyMap;
+    private ArrayList<Credit> credits;
+    private ArrayList<Roles> roles;
 
-    public static void generateFinanceReport() {
+    //udskriver en samlet rapport
+    public void generateFinanceReport() {
         generateFilmProducers();
         generateRolesOverview();
         generateTop10MostCredited();
@@ -37,13 +37,14 @@ public class FinanceReport extends Report {
         }
     }
 
-    public static void generateFilmProducers() {
+    //generere en liste over alle producenterne i databasen, samt et overblik over hvilke roller der er brugt og i hvilket omfang
+    public void generateFilmProducers() {
         producers = new HashMap<>();
         ArrayList<String> producingCompanies = new ArrayList<>();
 
         //finder navnene på alle producenterne
         for (Production production : cs.getProductions()) {
-            if (producingCompanies.contains(production.getCompany()) == false)
+            if (!producingCompanies.contains(production.getCompany()))
                 producingCompanies.add(production.getCompany());
         }
         //finder alle rollerne for alle produktionerne for hver producent
@@ -61,7 +62,8 @@ public class FinanceReport extends Report {
         }
     }
 
-    public static void generateRolesOverview() {
+    //generere en samlet liste med alle roller og hvor hyppigt de forekommer i databasen
+    public void generateRolesOverview() {
         creditTypes = new HashMap<>();
         roles = new ArrayList<>();
         for (Production production : cs.getProductions()) {
@@ -71,7 +73,8 @@ public class FinanceReport extends Report {
         countFrequencyRoles(roles, creditTypes);
     }
 
-    public static void generateTop10MostCredited() {
+    //generere en liste over de top 10 mest krediterede personer
+    public void generateTop10MostCredited() {
         HashMap<String, Integer> map = new HashMap<>();
         credits = new ArrayList<>();
         for (Production production : cs.getProductions()) {
@@ -92,7 +95,7 @@ public class FinanceReport extends Report {
     }
 
     //tæller hvor mange instanser der er af roller i en liste
-    private static void countFrequencyRoles(ArrayList<Roles> list, HashMap<Roles, Integer> map) {
+    private void countFrequencyRoles(ArrayList<Roles> list, HashMap<Roles, Integer> map) {
         for (Roles r : list) {
             Integer count = map.get(r);
             if (count == null) {
@@ -103,14 +106,10 @@ public class FinanceReport extends Report {
     }
 
     //udtrækker alle krediteringer og roller for en given production
-    private static void getCreditsAndRolesFromProduction(Production production) {
+    private void getCreditsAndRolesFromProduction(Production production) {
         credits.addAll(production.getCredits());
         for (Credit credit : credits) {
             roles.addAll(credit.getRoles());
         }
-    }
-
-    public static void main(String[] args) {
-    generateFinanceReport();
     }
 }
