@@ -343,7 +343,7 @@ public class DomainConnect implements DomainI {
     //Genererer finansrapport
     @Override
     public void generateFinanceReport() {
-        //TODO
+        creditingSystem.generateFinanceReport();
     }
 
 }

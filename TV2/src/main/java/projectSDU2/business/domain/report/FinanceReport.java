@@ -10,7 +10,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class FinanceReport extends Report {
-    private HashMap<String, Integer> top10credits;
+    //Attributter
+    private LinkedHashMap<String, Integer> top10credits;
     private HashMap<Roles, Integer> creditTypes;
     private HashMap<String, HashMap<Roles, Integer>> producers;
     private static int index = 1;
@@ -19,7 +20,7 @@ public class FinanceReport extends Report {
     private ArrayList<Credit> credits;
     private ArrayList<Roles> roles;
 
-    //udskriver en samlet rapport
+    //Udskriver en samlet rapport
     public void generateFinanceReport() {
         generateFilmProducers();
         generateRolesOverview();
@@ -37,23 +38,23 @@ public class FinanceReport extends Report {
         }
     }
 
-    //generere en liste over alle producenterne i databasen, samt et overblik over hvilke roller der er brugt og i hvilket omfang
+    //Genererer en liste over alle producenterne i databasen, samt et overblik over hvilke roller der er brugt og i hvilket omfang
     private void generateFilmProducers() {
         producers = new HashMap<>();
         ArrayList<String> producingCompanies = new ArrayList<>();
 
-        //finder navnene på alle producenterne
+        //Finder navnene på alle producenterne
         for (Production production : cs.getProductions()) {
             if (!producingCompanies.contains(production.getCompany()))
                 producingCompanies.add(production.getCompany());
         }
-        //finder alle rollerne for alle produktionerne for hver producent
+        //Finder alle rollerne for alle produktionerne for hver producent
         for (String companyName : producingCompanies) {
             frequencyMap = new HashMap<>();
             for (Production production : cs.getProductions()) {
                 credits = new ArrayList<>();
                 roles = new ArrayList<>();
-                if (companyName.equalsIgnoreCase(production.getCompany())) {
+                if (companyName.equalsIgnoreCase(production.getCompany())) { //Hvis firmanavn er ens, case insensitive
                     getCreditsAndRolesFromProduction(production);
                 }
                 countFrequencyRoles(roles, frequencyMap);
@@ -62,7 +63,7 @@ public class FinanceReport extends Report {
         }
     }
 
-    //generere en samlet liste med alle roller og hvor hyppigt de forekommer i databasen
+    //Genererer en samlet liste med alle roller og hvor hyppigt de forekommer i databasen
     private void generateRolesOverview() {
         creditTypes = new HashMap<>();
         roles = new ArrayList<>();
@@ -73,28 +74,29 @@ public class FinanceReport extends Report {
         countFrequencyRoles(roles, creditTypes);
     }
 
-    //generere en liste over de top 10 mest krediterede personer
+    //Generere en liste over de top 10 mest krediterede personer
     private void generateTop10MostCredited() {
         HashMap<String, Integer> map = new HashMap<>();
+        LinkedHashMap<String, Integer> sortedMap = new LinkedHashMap<>();
         credits = new ArrayList<>();
         for (Production production : cs.getProductions()) {
             credits.addAll(production.getCredits());
         }
         for (Credit credit : credits) {
-            if (map.containsKey(credit.getPerson().getName())) {
+            if (map.containsKey(credit.getPerson().getName())) { //Hvis den indeholder navnet
                 map.put(credit.getPerson().getName(),
                         map.get(credit.getPerson().getName()) + credit.getRoles().size());
-            } else {
+            } else { //Indeholder ikke navnet på personen
                 map.put(credit.getPerson().getName(), credit.getRoles().size());
             }
         }
         //Sorterer listen over medvirkende og finder top 10 medvirkende med fleste krediteringer
-        top10credits = map.entrySet().stream()
-                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).limit(10)
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
+        map.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).limit(10).forEach(value -> sortedMap.put(value.getKey(), value.getValue()));
+        top10credits = sortedMap;
     }
 
-    //tæller hvor mange instanser der er af roller i en liste
+    //Tæller hvor mange instanser der er af roller i en liste
     private void countFrequencyRoles(ArrayList<Roles> list, HashMap<Roles, Integer> map) {
         for (Roles r : list) {
             Integer count = map.get(r);
@@ -105,7 +107,7 @@ public class FinanceReport extends Report {
         }
     }
 
-    //udtrækker alle krediteringer og roller for en given production
+    //Udtrækker alle krediteringer og roller for en given production
     private void getCreditsAndRolesFromProduction(Production production) {
         credits.addAll(production.getCredits());
         for (Credit credit : credits) {

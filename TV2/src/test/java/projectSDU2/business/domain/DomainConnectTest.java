@@ -122,7 +122,7 @@ public class DomainConnectTest {
         DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         Date today = new Date();
         String todayNoTime = format.format(today);
-        int index = 0;
+        int index = 1;
         String nameOfFile = "Krediteringsrapport " + todayNoTime + " ID " + index + ".txt";
         File file = new File(nameOfFile); //Laver et fil objekt
         assertEquals(true, file.exists());
