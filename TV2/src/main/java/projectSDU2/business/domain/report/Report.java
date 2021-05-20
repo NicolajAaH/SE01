@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public abstract class Report {
-    private int reportID;
-
     protected CreditingSystem cs = CreditingSystem.getInstance();
     protected Gson gson = new Gson();
     protected DateFormat format = new SimpleDateFormat("dd-MM-yyyy");

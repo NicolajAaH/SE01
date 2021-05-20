@@ -38,7 +38,7 @@ public class FinanceReport extends Report {
     }
 
     //generere en liste over alle producenterne i databasen, samt et overblik over hvilke roller der er brugt og i hvilket omfang
-    public void generateFilmProducers() {
+    private void generateFilmProducers() {
         producers = new HashMap<>();
         ArrayList<String> producingCompanies = new ArrayList<>();
 
@@ -63,7 +63,7 @@ public class FinanceReport extends Report {
     }
 
     //generere en samlet liste med alle roller og hvor hyppigt de forekommer i databasen
-    public void generateRolesOverview() {
+    private void generateRolesOverview() {
         creditTypes = new HashMap<>();
         roles = new ArrayList<>();
         for (Production production : cs.getProductions()) {
@@ -74,7 +74,7 @@ public class FinanceReport extends Report {
     }
 
     //generere en liste over de top 10 mest krediterede personer
-    public void generateTop10MostCredited() {
+    private void generateTop10MostCredited() {
         HashMap<String, Integer> map = new HashMap<>();
         credits = new ArrayList<>();
         for (Production production : cs.getProductions()) {
