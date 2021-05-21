@@ -92,7 +92,8 @@ public class MergeController extends Controller {
             if (mergePersonsList.getSelectionModel().getSelectedItem() == null) {
                 labelStatus.setText("Choose person 2");
             } else {
-                if (!idPerson1.getText().equals("") && (mergePersonsList.getSelectionModel().getSelectedItem() == null || getDomainI().castToPerson(mergePersonsList.getSelectionModel().getSelectedItem()).getId() == Integer.parseInt(idPerson1.getText()))) {
+                if (!idPerson1.getText().equals("") && (mergePersonsList.getSelectionModel().getSelectedItem() == null
+                        || getDomainI().castToPerson(mergePersonsList.getSelectionModel().getSelectedItem()).getId() == Integer.parseInt(idPerson1.getText()))) {
                     if (getDomainI().castToPerson(mergePersonsList.getSelectionModel().getSelectedItem()).getId() == Integer.parseInt(idPerson1.getText())) {
                         labelStatus.setText("Cannot merge same person");
                     } else {
@@ -117,7 +118,8 @@ public class MergeController extends Controller {
         if (idPerson1.getText().isBlank() || idPerson2.getText().isBlank()) { //Hvis der ikke er valgt begge personer
             labelStatus.setText("Both persons must be selected!");
         } else {
-            if (getDomainI().findPerson(Integer.parseInt(idPerson1.getText())).getType().equals(getDomainI().findPerson(Integer.parseInt(idPerson2.getText())).getType())) {
+            if (getDomainI().findPerson(Integer.parseInt(idPerson1.getText())).getType().
+                    equals(getDomainI().findPerson(Integer.parseInt(idPerson2.getText())).getType())) {
                 idMerged.setText("Will be given after"); //Sætter felter
                 nameMerged.setText(namePerson1.getText());
                 phoneMerged.setText(phonePerson1.getText());
