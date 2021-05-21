@@ -114,23 +114,27 @@ public class ProducerController extends Controller {
             statusLabelProducer.setText("One or more fields are blank");
         } else {
             try {
-                if (descLabel.getText().equals("Edit producer")) { //Edit producer
-                    int oid = getDomainI().castToPerson(producersList.getSelectionModel().getSelectedItem()).getId();
-                    String name = nameFieldProducer.getText();
-                    int phone = Integer.parseInt(phoneFieldProducer.getText());
-                    String email = emailFieldProducer.getText();
-                    String password = passwordFieldProducer.getText();
-                    getDomainI().editPerson(oid, name, phone, email, password);
+                if (Integer.parseInt(phoneFieldProducer.getText()) < 10000000 || Integer.parseInt(phoneFieldProducer.getText()) > 99999999) {
+                    statusLabelProducer.setText("Phone must be an integer with 8 figures"); //Phone skal være et telefonnummer
                 } else {
-                    //Add producer
-                    String name = nameFieldProducer.getText();
-                    int phone = Integer.parseInt(phoneFieldProducer.getText());
-                    String email = emailFieldProducer.getText();
-                    String password = passwordFieldProducer.getText();
-                    getDomainI().addProducer(name, phone, email, password);
+                    if (descLabel.getText().equals("Edit producer")) { //Edit producer
+                        int oid = getDomainI().castToPerson(producersList.getSelectionModel().getSelectedItem()).getId();
+                        String name = nameFieldProducer.getText();
+                        int phone = Integer.parseInt(phoneFieldProducer.getText());
+                        String email = emailFieldProducer.getText();
+                        String password = passwordFieldProducer.getText();
+                        getDomainI().editPerson(oid, name, phone, email, password);
+                    } else {
+                        //Add producer
+                        String name = nameFieldProducer.getText();
+                        int phone = Integer.parseInt(phoneFieldProducer.getText());
+                        String email = emailFieldProducer.getText();
+                        String password = passwordFieldProducer.getText();
+                        getDomainI().addProducer(name, phone, email, password);
+                    }
+                    resetFields();
+                    initialize();
                 }
-                resetFields();
-                initialize();
             } catch (NumberFormatException e) {
                 statusLabelProducer.setText("Phone must be an integer"); //telefonnummer er ikke en integer
             }

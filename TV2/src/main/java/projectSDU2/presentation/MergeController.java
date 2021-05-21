@@ -138,10 +138,14 @@ public class MergeController extends Controller {
         } else {
             try {
                 int phone = Integer.parseInt(phoneMerged.getText());
-                getDomainI().merge(Integer.parseInt(idPerson1.getText()), Integer.parseInt(idPerson2.getText()), nameMerged.getText(), phone,
-                        emailMerged.getText(), passwordMerged.getText(), type); //Merger dem
-                resetFields(); //Nulstiller felterne
-                labelStatus.setText("Merge complete");
+                if (phone < 10000000 || phone > 99999999) {
+                    labelStatus.setText("Phone must be an integer with 8 figures"); //Skal være telefonnummer
+                } else {
+                    getDomainI().merge(Integer.parseInt(idPerson1.getText()), Integer.parseInt(idPerson2.getText()), nameMerged.getText(), phone,
+                            emailMerged.getText(), passwordMerged.getText(), type); //Merger dem
+                    resetFields(); //Nulstiller felterne
+                    labelStatus.setText("Merge complete");
+                }
             } catch (NumberFormatException e) {
                 labelStatus.setText("Phone must be an integer"); //Hvis telefonnummer ikke er en integer
             }

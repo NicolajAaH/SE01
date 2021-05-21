@@ -56,15 +56,19 @@ public class PersonalController extends Controller {
             updateLabel.setText("One or more fields are blank"); //Felter er blanke
         } else {
             try {
-                if (getDomainI().findPerson(emailField.getText()) == null || email.equals(emailField.getText())) {//Sikrer sig at der ikke kan gemmes en allerede mail i brug
-                    int phone = Integer.parseInt(phoneField.getText());
-                    getDomainI().editPerson(getDomainI().findPerson(email).getId(), nameField.getText(), phone,
-                            emailField.getText(), password.getText(), getDomainI().findPerson(email).getType()); //Ændrer person
-                    updateLabel.setText("Update finished");
-                    email = emailField.getText(); //Sætter email til ny
-                    getDomainI().runSetup(); //Opdaterer listerne i systemet
+                if (Integer.parseInt(phoneField.getText()) < 10000000 || Integer.parseInt(phoneField.getText()) > 99999999) { //Skal være et telefonnummer
+                    updateLabel.setText("Phone must be an integer with 8 figures");
                 } else {
-                    updateLabel.setText("Email already in use!"); //Email allerede i brug, ikke tilladt pga. UNIQUE constraint i DB
+                    if (getDomainI().findPerson(emailField.getText()) == null || email.equals(emailField.getText())) {//Sikrer sig at der ikke kan gemmes en allerede mail i brug
+                        int phone = Integer.parseInt(phoneField.getText());
+                        getDomainI().editPerson(getDomainI().findPerson(email).getId(), nameField.getText(), phone,
+                                emailField.getText(), password.getText(), getDomainI().findPerson(email).getType()); //Ændrer person
+                        updateLabel.setText("Update finished");
+                        email = emailField.getText(); //Sætter email til ny
+                        getDomainI().runSetup(); //Opdaterer listerne i systemet
+                    } else {
+                        updateLabel.setText("Email already in use!"); //Email allerede i brug, ikke tilladt pga. UNIQUE constraint i DB
+                    }
                 }
             } catch (NumberFormatException e) {
                 updateLabel.setText("Phone must be an integer"); //Telefonnummer er ikke integer

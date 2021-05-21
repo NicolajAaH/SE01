@@ -78,24 +78,28 @@ public class ParticipantsController extends Controller {
             labelStatusAddEdit.setText("One or more fields are blank");
         } else {
             try {
-                if (descLabel.getText().equals("Edit participant")) {
-                    //edit participant
-                    int oid = getDomainI().castToPerson(participantsList.getSelectionModel().getSelectedItem()).getId();
-                    String name = nameFieldParticipant.getText();
-                    int phone = Integer.parseInt(phoneFieldParticipant.getText());
-                    String email = emailFieldParticipant.getText();
-                    String password = passwordFieldParticipant.getText();
-                    getDomainI().editPerson(oid, name, phone, email, password); //Ændrer
+                if (Integer.parseInt(phoneFieldParticipant.getText()) < 10000000 || Integer.parseInt(phoneFieldParticipant.getText()) > 99999999) {
+                    labelStatusAddEdit.setText("Phone must be an integer with 8 figures"); //Skal være telefonnummer
                 } else {
-                    //add participant
-                    String name = nameFieldParticipant.getText();
-                    int phone = Integer.parseInt(phoneFieldParticipant.getText());
-                    String email = emailFieldParticipant.getText();
-                    String password = passwordFieldParticipant.getText();
-                    getDomainI().addParticipant(name, phone, email, password); //Tilføjer
+                    if (descLabel.getText().equals("Edit participant")) {
+                        //edit participant
+                        int oid = getDomainI().castToPerson(participantsList.getSelectionModel().getSelectedItem()).getId();
+                        String name = nameFieldParticipant.getText();
+                        int phone = Integer.parseInt(phoneFieldParticipant.getText());
+                        String email = emailFieldParticipant.getText();
+                        String password = passwordFieldParticipant.getText();
+                        getDomainI().editPerson(oid, name, phone, email, password); //Ændrer
+                    } else {
+                        //add participant
+                        String name = nameFieldParticipant.getText();
+                        int phone = Integer.parseInt(phoneFieldParticipant.getText());
+                        String email = emailFieldParticipant.getText();
+                        String password = passwordFieldParticipant.getText();
+                        getDomainI().addParticipant(name, phone, email, password); //Tilføjer
+                    }
+                    resetFields(); //Nulstiller felter
+                    initialize(); //Kalder initialize
                 }
-                resetFields(); //Nulstiller felter
-                initialize(); //Kalder initialize
             } catch (NumberFormatException e) {
                 labelStatusAddEdit.setText("Error: Phone needs to be an integer"); //Telefon er ikke en integer
             }
